@@ -21,9 +21,7 @@ export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
 					content: panel([
 						text(`Hello, **${origin}**!`),
 						text('This custom confirmation is just for display purposes.'),
-						text(
-							'But you can edit the snap source code to make it do something, if you want to!'
-						)
+						text('But you can edit the snap source code to make it do something, if you want to!')
 					])
 				}
 			})

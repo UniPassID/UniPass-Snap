@@ -1,5 +1,6 @@
 import { defaultSnapOrigin } from '@/constants'
 import { GetSnapsResponse, Snap } from '@/types'
+import { Wallet, providers } from 'ethers'
 
 /**
  * Get the installed snaps in MetaMask.

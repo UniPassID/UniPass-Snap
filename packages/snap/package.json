@@ -26,9 +26,11 @@
     "start": "mm-snap watch"
   },
   "dependencies": {
+    "@metamask/key-tree": "^7.0.0",
     "@metamask/snaps-types": "^0.32.2",
     "@metamask/snaps-ui": "^0.32.2",
-    "buffer": "^6.0.3"
+    "buffer": "^6.0.3",
+    "ethers": "5.7.1"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^2.0.3",

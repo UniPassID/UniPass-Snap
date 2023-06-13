@@ -8,10 +8,10 @@ import { Wallet, providers } from 'ethers'
  * @returns The snaps installed in MetaMask.
  */
 export const getSnaps = async (): Promise<GetSnapsResponse> => {
-	return (await window.ethereum.request({
-		method: 'wallet_getSnaps'
-	})) as unknown as GetSnapsResponse
-}
+  return (await window.ethereum.request({
+    method: 'wallet_getSnaps',
+  })) as unknown as GetSnapsResponse;
+};
 
 /**
  * Connect a snap to MetaMask.
@@ -56,6 +56,13 @@ export const sendHello = async () => {
 	await window.ethereum.request({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'hello' } }
+	})
+}
+
+export const getMasterKeyAddress = async () => {
+  return await window.ethereum.request<string>({
+		method: 'wallet_invokeSnap',
+		params: { snapId: defaultSnapOrigin, request: { method: 'getMasterKeyAddress' } }
 	})
 }
 

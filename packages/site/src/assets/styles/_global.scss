@@ -1,0 +1,190 @@
+// global color config
+$primary-1: #f3f0ff;
+$primary-2: #e7e0ff;
+$primary-3: #cfc1ff;
+$primary-4: #b8a2ff;
+$primary-5: #a083ff;
+$primary-6: #8864ff;
+$primary-7: #6d50cc;
+$primary-8: #523c99;
+$primary-9: #362866;
+$primary-10: #1b1433;
+
+// secondary red color
+$secondary-red-1: #fdeeee;
+$secondary-red-2: #ff8282;
+$secondary-red-3: #e85050;
+
+// secondary green color
+$secondary-green-1: #edf7ed;
+$secondary-green-2: #acf080;
+$secondary-green-3: #4aac4c;
+
+// secondary special color
+$secondary-special-1: #f5f5f5;
+$secondary-special-2: #f3f0ff;
+$secondary-special-3: #362866;
+
+// secondary mask color
+$secondary-mask-1: rgba(0, 0, 0, 0.9);
+$secondary-mask-2: rgba(0, 0, 0, 0.7);
+$secondary-mask-3: rgba(0, 0, 0, 0.01);
+
+// secondary gradient color
+$secondary-gradient-button: linear-gradient(270deg, #997afb 0%, #7a55f8 63.6%);
+$secondary-gradient-button-hover: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+	linear-gradient(270deg, #997afb 0%, #7a55f8 63.6%);
+$secondary-gradient-purple: linear-gradient(132.97deg, #ac6aff 9.38%, #6e1cf2 68.21%);
+$secondary-gradient-green: linear-gradient(132.97deg, #1ee0bd 9.38%, #0eba91 68.21%);
+$secondary-gradient-orange: linear-gradient(132.97deg, #ff9e5e 9.38%, #f56c41 68.21%);
+$secondary-gradient-blue: linear-gradient(132.97deg, #4fb0ff 9.38%, #0e7af8 68.21%);
+
+// button
+$btn-font-weight: 500;
+$btn-filled-text-color: #ffffff !default;
+$btn-padding-sm: 8px 16px !default;
+$btn-padding-md: 12px 24px !default;
+$btn-padding-lg: 14px 32px !default;
+$btn-opacity: 1 !default;
+$btn-opacity-hover: 0.8 !default;
+$btn-opacity-focus: 0.6 !default;
+$btn-opacity-disable: 0.4 !default;
+$btn-transition: color 0.15s ease-in-out, opacity 0.15s ease-in-out !default;
+
+// notify keyframes
+@keyframes up_notify_animation {
+	0% {
+		transform: translate3d(0, -200%, 0) scale(0.6);
+		opacity: 0.5;
+	}
+
+	100% {
+		transform: translate3d(0, 0, 0) scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes up_notify_animation_leave {
+	0% {
+		transform: translate3d(0, 0, 0) scale(1);
+		opacity: 1;
+	}
+
+	100% {
+		transform: translate3d(0, -200%, 0) scale(0.6);
+		opacity: 0;
+	}
+}
+
+// global light config
+:root {
+	--up-primary: #8864ff;
+
+	--up-text-primary: #1f202a;
+	--up-text-secondary: #5e5f6e;
+	--up-text-third: #97989d;
+
+	--up-page-background: #f8f9fd;
+	--up-card-background: #ffffff;
+	--up-content-background: #f7f7fa;
+	--up-content-background-hover: #e9e9f3;
+
+	--up-border-line: #f0f0f5;
+	--up-divider-line: #c1c1c1;
+
+	// button
+	--up-button-tinted-content: #f3f0ff;
+
+	// notify
+	--up-notify-info-text: #8864ff;
+	--up-notify-info-background: #f3f0ff;
+	--up-notify-success-text: #4aac4c;
+	--up-notify-success-background: #edf7ed;
+	--up-notify-waiting-text: #97989d;
+	--up-notify-waiting-background: #f5f5f5;
+	--up-notify-error-text: #e85050;
+	--up-notify-error-background: #fdeeee;
+	--up-alert-icon-background: #edf7ed;
+	--up-alert-icon-content: #4aac4c;
+
+	// slider
+	--up-slider-dot-background: #ffffff;
+
+	// tooltip
+	--up-tooltip-background: #313036;
+	--up-tooltip-color: #ffffff;
+	--up-tooltip-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.8);
+
+	// switch
+	--up-switch-off-background: #c1c1c1;
+}
+
+// global dark config
+[data-theme='dark'] {
+	--up-primary: #b8a2ff;
+
+	--up-text-primary: #ffffff;
+	--up-text-secondary: #d2d2d4;
+	--up-text-third: #a5a6aa;
+
+	--up-page-background: #000000;
+	--up-card-background: #1a1920;
+	--up-content-background: #313036;
+	--up-content-background-hover: #5a595e;
+
+	--up-border-line: #46454a;
+	--up-divider-line: #8f8f95;
+
+	--up-button-tinted-content: #362866;
+
+	// notify
+	--up-notify-info-text: #ffffff;
+	--up-notify-info-background: #8864ff;
+	--up-notify-success-text: #ffffff;
+	--up-notify-success-background: #4aac4c;
+	--up-notify-waiting-text: #ffffff;
+	--up-notify-waiting-background: #97989d;
+	--up-notify-error-text: #ffffff;
+	--up-notify-error-background: #e85050;
+	--up-alert-icon-background: #4aac4c;
+	--up-alert-icon-content: #ffffff;
+
+	// slider
+	--up-slider-dot-background: #8f8f95;
+
+	// tooltip
+	--up-tooltip-background: #f7f7fa;
+	--up-tooltip-color: #1f202a;
+	--up-tooltip-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16);
+
+	// switch
+	--up-switch-off-background: #000;
+}
+
+// for theme switch
+* {
+	transition: color, background-color 0.2s ease;
+}
+
+html,
+#root,
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+		'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+// disable default scroll bar
+* {
+	/* Internet Explorer 10+ */
+	-ms-overflow-style: none;
+	/* Firefox */
+	scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+	/* Safari and Chrome */
+	display: none;
+}

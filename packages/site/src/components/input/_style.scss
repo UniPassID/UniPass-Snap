@@ -1,0 +1,143 @@
+.up-input-wrapper {
+	position: relative;
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+	min-width: 200px;
+	margin-bottom: 20px;
+
+	.up-input-title {
+		display: inline-block;
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 20px;
+		color: var(--up-text-primary);
+		margin-bottom: 8px;
+	}
+
+	.up-input-content {
+		width: 100%;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		height: 48px;
+		background-color: var(--up-content-background);
+		border: 1px solid var(--up-border-line);
+		border-radius: 12px;
+		box-sizing: border-box;
+		transition: all 0.2s;
+		overflow: hidden;
+
+		&:hover {
+			background-color: var(--up-content-background-hover);
+		}
+
+		&:focus-within {
+			background-color: var(--up-content-background);
+			border-color: var(--up-primary);
+		}
+
+		.up-input-inner {
+			flex: 1;
+			padding: 13px 16px;
+			border: 0;
+			outline: none;
+			background-color: transparent;
+			font-weight: 500;
+			font-size: 20px;
+			color: var(--up-text-primary);
+
+			&::placeholder {
+				font-weight: 400;
+				font-size: 14px;
+				color: var(--up-text-third);
+				user-select: none;
+			}
+		}
+
+		&.up-input-error {
+			border-color: $secondary-red-3;
+		}
+
+		&.up-input-disabled {
+			cursor: not-allowed;
+			background-color: var(--up-border-line);
+
+			.up-input-inner {
+				cursor: not-allowed;
+			}
+		}
+
+		.up-input-counter-left {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			width: 48px;
+			border-top-left-radius: 12px;
+			border-bottom-left-radius: 12px;
+			border-right: 1px solid var(--up-border-line);
+			background: var(--up-card-background);
+			cursor: pointer;
+		}
+
+		.up-input-counter-right {
+			display: flex;
+			flex-flow: row nowrap;
+			align-items: center;
+			justify-content: center;
+			height: 100%;
+			width: 48px;
+			border-top-right-radius: 12px;
+			border-bottom-right-radius: 12px;
+			border-left: 1px solid var(--up-border-line);
+			background: var(--up-card-background);
+			cursor: pointer;
+		}
+	}
+
+	.up-input-close {
+		width: 20px;
+		height: 20px;
+		margin-right: 16px;
+		cursor: pointer;
+	}
+
+	.up-input-suffix {
+		height: 20px;
+		margin-right: 16px;
+	}
+
+	.up-input-error-message {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 20px;
+		color: $secondary-red-3;
+		margin-top: 8px;
+		animation-timing-function: ease-in-out;
+		animation-duration: 0.2s;
+		animation-name: upInputErrorAnimationIn;
+
+		span {
+			display: inline-block;
+			margin-right: 10px;
+		}
+	}
+}
+
+@keyframes upInputErrorAnimationIn {
+	0% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

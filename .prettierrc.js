@@ -1,8 +1,10 @@
-// All of these are defaults except singleQuote, but we specify them
-// for explicitness
 module.exports = {
-  quoteProps: 'as-needed',
-  singleQuote: true,
-  tabWidth: 2,
-  trailingComma: 'all',
-};
+	printWidth: 120,
+	tabWidth: 2,
+	useTabs: true,
+	singleQuote: true,
+	semi: false,
+	trailingComma: 'none',
+	bracketSpacing: true,
+	endOfLine: 'auto'
+}

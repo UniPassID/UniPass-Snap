@@ -1,0 +1,92 @@
+.up_button {
+	position: relative;
+	white-space: nowrap;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	transition: $btn-transition;
+	overflow: hidden;
+	box-sizing: border-box;
+	border: 0;
+	outline: none;
+	font-weight: $btn-font-weight;
+
+	&:active,
+	&.active {
+		opacity: $btn-opacity-focus;
+	}
+
+	.up_button_content {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+
+		.up_icon {
+			display: inline-block;
+			margin-right: 6px;
+		}
+
+		span {
+			display: inline-block;
+		}
+	}
+
+	.up_button_mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0);
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+	}
+
+	&.up_button_sm {
+		padding: $btn-padding-sm;
+		height: 36px;
+		border-radius: 100px;
+	}
+
+	&.up_button_md {
+		padding: $btn-padding-md;
+		height: 44px;
+		border-radius: 128px;
+	}
+
+	&.up_button_lg {
+		padding: $btn-padding-lg;
+		height: 48px;
+		border-radius: 148px;
+	}
+
+	&.up_button_filled {
+		color: $btn-filled-text-color;
+		background: $secondary-gradient-button;
+	}
+
+	&.up_button_gray {
+		color: var(--up-text-secondary);
+		background-color: var(--up-content-background);
+		border: 1px solid var(--up-border-line);
+	}
+
+	&.up_button_tinted {
+		color: var(--up-primary);
+		background-color: var(--up-button-tinted-content);
+	}
+
+	&.disabled,
+	&[disabled] {
+		cursor: not-allowed;
+		opacity: $btn-opacity-disable !important;
+		box-shadow: none;
+
+		> * {
+			pointer-events: none;
+		}
+	}
+}

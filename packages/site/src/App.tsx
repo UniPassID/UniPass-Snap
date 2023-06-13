@@ -1,33 +1,13 @@
-import { FunctionComponent, ReactNode, useContext } from 'react';
-import styled from 'styled-components';
-import { Footer, Header } from './components';
+import { RouterProvider } from 'react-router-dom'
+import router from '@/router'
+import styles from './App.module.scss'
 
-import { GlobalStyle } from './config/theme';
-import { ToggleThemeContext } from './Root';
+const App: React.FC = () => {
+	return (
+		<div className={styles.app}>
+			<RouterProvider router={router} />
+		</div>
+	)
+}
 
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 100vh;
-  max-width: 100vw;
-`;
-
-export type AppProps = {
-  children: ReactNode;
-};
-
-export const App: FunctionComponent<AppProps> = ({ children }) => {
-  const toggleTheme = useContext(ToggleThemeContext);
-
-  return (
-    <>
-      <GlobalStyle />
-      <Wrapper>
-        <Header handleToggleClick={toggleTheme} />
-        {children}
-        <Footer />
-      </Wrapper>
-    </>
-  );
-};
+export default App

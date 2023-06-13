@@ -1,0 +1,121 @@
+.up_notify {
+	box-shadow: none;
+	width: 342px;
+	padding: 12px 16px;
+	border-radius: 12px;
+
+	&.up_notify_info {
+		color: var(--up-notify-info-text);
+		background-color: var(--up-notify-info-background);
+	}
+
+	&.up_notify_success {
+		color: var(--up-notify-success-text);
+		background-color: var(--up-notify-success-background);
+	}
+
+	&.up_notify_waiting {
+		color: var(--up-notify-waiting-text);
+		background-color: var(--up-notify-waiting-background);
+
+		@keyframes rotation {
+			from {
+				transform: rotate(0deg);
+			}
+
+			to {
+				transform: rotate(359deg);
+			}
+		}
+
+		.up_notify_icon {
+			width: 16px;
+			height: 16px;
+			animation: rotation 1s infinite linear;
+		}
+	}
+
+	&.up_notify_error {
+		color: var(--up-notify-error-text);
+		background-color: var(--up-notify-error-background);
+	}
+
+	.up_notify_wrap {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+
+		.up_notify_content {
+			flex: 1;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+
+			.up_notify_message {
+				margin-left: 10px;
+				overflow-wrap: break-word;
+				width: 260px;
+			}
+		}
+
+		.up_notify_close {
+			width: 16px;
+			height: 16px;
+			cursor: pointer;
+		}
+	}
+}
+
+.up_alert {
+	box-shadow: none;
+	width: 342px;
+	padding: 16px 20px;
+	border-radius: 12px;
+	background-color: var(--up-card-background);
+
+	.up_alert_wrap {
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		width: 100%;
+
+		.up_alert_content {
+			flex: 1;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: flex-start;
+			align-items: center;
+
+			.up_alert_messages {
+				margin-left: 12px;
+				overflow-wrap: break-word;
+
+				.up_alert_title {
+					font-size: 16px;
+					color: var(--up-text-primary);
+				}
+
+				.up_alert_message {
+					font-size: 14px;
+					color: var(--up-text-third);
+				}
+			}
+		}
+
+		.up_alert_close {
+			cursor: pointer;
+		}
+	}
+}
+
+.up_notify_animation_enter {
+	animation: 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) 0s 1 normal forwards running up_notify_animation;
+}
+
+.up_notify_animation_leave {
+	animation: 0.8s cubic-bezier(0.06, 0.71, 0.55, 1) 1 normal forwards running up_notify_animation_leave;
+}

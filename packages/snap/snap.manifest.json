@@ -7,12 +7,12 @@
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "Zd84muhkBBeBuGKroUwzso/s7RVBMZkBCZ24YT8TqGA=",
+    "shasum": "HZCdrFAsvflbM5xfB9E/FL3JzhqQacNtK3YSN0AO0eg=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "snap-1",
         "registry": "https://registry.npmjs.org/"
       }
     }

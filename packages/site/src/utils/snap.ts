@@ -1,6 +1,5 @@
 import { defaultSnapOrigin } from '@/constants'
 import { GetSnapsResponse, Snap } from '@/types'
-import { Wallet, providers } from 'ethers'
 
 /**
  * Get the installed snaps in MetaMask.
@@ -8,10 +7,10 @@ import { Wallet, providers } from 'ethers'
  * @returns The snaps installed in MetaMask.
  */
 export const getSnaps = async (): Promise<GetSnapsResponse> => {
-  return (await window.ethereum.request({
-    method: 'wallet_getSnaps',
-  })) as unknown as GetSnapsResponse;
-};
+	return (await window.ethereum.request({
+		method: 'wallet_getSnaps'
+	})) as unknown as GetSnapsResponse
+}
 
 /**
  * Connect a snap to MetaMask.
@@ -41,7 +40,9 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
 	try {
 		const snaps = await getSnaps()
 
-		return Object.values(snaps).find((snap) => snap.id === defaultSnapOrigin && (!version || snap.version === version))
+		return Object.values(snaps).find((snap) => {
+			return snap.id === defaultSnapOrigin && (!version || snap.version === version)
+		})
 	} catch (e) {
 		console.log('Failed to obtain installed snap', e)
 		return undefined
@@ -60,9 +61,16 @@ export const sendHello = async () => {
 }
 
 export const getMasterKeyAddress = async () => {
-  return await window.ethereum.request<string>({
+	return await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'getMasterKeyAddress' } }
+	})
+}
+
+export const signMessageWithSnap = async (message: string) => {
+	return await window.ethereum.request<string>({
+		method: 'wallet_invokeSnap',
+		params: { snapId: defaultSnapOrigin, request: { method: 'signMessage', params: { message } } }
 	})
 }
 

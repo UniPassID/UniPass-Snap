@@ -6,16 +6,13 @@ import reportWebVitals from '@/reportWebVitals'
 import ErrorBoundary from '@/hooks/error-boundary'
 import App from './App'
 import '@/assets/styles/index.scss'
-import { MetaMaskProvider } from '@/hooks/metamask-context'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<RecoilRoot>
 		<ErrorBoundary>
 			<ThemeProvider>
 				<Toaster />
-				<MetaMaskProvider>
-					<App />
-				</MetaMaskProvider>
+				<App />
 			</ThemeProvider>
 		</ErrorBoundary>
 	</RecoilRoot>

@@ -1,60 +1,25 @@
-import { useContext } from 'react'
-import { MetaMaskContext, MetamaskActions } from '@/hooks/metamask-context'
-import { Button } from '@/components'
-import { connectSnap, getMasterKeyAddress, getSnap } from '@/utils'
-import { providers, Wallet, utils } from 'ethers'
-import { ChainConfig } from '@/constants/chains'
-import { SmartAccount } from '@unipasswallet/smart-account'
-import { LocalStorage } from '@unipasswallet/smart-account-signer'
+import { Button, upNotify } from '@/components'
+import { useSnap } from '@/hooks'
 
 const Home: React.FC = () => {
-	const [state, dispatch] = useContext(MetaMaskContext)
+	const { isFlask, installedSnap, smartAccount, handleConnectSnap, handleGetSmartContractAddress } = useSnap()
 
 	const installFlask = () => {
 		window.open('https://metamask.io/flask/', '_blank')
 	}
 
-	const handleConnect = async () => {
-		try {
-			await connectSnap()
-			const installedSnap = await getSnap()
-
-			dispatch({
-				type: MetamaskActions.SetInstalled,
-				payload: installedSnap
-			})
-		} catch (e) {
-			console.error(e)
-			dispatch({ type: MetamaskActions.SetError, payload: e })
-		}
-	}
-
-	const handleGetAddress = async () => {
-		try {
-			const privateKey = await getMasterKeyAddress()
-			const provider = new providers.JsonRpcProvider(ChainConfig[0].rpcUrl)
-			const wallet = new Wallet(privateKey!)
-			const signer = provider.getSigner(wallet.address)
-			const smartAccount = new SmartAccount({
-				// !Attention: The rpcUrl should be replaced with your RPC node address.
-				chainOptions: ChainConfig,
-				masterKeySigner: signer,
-				// !Attention: The appId should be replaced with the appId assigned to you.
-				appId: 'ce3feaa41d725a018f75b165a8ee528d'
-			})
-			await smartAccount.init({ chainId: 137 })
-		} catch (e) {
-			console.error(e)
-			dispatch({ type: MetamaskActions.SetError, payload: e })
-		}
-	}
-
 	return (
 		<div>
-			{!state.isFlask && <Button onClick={installFlask}>Install Flask</Button>}
+			{!isFlask && <Button onClick={installFlask}>Install Flask</Button>}
 			<br />
-			<Button onClick={handleConnect}>Connect</Button>
-			<Button onClick={handleGetAddress}>Get Address</Button>
+			{smartAccount && <h2>Smart Contract Address: {smartAccount}</h2>}
+			{<Button onClick={handleConnectSnap}>Connect</Button>}
+			<Button onClick={handleGetSmartContractAddress} disabled={!installedSnap}>
+				Get Smart Contract Address
+			</Button>
+			{/* <Button onClick={handleGetEOAContractAddress} disabled={!installedSnap}>
+				Get EOA(Snap) Address
+			</Button> */}
 		</div>
 	)
 }

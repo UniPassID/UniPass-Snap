@@ -1,6 +1,7 @@
 .app {
 	display: flex;
 	align-items: center;
+	flex-flow: column nowrap;
 	justify-content: center;
 	min-height: 100vh;
 	color: var(--up-text-primary);

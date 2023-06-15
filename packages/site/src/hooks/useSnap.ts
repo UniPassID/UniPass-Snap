@@ -54,5 +54,5 @@ export const useSnap = () => {
 		}
 	}, [installedSnap])
 
-	return { isFlask, installedSnap, setInstalledSnap, handleConnectSnap }
+	return { isFlask, installedSnap, handleConnectSnap }
 }

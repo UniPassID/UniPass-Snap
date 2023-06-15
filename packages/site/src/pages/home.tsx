@@ -18,7 +18,7 @@ const Home: React.FC = () => {
 		<div>
 			{!isFlask && <Button onClick={installFlask}>Install Flask</Button>}
 			<br />
-			{<Button onClick={handleConnectSnap}>Connect</Button>}
+			{<Button onClick={handleConnectSnap}>Connect</Button>}	
 			{<Button onClick={handlePay}>Go to Pay</Button>}
 			{/* <Button onClick={initSmartContract} disabled={!installedSnap}> */}
 			Get Smart Contract Address

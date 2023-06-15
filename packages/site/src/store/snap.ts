@@ -11,9 +11,4 @@ const installedSnapState = atom<Snap | undefined>({
 	default: undefined
 })
 
-const smartAccountState = atom<string>({
-	key: 'smartAccount',
-	default: ''
-})
-
-export { flaskState, installedSnapState, smartAccountState }
+export { flaskState, installedSnapState }

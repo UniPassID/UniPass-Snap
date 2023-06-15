@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const getCloseIcon = (hasError: boolean) => {
 	let color = ''
 	if (hasError) {

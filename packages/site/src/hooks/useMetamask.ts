@@ -1,26 +1,57 @@
-import { providers } from 'ethers'
-import { useAsyncEffect } from 'ahooks'
+import { useEffect, useState } from 'react'
+import { utils } from 'ethers'
 import { useRecoilState } from 'recoil'
+import { useAsyncEffect } from 'ahooks'
 import { metamaskAccountState } from '@/store'
-import { connectSnap, getMasterKeyAddress, getSnap, isFlaskVersion } from '@/utils'
-import { ChainConfig } from '@/constants/chains'
-import { SmartAccount } from '@unipasswallet/smart-account'
 import { upNotify } from '@/components'
+import { CHAIN_CONFIGS } from '@/constants'
+import { getBalancesByMulticall } from '@/utils'
+import { TokenInfo } from '@/types/token'
 
-export const useSnap = () => {
+export const useMetamask = () => {
 	const [metamaskAccount, setMetamaskAccountState] = useRecoilState(metamaskAccountState)
+	const [tokens, setTokens] = useState<Array<TokenInfo>>([])
 
-	const handleGetEOAContractAddress = async () => {
+	useEffect(() => {
+		const provider = window.ethereum
+		provider.on('accountsChanged', handleAccountsChanged)
+
+		return () => {
+			provider.removeListener('accountsChanged', handleAccountsChanged)
+		}
+	}, [])
+
+	const queryERC20Balances = async () => {
+		if (!metamaskAccount) return
+		const tasks = CHAIN_CONFIGS.map((chain) => {
+			return getBalancesByMulticall(metamaskAccount, chain.tokens, chain.rpcUrl)
+		})
+
+		const results = await Promise.all(tasks)
+
+		setTokens(results.flat())
+	}
+
+	useAsyncEffect(queryERC20Balances, [metamaskAccount])
+
+	const handleAccountsChanged = (accounts: any) => {
+		if (accounts && accounts.length > 0 && accounts[0]) {
+			setMetamaskAccountState(utils.getAddress(accounts[0]))
+		}
+	}
+
+	const handleGetEOAAddress = async () => {
 		try {
 			const provider = window.ethereum
 			const accounts = await provider.request<string[]>({ method: 'eth_requestAccounts', params: [] })
 
-			console.log(accounts)
-			// if (accounts && accounts[0]) setMetamaskAccountState[accounts![0]]
+			if (accounts && accounts.length > 0 && accounts[0]) {
+				setMetamaskAccountState(utils.getAddress(accounts[0]))
+			}
 		} catch (e: any) {
 			upNotify.error(e.message)
 		}
 	}
 
-	return {}
+	return { metamaskAccount, tokens, handleGetEOAAddress }
 }

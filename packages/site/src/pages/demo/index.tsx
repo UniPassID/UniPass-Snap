@@ -21,6 +21,10 @@ const App: React.FC = () => {
 	const { handleSubmit, ...rest } = methods
 	const onSubmit = (data: any) => console.log(data)
 
+	console.log(rest.formState.errors)
+
+	const { ref, ...restRadioProps } = rest.register('radio', { required: true })
+
 	return (
 		<div className={styles.app}>
 			<div>This is UniPass Interface - Signer</div>
@@ -213,9 +217,15 @@ const App: React.FC = () => {
 			<CheckBox disabled />
 			<CheckBox disabled checked />
 			<h1>Radio</h1>
-			<Radio />
-			<Radio disabled />
-			<Radio disabled checked />
+			<Radio
+				onChange={(event) => {
+					console.log(`Radio value: ${event.target.checked}`)
+				}}
+			>
+				123
+			</Radio>
+			<Radio>123</Radio>
+			<Radio checked>123</Radio>
 			<h1>Input</h1>
 
 			<form onSubmit={handleSubmit(onSubmit)}>

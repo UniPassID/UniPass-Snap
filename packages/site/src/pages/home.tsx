@@ -3,7 +3,7 @@ import { useSnap } from '@/hooks'
 import { useNavigate } from 'react-router-dom'
 
 const Home: React.FC = () => {
-	const { isFlask, smartAccount, handleConnectSnap } = useSnap()
+	const { isFlask, handleConnectSnap } = useSnap()
 	const navigate = useNavigate()
 
 	const installFlask = () => {
@@ -18,7 +18,6 @@ const Home: React.FC = () => {
 		<div>
 			{!isFlask && <Button onClick={installFlask}>Install Flask</Button>}
 			<br />
-			{smartAccount && <h2>Smart Contract Address: {smartAccount}</h2>}
 			{<Button onClick={handleConnectSnap}>Connect</Button>}
 			{<Button onClick={handlePay}>Go to Pay</Button>}
 			{/* <Button onClick={initSmartContract} disabled={!installedSnap}> */}

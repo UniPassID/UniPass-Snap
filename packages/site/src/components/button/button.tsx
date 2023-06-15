@@ -23,6 +23,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 	disabled,
 	btnType = 'filled',
 	size = 'md',
+	type="button",
 	icon,
 	children,
 	...rest

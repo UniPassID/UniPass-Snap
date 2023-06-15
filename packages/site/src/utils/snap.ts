@@ -1,5 +1,7 @@
 import { defaultSnapOrigin } from '@/constants'
 import { GetSnapsResponse, Snap } from '@/types'
+import { Bytes } from "ethers";
+import { TransactionRequest } from "@ethersproject/abstract-provider";
 
 /**
  * Get the installed snaps in MetaMask.
@@ -64,14 +66,21 @@ export const getMasterKeyAddress = async () => {
 	return await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'getMasterKeyAddress' } }
-	})
+	}) as string
 }
 
-export const signMessageWithSnap = async (message: string) => {
+export const signMessageWithSnap = async (message: string | Bytes) => {
 	return await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'signMessage', params: { message } } }
-	})
+	}) as string
+}
+
+export const signTransactionWithSnap = async (transaction: TransactionRequest) => {
+	return await window.ethereum.request<string>({
+		method: 'wallet_invokeSnap',
+		params: { snapId: defaultSnapOrigin, request: { method: 'signTransaction', params: { transaction } } }
+	}) as string
 }
 
 export const isLocalSnap = (snapId: string) => snapId.startsWith('local:')

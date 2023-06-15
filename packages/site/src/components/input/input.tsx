@@ -1,12 +1,13 @@
-import React, { useMemo, InputHTMLAttributes } from 'react'
+import React, { useMemo, InputHTMLAttributes, useEffect, useCallback } from 'react'
 import type { UseFormReturn, FieldValues, RegisterOptions } from 'react-hook-form'
 import clsx from 'clsx'
 import { handleErrors } from './utils'
 import { getCloseIcon, error_message_icon } from './icons'
 
 export interface InputProps extends InputHTMLAttributes<HTMLElement> {
-	formField: Omit<UseFormReturn<FieldValues>, 'handleSubmit'>
+	formField: Omit<UseFormReturn<any>, 'handleSubmit'>
 	name: string
+	label?: string
 	inputRef?: React.MutableRefObject<HTMLInputElement | null>
 	disabled?: boolean
 	allowClose?: boolean
@@ -31,10 +32,12 @@ const Input: React.FC<InputProps> = (props) => {
 		return typeof value === 'string' && value.length > 0
 	}, [value])
 
+	console.log('errors:', errors)
+	
 	const { message, hasError } = useMemo(() => {
-		return handleErrors(errors, props.name)
+		 return handleErrors(errors, props.name)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errors?.[props.name], props.name])
+	}, [errors, props.name])
 
 	const wrapperClassNames = clsx('up-input-wrapper')
 
@@ -49,7 +52,7 @@ const Input: React.FC<InputProps> = (props) => {
 
 	return (
 		<div className={wrapperClassNames} style={style}>
-			<span className="up-input-title">{props.name || ''}</span>
+			<span className="up-input-title">{props.label || props.name || ''}</span>
 			<div className={contentClassNames}>
 				<input
 					className="up-input-inner"

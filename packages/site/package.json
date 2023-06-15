@@ -32,6 +32,7 @@
 		"axios": "^1.4.0",
 		"clsx": "^1.2.1",
 		"dayjs": "^1.11.7",
+		"eip1193-provider": "^1.0.1",
 		"ethers": "5.7.1",
 		"rc-checkbox": "3.0.1",
 		"rc-slider": "10.2.0",

@@ -1,11 +1,17 @@
-import { Button, upNotify } from '@/components'
+import { Button } from '@/components'
 import { useSnap } from '@/hooks'
+import { useNavigate } from 'react-router-dom'
 
 const Home: React.FC = () => {
-	const { isFlask, installedSnap, smartAccount, handleConnectSnap, handleGetSmartContractAddress } = useSnap()
+	const { isFlask, smartAccount, handleConnectSnap } = useSnap()
+	const navigate = useNavigate()
 
 	const installFlask = () => {
 		window.open('https://metamask.io/flask/', '_blank')
+	}
+
+	const handlePay = () => {
+		navigate('/pay?chainId=80001&symbol=USDC')
 	}
 
 	return (
@@ -14,9 +20,10 @@ const Home: React.FC = () => {
 			<br />
 			{smartAccount && <h2>Smart Contract Address: {smartAccount}</h2>}
 			{<Button onClick={handleConnectSnap}>Connect</Button>}
-			<Button onClick={handleGetSmartContractAddress} disabled={!installedSnap}>
-				Get Smart Contract Address
-			</Button>
+			{<Button onClick={handlePay}>Go to Pay</Button>}
+			{/* <Button onClick={initSmartContract} disabled={!installedSnap}> */}
+			Get Smart Contract Address
+			{/* </Button> */}
 			{/* <Button onClick={handleGetEOAContractAddress} disabled={!installedSnap}>
 				Get EOA(Snap) Address
 			</Button> */}

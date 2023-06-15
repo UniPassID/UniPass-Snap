@@ -14,9 +14,6 @@ const Transfer: React.FC<{
 				placeholder="Input amount"
 				formField={formField}
 				label="Amount"
-				validateShame={{
-					required: true
-				}}
 				name={`txs.${index}.amount`}
 			/>
 			<Input
@@ -25,9 +22,6 @@ const Transfer: React.FC<{
 				formField={formField}
 				label="To"
 				name={`txs.${index}.to`}
-				validateShame={{
-					required: true
-				}}
 			/>
 			{!!index && <div onClick={() => remove(index)}>delete</div>}
 		</div>

@@ -23,7 +23,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 	disabled,
 	btnType = 'filled',
 	size = 'md',
-	type="button",
+	type = 'button',
 	icon,
 	children,
 	...rest
@@ -35,7 +35,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 	})
 
 	return (
-		<button className={classes} disabled={disabled} {...rest}>
+		<button className={classes} disabled={disabled} {...rest} type={type}>
 			<div className="up_button_content">
 				{icon}
 				<span>{children}</span>

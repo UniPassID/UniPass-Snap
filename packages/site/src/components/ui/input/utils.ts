@@ -2,11 +2,10 @@ import { get } from 'react-hook-form'
 import type { FieldErrors } from 'react-hook-form'
 
 export const handleErrors = (errors?: FieldErrors, name?: string) => {
-	console.log('handleErrors: ', errors, name)
 	if (!errors || !name) return { message: '', hasError: false }
 	if (!Reflect.ownKeys(errors).length) return { message: '', hasError: false }
 
-	const errorType = get(errors, name)
+	const errorType = get(errors, name)?.type
 	if (!errorType) return { message: '', hasError: false }
 
 	let message = errors?.[name]?.message as string

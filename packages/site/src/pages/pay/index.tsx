@@ -17,7 +17,7 @@ const Pay: React.FC = () => {
 	const { handleSubmit, ...rest } = useForm<any>({
 		mode: 'onChange',
 		defaultValues: {
-			txs: [{ amount: null, to: null }]
+			txs: [{ amount: undefined, to: undefined }]
 		}
 	})
 
@@ -26,11 +26,14 @@ const Pay: React.FC = () => {
 		name: 'txs'
 	})
 
+	console.log(rest.formState.errors)
+
 	const addMore = () => {
-		append([{ amount: null, to: null }])
+		append({ amount: undefined, to: undefined }, { shouldFocus: true })
 	}
 
 	const onSubmit = (data: any) => {
+		rest.setError(`txs.${1}.to`, { type: 'custom', message: 'custom message' })
 		console.log('data: ', data)
 	}
 
@@ -42,7 +45,9 @@ const Pay: React.FC = () => {
 					return <Transfer key={item.id} index={index} remove={remove} formField={rest} />
 				})}
 				<Button type="submit">Pay</Button>
-				<Button onClick={addMore}>Add more</Button>
+				<Button type="button" onClick={addMore}>
+					Add more
+				</Button>
 			</form>
 		</div>
 	)

@@ -1,4 +1,4 @@
-import React, { useMemo, InputHTMLAttributes, useEffect, useCallback } from 'react'
+import React, { useMemo, InputHTMLAttributes, useCallback } from 'react'
 import type { UseFormReturn, FieldValues, RegisterOptions } from 'react-hook-form'
 import clsx from 'clsx'
 import { handleErrors } from './utils'
@@ -32,12 +32,10 @@ const Input: React.FC<InputProps> = (props) => {
 		return typeof value === 'string' && value.length > 0
 	}, [value])
 
-	console.log('errors:', errors)
-	
-	const { message, hasError } = useMemo(() => {
-		 return handleErrors(errors, props.name)
+	const { message, hasError } = useCallback(() => {
+		return handleErrors(errors, props.name)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [errors, props.name])
+	}, [errors, props.name])()
 
 	const wrapperClassNames = clsx('up-input-wrapper')
 

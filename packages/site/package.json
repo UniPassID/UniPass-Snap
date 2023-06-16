@@ -27,7 +27,7 @@
 	},
 	"dependencies": {
 		"@solana/web3.js": "^1.77.3",
-		"@unipasswallet/smart-account": "^0.1.0-alpha.15",
+		"@unipasswallet/smart-account": "^0.1.0-alpha.16",
 		"@web3-react/core": "8.2.0",
 		"@web3-react/metamask": "^8.2.1",
 		"@web3-react/types": "8.2.0",

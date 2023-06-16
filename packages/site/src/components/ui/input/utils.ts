@@ -8,7 +8,7 @@ export const handleErrors = (errors?: FieldErrors, name?: string) => {
 	const errorType = get(errors, name)?.type
 	if (!errorType) return { message: '', hasError: false }
 
-	let message = errors?.[name]?.message as string
+	let message = get(errors, name)?.message as string
 
 	if (message && typeof message === 'string') return { message, hasError: true }
 
@@ -18,6 +18,8 @@ export const handleErrors = (errors?: FieldErrors, name?: string) => {
 			break
 		case 'pattern':
 			message = `${name} is mismatch with pattern`
+			break
+		case 'custom':
 			break
 		default:
 			message = `${name} is not valid`

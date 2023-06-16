@@ -5,7 +5,7 @@ import { handleErrors } from './utils'
 import { getCloseIcon, error_message_icon } from './icons'
 
 export interface InputProps extends InputHTMLAttributes<HTMLElement> {
-	formField: Omit<UseFormReturn<any>, 'handleSubmit'>
+	formField: UseFormReturn<any>,
 	name: string
 	label?: string
 	inputRef?: React.MutableRefObject<HTMLInputElement | null>

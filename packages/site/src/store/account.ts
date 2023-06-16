@@ -1,3 +1,4 @@
+import { SmartAccount } from '@unipasswallet/smart-account'
 import { atom } from 'recoil'
 
 const smartAccountState = atom<string>({
@@ -10,4 +11,9 @@ const smartAccountTotalBalanceState = atom<string>({
 	default: '0.00'
 })
 
-export { smartAccountState, smartAccountTotalBalanceState }
+const smartAccountInsState = atom<SmartAccount>({
+	key: 'smartAccountInsState',
+	default: undefined
+})
+
+export { smartAccountState, smartAccountTotalBalanceState, smartAccountInsState }

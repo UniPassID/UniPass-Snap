@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react'
-import { utils, providers, BigNumber } from 'ethers'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useState } from 'react'
+import { useRecoilValue } from 'recoil'
 import { useAsyncEffect } from 'ahooks'
-import { ProviderRpcError } from '@web3-react/types'
 import { smartAccountState } from '@/store'
 import { upNotify } from '@/components'
 import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
@@ -54,7 +52,7 @@ export const useMetaMask = () => {
 		try {
 			await switchCurrentChain(80001)
 
-			const contract = makeERC20Contract(provider, '0x87F0E95E11a49f56b329A1c143Fb22430C07332a', metamaskAccount)
+			const contract = makeERC20Contract('0x87F0E95E11a49f56b329A1c143Fb22430C07332a', provider, metamaskAccount)
 
 			const tx = await contract.transfer(smartAccount, etherToWei('1', 6).toHexString())
 

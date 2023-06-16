@@ -233,7 +233,7 @@ const App: React.FC = () => {
 					type="text"
 					placeholder="FirstName"
 					name="FirstName"
-					formField={rest}
+					formField={methods}
 					allowClose
 					validateShame={{
 						maxLength: { value: 4, message: 'length <= 4' },
@@ -244,7 +244,7 @@ const App: React.FC = () => {
 					type="text"
 					placeholder="LastName"
 					name="LastName"
-					formField={rest}
+					formField={methods}
 					validateShame={{
 						maxLength: { value: 4, message: 'length <= 4' },
 						required: true
@@ -254,7 +254,7 @@ const App: React.FC = () => {
 					type="number"
 					placeholder="InputWithNumber"
 					name="InputWithNumber"
-					formField={rest}
+					formField={methods}
 					validateShame={{
 						min: { value: 4, message: 'must >= 4' },
 						required: true
@@ -263,7 +263,7 @@ const App: React.FC = () => {
 				<Input.Password
 					placeholder="Password"
 					name="password"
-					formField={rest}
+					formField={methods}
 					allowClose
 					validateShame={{
 						maxLength: { value: 10, message: 'must >= 4' },
@@ -274,7 +274,7 @@ const App: React.FC = () => {
 				<Input.Code
 					placeholder="Code"
 					name="Code"
-					formField={rest}
+					formField={methods}
 					autoComplete="off"
 					suffix={<div>Get Code</div>}
 					validateShame={{

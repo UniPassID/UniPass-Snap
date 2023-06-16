@@ -1,14 +1,15 @@
 import { Input } from '@/components'
-import { FieldValues, UseFieldArrayRemove, UseFormReturn } from 'react-hook-form'
+import { UseFormReturn } from 'react-hook-form'
 
 const Transfer: React.FC<{
-	formField: Omit<UseFormReturn<FieldValues>, 'handleSubmit'>
-	key: string
-	remove: UseFieldArrayRemove
+	formField: UseFormReturn<any>,
+	id: string
+	remove: (index: number) => void
+  total: number
 	index?: number
-}> = ({ formField, key, remove, index = 0 }) => {
+}> = ({ formField, id, remove,total, index = 0 }) => {
 	return (
-		<div key={key}>
+		<div key={id}>
 			<Input
 				type="number"
 				placeholder="Input amount"
@@ -23,7 +24,7 @@ const Transfer: React.FC<{
 				label="To"
 				name={`txs.${index}.to`}
 			/>
-			{!!index && <div onClick={() => remove(index)}>delete</div>}
+			{(total > 1) && <div onClick={() => remove(index)}>delete</div>}
 		</div>
 	)
 }

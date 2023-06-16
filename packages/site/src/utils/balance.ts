@@ -1,4 +1,4 @@
-import { providers, BigNumber } from 'ethers'
+import { BigNumber } from 'ethers'
 import { aggregate, ICall } from 'makerdao-multicall'
 import { TokenInfo } from '@/types/token'
 import { MULTICALL_ADDRESS } from '@/constants'

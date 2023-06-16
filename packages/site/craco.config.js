@@ -1,6 +1,6 @@
 const path = require('path')
 const sassResourcesLoader = require('craco-sass-resources-loader')
-const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
+// const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 
 module.exports = {
 	webpack: {
@@ -11,13 +11,13 @@ module.exports = {
 			/* alias config: "@" as src directory */
 			'@': path.resolve(__dirname, 'src')
 		},
-		plugins: {
-			add: [
-				new NodePolyfillPlugin({
-					excludeAliases: ['console']
-				})
-			]
-		}
+		// plugins: {
+		// 	add: [
+		// 		new NodePolyfillPlugin({
+		// 			excludeAliases: ['console']
+		// 		})
+		// 	]
+		// }
 	},
 	plugins: [
 		{

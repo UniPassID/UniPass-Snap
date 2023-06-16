@@ -1,24 +1,27 @@
 import { useEffect, useState } from 'react'
-import { utils } from 'ethers'
-import { useRecoilState } from 'recoil'
+import { utils, providers, BigNumber } from 'ethers'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { useAsyncEffect } from 'ahooks'
-import { metamaskAccountState } from '@/store'
+import { ProviderRpcError } from '@web3-react/types'
+import { smartAccountState } from '@/store'
 import { upNotify } from '@/components'
-import { CHAIN_CONFIGS } from '@/constants'
-import { getBalancesByMulticall } from '@/utils'
+import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
+import { etherToWei, getBalancesByMulticall } from '@/utils'
 import { TokenInfo } from '@/types/token'
+import { hooks, metaMask } from '@/utils'
+import { makeERC20Contract } from '@/utils/make_contract'
 
-export const useMetamask = () => {
-	const [metamaskAccount, setMetamaskAccountState] = useRecoilState(metamaskAccountState)
+const { useAccount, useProvider } = hooks
+
+export const useMetaMask = () => {
+	const smartAccount = useRecoilValue(smartAccountState)
 	const [tokens, setTokens] = useState<Array<TokenInfo>>([])
 
-	useEffect(() => {
-		const provider = window.ethereum
-		provider.on('accountsChanged', handleAccountsChanged)
+	const provider = useProvider()
+	const metamaskAccount = useAccount()
 
-		return () => {
-			provider.removeListener('accountsChanged', handleAccountsChanged)
-		}
+	useAsyncEffect(async () => {
+		await metaMask.connectEagerly()
 	}, [])
 
 	const queryERC20Balances = async () => {
@@ -34,24 +37,43 @@ export const useMetamask = () => {
 
 	useAsyncEffect(queryERC20Balances, [metamaskAccount])
 
-	const handleAccountsChanged = (accounts: any) => {
-		if (accounts && accounts.length > 0 && accounts[0]) {
-			setMetamaskAccountState(utils.getAddress(accounts[0]))
-		}
-	}
-
-	const handleGetEOAAddress = async () => {
+	const connect = async () => {
 		try {
-			const provider = window.ethereum
-			const accounts = await provider.request<string[]>({ method: 'eth_requestAccounts', params: [] })
-
-			if (accounts && accounts.length > 0 && accounts[0]) {
-				setMetamaskAccountState(utils.getAddress(accounts[0]))
-			}
+			await metaMask.activate()
 		} catch (e: any) {
 			upNotify.error(e.message)
 		}
 	}
 
-	return { metamaskAccount, tokens, handleGetEOAAddress }
+	const switchCurrentChain = async (chainId: number) => {
+		await metaMask.activate(getAddChainParameters(chainId))
+	}
+
+	const recharge = async () => {
+		if (!provider) return
+		try {
+			await switchCurrentChain(80001)
+
+			const contract = makeERC20Contract(provider, '0x87F0E95E11a49f56b329A1c143Fb22430C07332a', metamaskAccount)
+
+			const tx = await contract.transfer(smartAccount, etherToWei('1', 6).toHexString())
+
+			const result = await tx.wait()
+
+			if (result.status === 1) {
+				console.log(result.transactionHash)
+				upNotify.success('recharge success')
+			} else {
+				upNotify.error('recharge failed')
+			}
+		} catch (error: any) {
+			const errorCode = (error.data as any)?.originalError?.code || (error.data as any)?.code || error.code
+			const message = error?.reason || error.message
+			if (errorCode !== 'NETWORK_ERROR') {
+				upNotify.error(message)
+			}
+		}
+	}
+
+	return { metamaskAccount, tokens, connect, recharge }
 }

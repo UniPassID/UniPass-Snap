@@ -11,7 +11,9 @@
     "bignumber",
     "clsx",
     "craco",
+    "ethersproject",
     "Inpage",
-    "numbro"
+    "numbro",
+    "qrcode"
   ]
 }

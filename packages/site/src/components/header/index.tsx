@@ -19,20 +19,26 @@ const Header = () => {
 	}
 
 	const renderActions = () => {
+		if (isFlask == null) {
+			return null
+		}
+
+		if (smartAccount) {
+			return <span>{formatAddress(smartAccount)}</span>
+		}
+
 		if (!isFlask) {
 			return (
 				<Button onClick={installFlask} size="sm">
 					Install MetaMask(Snap)
 				</Button>
 			)
-		} else if (!installedSnap || !smartAccount) {
+		} else {
 			return (
 				<Button onClick={connect} size="sm">
 					Connect
 				</Button>
 			)
-		} else {
-			return <span>{formatAddress(smartAccount)}</span>
 		}
 	}
 

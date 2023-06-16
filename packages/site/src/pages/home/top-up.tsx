@@ -1,9 +1,14 @@
 import React from 'react'
-import { Button, Dialog } from '@/components'
-import styles from './home.module.scss'
+import { useBoolean, useCounter } from 'ahooks'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { QRCodeSVG } from 'qrcode.react'
 import { useRecoilValue } from 'recoil'
+import { Button, Dialog, upNotify } from '@/components'
 import { smartAccountState } from '@/store'
-import { useMetamask } from '@/hooks'
+import { useMetaMask } from '@/hooks'
+import { getChainNameByChainId } from '@/constants'
+import { weiToEther } from '@/utils'
+import styles from './home.module.scss'
 
 interface TopUpProps {
 	topUpVisible: boolean
@@ -11,26 +16,58 @@ interface TopUpProps {
 	setTrue: () => void
 }
 
-const TopUp: React.FC<TopUpProps> = ({ topUpVisible, setFalse, setTrue }) => {
+const TopUp: React.FC<TopUpProps> = ({ topUpVisible, setFalse }) => {
 	const smartAccount = useRecoilValue(smartAccountState)
-	const { metamaskAccount, handleGetEOAAddress } = useMetamask()
+	const [current, { inc }] = useCounter(1)
+	const { tokens, metamaskAccount, connect, recharge } = useMetaMask()
+	const [showQRcode, { setTrue: setShowQRCode, setFalse: setCloseQRCode }] = useBoolean(false)
 
 	const renderDialog = () => {
+		if (showQRcode) {
+			return (
+				<>
+					<QRCodeSVG value={smartAccount} />
+					<CopyToClipboard
+						text={smartAccount}
+						onCopy={() => {
+							upNotify.success('copied')
+						}}
+					>
+						<span>Copy to clipboard with span</span>
+					</CopyToClipboard>
+				</>
+			)
+		}
+
 		if (metamaskAccount) {
 			return (
-				<div className={styles.top_up}>
+				<>
 					<span>MetaMask Address: {metamaskAccount}</span>
-				</div>
+					<div style={{ overflow: 'scroll', height: '200px' }}>
+						{tokens.map((token) => {
+							return (
+								<div key={token.contractAddress}>
+									<h3>{getChainNameByChainId(token.chainId)}</h3>
+									<p>name: {token.name}</p>
+									<p>symbol: {token.symbol}</p>
+									<p>balance: {weiToEther(token.balance || 0, token.decimals)}</p>
+								</div>
+							)
+						})}
+					</div>
+					<Button onClick={recharge}>recharge</Button>
+					<span onClick={setShowQRCode}>TopUp via QRCode</span>
+				</>
 			)
 		} else {
 			return (
-				<div className={styles.top_up}>
+				<>
 					<span>Snap 需要读取你的 MetaMask 地址来完成便捷的资产充值</span>
-					<Button size="sm" disabled={!smartAccount} onClick={handleGetEOAAddress}>
+					<Button size="sm" disabled={!smartAccount} onClick={connect}>
 						Get MetaMask Address
 					</Button>
 					<span>Top up via QRcode</span>
-				</div>
+				</>
 			)
 		}
 	}
@@ -38,6 +75,10 @@ const TopUp: React.FC<TopUpProps> = ({ topUpVisible, setFalse, setTrue }) => {
 	return (
 		<Dialog
 			title=""
+			onAfterClose={() => {
+				inc()
+				setCloseQRCode()
+			}}
 			isOpen={topUpVisible}
 			onRequestClose={setFalse}
 			onCancel={setFalse}
@@ -45,7 +86,9 @@ const TopUp: React.FC<TopUpProps> = ({ topUpVisible, setFalse, setTrue }) => {
 			showConfirmButton={false}
 			style={{ content: { width: '500px', height: '400px' } }}
 		>
-			{renderDialog()}
+			<div className={styles.top_up} key={current}>
+				{renderDialog()}
+			</div>
 		</Dialog>
 	)
 }

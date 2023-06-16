@@ -3,16 +3,11 @@ import PageNotFound from '@/pages/404'
 import Home from '@/pages/home'
 import Demo from '@/pages/demo'
 import Pay from '@/pages/pay'
-import EOABalancePage from '@/pages/eoa-balance'
 
 const routes: RouteObject[] = [
 	{
 		path: '/',
 		Component: Home
-	},
-	{
-		path: '/eoa',
-		Component: EOABalancePage
 	},
 	{
 		path: '/demo',

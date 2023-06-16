@@ -1,9 +1,9 @@
 import { atom } from 'recoil'
 import type { Snap } from '../types'
 
-const flaskState = atom<boolean>({
+const flaskState = atom<boolean | undefined>({
 	key: 'flaskState',
-	default: false
+	default: undefined
 })
 
 const installedSnapState = atom<Snap | undefined>({

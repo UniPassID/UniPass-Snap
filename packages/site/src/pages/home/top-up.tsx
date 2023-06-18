@@ -19,7 +19,7 @@ interface TopUpProps {
 const TopUp: React.FC<TopUpProps> = ({ topUpVisible, setFalse }) => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [current, { inc }] = useCounter(1)
-	const { tokens, metamaskAccount, connect, recharge } = useMetaMask()
+	const { tokens, metamaskAccount, connectEagerly, connect, recharge } = useMetaMask()
 	const [showQRcode, { setTrue: setShowQRCode, setFalse: setCloseQRCode }] = useBoolean(false)
 
 	const renderDialog = () => {
@@ -79,6 +79,7 @@ const TopUp: React.FC<TopUpProps> = ({ topUpVisible, setFalse }) => {
 				inc()
 				setCloseQRCode()
 			}}
+			onAfterOpen={connectEagerly}
 			isOpen={topUpVisible}
 			onRequestClose={setFalse}
 			onCancel={setFalse}

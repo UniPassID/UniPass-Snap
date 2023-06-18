@@ -18,10 +18,6 @@ export const useMetaMask = () => {
 	const provider = useProvider()
 	const metamaskAccount = useAccount()
 
-	useAsyncEffect(async () => {
-		await metaMask.connectEagerly()
-	}, [])
-
 	const queryERC20Balances = async () => {
 		if (!metamaskAccount) return
 		const tasks = CHAIN_CONFIGS.map((chain) => {
@@ -41,6 +37,10 @@ export const useMetaMask = () => {
 		} catch (e: any) {
 			upNotify.error(e.message)
 		}
+	}
+
+	const connectEagerly = async () => {
+		await metaMask.connectEagerly().catch(console.log)
 	}
 
 	const switchCurrentChain = async (chainId: number) => {
@@ -73,5 +73,5 @@ export const useMetaMask = () => {
 		}
 	}
 
-	return { metamaskAccount, tokens, connect, recharge }
+	return { metamaskAccount, tokens, connectEagerly, connect, recharge }
 }

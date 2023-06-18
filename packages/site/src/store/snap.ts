@@ -8,7 +8,8 @@ const flaskState = atom<boolean | undefined>({
 
 const installedSnapState = atom<Snap | undefined>({
 	key: 'installedSnapState',
-	default: undefined
+	default: undefined,
+	dangerouslyAllowMutability: true
 })
 
 export { flaskState, installedSnapState }

@@ -3,7 +3,8 @@ import { atom } from 'recoil'
 
 const smartAccountState = atom<string>({
 	key: 'smartAccount',
-	default: ''
+	default: '',
+	dangerouslyAllowMutability: true
 })
 
 const smartAccountTotalBalanceState = atom<string>({

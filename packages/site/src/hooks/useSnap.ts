@@ -43,24 +43,14 @@ export const useSnap = () => {
 	useAsyncEffect(async () => {
 		if (installedSnap) {
 			try {
-				// const masterKeyAddress = await getMasterKeyAddress()
-				// const wallet  = Wallet.createRandom()
-				// const masterKeyAddress = wallet.address
-				// const signer = wallet
-				
-				// const signer = new SnapSigner(masterKeyAddress)
-				// @ts-ignore
-				const provider = new providers.Web3Provider(window.ethereum)
-      	await provider.send("eth_requestAccounts", [])
-      	const signer = provider.getSigner()
+				const masterKeyAddress = await getMasterKeyAddress()
+				const signer = new SnapSigner(masterKeyAddress)
 				const smartAccount = new SmartAccount({
 					chainOptions: CHAIN_CONFIGS,
 					masterKeySigner: signer,
 					appId: CUSTOM_AUTH_APPID
 				})
 				await smartAccount.init({ chainId: CHAIN_CONFIGS[0].chainId })
-				// @ts-ignore
-				window.smartAccount = smartAccount
 				const address = await smartAccount.getAddress()
 				const smartAccountAddress = utils.getAddress(address)
 				window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)

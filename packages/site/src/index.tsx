@@ -1,19 +1,18 @@
 import ReactDOM from 'react-dom/client'
 import { RecoilRoot } from 'recoil'
 import { Toaster } from '@/components'
-import { ThemeProvider } from '@/hooks/theme-provider'
+import { ThemeProvider, ErrorBoundary } from '@/context'
 import reportWebVitals from '@/reportWebVitals'
-import ErrorBoundary from '@/hooks/error-boundary'
 import App from './App'
 import '@/assets/styles/index.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<RecoilRoot>
 		<ErrorBoundary>
-			<ThemeProvider>
-				<Toaster />
-				<App />
-			</ThemeProvider>
+			{/* <ThemeProvider> */}
+			<Toaster />
+			<App />
+			{/* </ThemeProvider> */}
 		</ErrorBoundary>
 	</RecoilRoot>
 )

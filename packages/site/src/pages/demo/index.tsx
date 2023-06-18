@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useTheme } from '@/hooks/theme-provider'
+import { useTheme } from '@/context'
 import { Button, upNotify, Dialog, Slider, Tooltip, Switch, CheckBox, Radio, Input } from '@/components'
 import { useForm } from 'react-hook-form'
 import styles from './_demo.module.scss'
@@ -162,8 +162,20 @@ const App: React.FC = () => {
 			<br />
 			<br />
 			<br />
-			<Tooltip title="this is top title" placement="top">
+			<Tooltip title="this is top title" placement='top'>
 				<div>top</div>
+			</Tooltip>
+			<br />
+			<br />
+			<br />
+			<Tooltip title="this is top title" placement='right'>
+				<div>right</div>
+			</Tooltip>
+			<br />
+			<br />
+			<br />
+			<Tooltip title="this is top title" placement='left'>
+				<div>left</div>
 			</Tooltip>
 			<br />
 			<br />

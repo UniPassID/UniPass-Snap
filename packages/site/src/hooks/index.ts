@@ -1,5 +1,4 @@
-export * from './error-boundary'
-export * from './theme-provider'
+
 export * from './useSnap'
-export * from './useMetaMask'
+export * from './useMetaMasks'
 export * from './useAccount'

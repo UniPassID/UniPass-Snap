@@ -17,7 +17,13 @@ const ChainSwitcher = () => {
 		})
 	}
 	if (isTestnetEnv) {
-		return 'Mumbai'
+		return (
+			<div className={styles.testnet}>
+				<div className={styles.circle}></div>
+				<span>Mumbai</span>
+				<span>(Testnet)</span>
+			</div>
+		)
 	} else
 		return (
 			<div className={styles.wrap}>

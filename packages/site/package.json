@@ -37,6 +37,7 @@
 		"dayjs": "^1.11.7",
 		"eip1193-provider": "^1.0.1",
 		"ethers": "5.7.1",
+		"numbro": "^2.3.6",
 		"qrcode.react": "^3.1.0",
 		"rc-checkbox": "3.0.1",
 		"rc-slider": "10.2.0",

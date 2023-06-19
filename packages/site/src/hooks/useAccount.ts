@@ -28,7 +28,8 @@ export const useAccount = () => {
 	const { run: handleQueryERC20Balance } = useRequest(queryERC20Balances, {
 		ready: !!smartAccount,
 		refreshDeps: [smartAccount, isTestnetEnv],
-		pollingInterval: 10000
+		pollingInterval: 10000,
+		debounceWait: 800
 	})
 
 	return { smartAccount, queryERC20Balances, tokens, handleQueryERC20Balance }

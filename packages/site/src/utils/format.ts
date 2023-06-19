@@ -12,7 +12,7 @@ export const formatAddress = (address: string) => {
 	if (!address) {
 		return ''
 	}
-	const prefix = address.slice(0, 6)
-	const suffix = address.slice(-4)
+	const prefix = address.slice(0, 7)
+	const suffix = address.slice(-5)
 	return prefix + '...' + suffix
 }

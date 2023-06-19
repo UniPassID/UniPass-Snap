@@ -5975,6 +5975,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bignumber.js@npm:^8.1.1":
+  version: 8.1.1
+  resolution: "bignumber.js@npm:8.1.1"
+  checksum: 71544348507cd16c2c152699a8e5146964d9cf4f46108075bcd16a964dffb3963256259fc6ffc9753b4d33dfd0cf863a6b564103a3a20e10002f12a1902e8075
+  languageName: node
+  linkType: hard
+
 "bin-links@npm:4.0.1":
   version: 4.0.1
   resolution: "bin-links@npm:4.0.1"
@@ -12879,6 +12886,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"numbro@npm:^2.3.6":
+  version: 2.3.6
+  resolution: "numbro@npm:2.3.6"
+  dependencies:
+    bignumber.js: ^8.1.1
+  checksum: a659bb418d15310c0accc99e73d5865f20ebe1ded319f78634aec81a07d90389b8c970d16608daf4ded8c47cb896e200ecd81aacc6955fc8c565f4faf33f1a6a
+  languageName: node
+  linkType: hard
+
 "nwsapi@npm:^2.2.0":
   version: 2.2.5
   resolution: "nwsapi@npm:2.2.5"
@@ -15920,6 +15936,7 @@ __metadata:
     eip1193-provider: ^1.0.1
     ethers: 5.7.1
     node-polyfill-webpack-plugin: ^2.0.1
+    numbro: ^2.3.6
     qrcode.react: ^3.1.0
     rc-checkbox: 3.0.1
     rc-slider: 10.2.0

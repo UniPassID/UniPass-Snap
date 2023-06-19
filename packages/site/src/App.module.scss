@@ -16,27 +16,3 @@
 		border-radius: 20px;
 	}
 }
-
-.top_tips {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	height: 36px;
-	width: 100%;
-	background: #362866;
-	font-weight: 400;
-	font-size: 14px;
-	color: #FFFFFF;
-	text-align: center;
-
-	span {
-		line-height: 36px;
-	}
-
-	.count {
-		display: inline-block;
-		font-weight: 500;
-		font-size: 20px;
-	}
-}

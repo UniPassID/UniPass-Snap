@@ -6,4 +6,9 @@ const currentSideBarState = atom<MenuType>({
 	default: 'Payment'
 })
 
-export { currentSideBarState }
+const isTestnetEnvState = atom<boolean>({
+	key: 'isTestnetEnvState',
+	default: false
+})
+
+export { currentSideBarState, isTestnetEnvState }

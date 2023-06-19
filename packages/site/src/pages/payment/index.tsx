@@ -1,7 +1,19 @@
-import React from 'react'
+import Assets from './assets'
+import Pay from './pay'
+import styles from './payment.module.scss'
 
 const Payment = () => {
-	return <div>Payment</div>
+	
+	return (
+		<div className={styles.payment}>
+			<div className={styles.assets}>
+				<Assets />
+			</div>
+			<div className={styles.pay}>
+				<Pay />
+			</div>
+		</div>
+	)
 }
 
 export default Payment

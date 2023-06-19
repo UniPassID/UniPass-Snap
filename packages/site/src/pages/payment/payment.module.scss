@@ -1,0 +1,30 @@
+.payment {
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    .assets {
+        width: 400px;
+        height: 720px;
+        padding: 40px;
+        border-right: 1px solid;
+        box-sizing: border-box;
+        border-image: linear-gradient(to bottom, rgb(240, 243, 250), rgba(240, 243, 250, 0.1)) 1;
+
+        .title {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #5E5F6E;
+        }
+
+        .balance {
+            margin-top: 52px;
+        }
+    }
+
+    .pay {
+        flex: 1;
+    }
+}

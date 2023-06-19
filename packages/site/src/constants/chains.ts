@@ -96,29 +96,10 @@ export const CHAIN_CONFIGS = [
 		],
 		explorer: 'https://arbiscan.io'
 	}
-	// {
-	// 	name: 'avalanche-mainnet',
-	// 	chainId: AVALANCHE_MAINNET,
-	// 	rpcUrl: 'https://node.wallet.unipass.id/avalanche-mainnet',
-	// 	tokens: [
-	// 		{
-	// 			chainId: AVALANCHE_MAINNET,
-	// 			contractAddress: '0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e',
-	// 			name: 'USD Coin',
-	// 			symbol: 'USDC',
-	// 			decimals: 6
-	// 		},
-	// 		{
-	// 			chainId: AVALANCHE_MAINNET,
-	// 			contractAddress: '0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7',
-	// 			name: 'TetherToken',
-	// 			symbol: 'USDT',
-	// 			decimals: 6
-	// 		}
-	// 	],
-	// 	explorer: 'https://snowtrace.io'
-	// }
 ]
+
+export const MAINNET_CHAIN_IDS = [POLYGON_MAINNET, ARBITRUM_MAINNET]
+export const TESTNET_CHAIN_IDS = [POLYGON_MUMBAI]
 
 export const getChainNameByChainId = (chainId: number) => {
 	switch (chainId) {

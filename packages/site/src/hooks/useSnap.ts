@@ -1,4 +1,5 @@
-import { Wallet, providers, utils } from 'ethers'
+import { useEffect } from 'react'
+import { utils } from 'ethers'
 import { useAsyncEffect } from 'ahooks'
 import { useRecoilState } from 'recoil'
 import { flaskState, installedSnapState, smartAccountState, smartAccountInsState } from '@/store'
@@ -7,7 +8,6 @@ import { CHAIN_CONFIGS, CUSTOM_AUTH_APPID } from '@/constants'
 import { SmartAccount } from '@unipasswallet/smart-account'
 import { upNotify } from '@/components'
 import { SnapSigner } from '@/snap-signer'
-import { useEffect } from 'react'
 
 export const useSnap = () => {
 	const [isFlask, setHasFlaskDetected] = useRecoilState(flaskState)

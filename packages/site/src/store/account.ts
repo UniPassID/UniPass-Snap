@@ -1,10 +1,15 @@
+import { TokenInfo } from '@/types'
 import { SmartAccount } from '@unipasswallet/smart-account'
 import { atom } from 'recoil'
 
 const smartAccountState = atom<string>({
 	key: 'smartAccount',
-	default: '',
-	dangerouslyAllowMutability: true
+	default: ''
+})
+
+const smartAccountTokenListState = atom<Array<TokenInfo>>({
+	key: 'smartAccountTokenList',
+	default: []
 })
 
 const smartAccountTotalBalanceState = atom<string>({
@@ -17,4 +22,4 @@ const smartAccountInsState = atom<SmartAccount>({
 	default: undefined
 })
 
-export { smartAccountState, smartAccountTotalBalanceState, smartAccountInsState }
+export { smartAccountState, smartAccountTokenListState, smartAccountTotalBalanceState, smartAccountInsState }

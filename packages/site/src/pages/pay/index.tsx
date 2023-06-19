@@ -80,7 +80,6 @@ const Pay: React.FC = () => {
 		console.log('selectedPay: ', selectedGas)
 		const txs = data.txs
 		console.log('txs: ', txs)
-		debugger
 		// @ts-ignore
 		const provider = new providers.Web3Provider(window.ethereum)
 		await provider.send("eth_requestAccounts", [])

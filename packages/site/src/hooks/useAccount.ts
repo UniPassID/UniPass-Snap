@@ -1,15 +1,13 @@
-import { useState } from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
-import { smartAccountState, smartAccountTotalBalanceState } from '@/store'
+import { smartAccountState, smartAccountTokenListState, smartAccountTotalBalanceState } from '@/store'
 import { CHAIN_CONFIGS } from '@/constants'
 import { getBalancesByMulticall, weiToEther } from '@/utils'
-import { TokenInfo } from '@/types/token'
 
 export const useAccount = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [smartAccountTotalBalance, setSmartAccountTotalBalanceState] = useRecoilState(smartAccountTotalBalanceState)
-	const [tokens, setTokens] = useState<Array<TokenInfo>>([])
+	const [tokens, setSmartAccountTokenList] = useRecoilState(smartAccountTokenListState)
 
 	const queryERC20Balances = async () => {
 		console.log(`begin query smart account(${smartAccount}) tokens balance`)
@@ -20,7 +18,6 @@ export const useAccount = () => {
 
 		const results = await Promise.all(tasks)
 		const _tokens = results.flat()
-		setTokens(_tokens)
 
 		let totalBalance = 0
 
@@ -28,6 +25,7 @@ export const useAccount = () => {
 			totalBalance = totalBalance + parseFloat(weiToEther(token.balance || 0, token.decimals))
 		})
 
+		setSmartAccountTokenList(_tokens)
 		setSmartAccountTotalBalanceState(totalBalance.toFixed(2))
 	}
 

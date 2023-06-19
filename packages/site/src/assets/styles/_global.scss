@@ -174,17 +174,21 @@ body {
 		'Droid Sans', 'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color: #F0F0F0;
+	position: relative;
+
+
 }
 
 // disable default scroll bar
-* {
-	/* Internet Explorer 10+ */
-	-ms-overflow-style: none;
-	/* Firefox */
-	scrollbar-width: none;
-}
+// * {
+// 	/* Internet Explorer 10+ */
+// 	-ms-overflow-style: none;
+// 	/* Firefox */
+// 	scrollbar-width: none;
+// }
 
-*::-webkit-scrollbar {
-	/* Safari and Chrome */
-	display: none;
-}
+// *::-webkit-scrollbar {
+// 	/* Safari and Chrome */
+// 	display: none;
+// }

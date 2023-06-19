@@ -14,7 +14,7 @@ import HistorySelected from '@/assets/svg/HistorySelected.svg'
 import More from '@/assets/svg/More.svg'
 import styles from './sidebar.module.scss'
 import { formatAddress } from '@/utils'
-import { POLYGON_MUMBAI } from '@/constants'
+import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
 
 const menus: Array<{ name: MenuType }> = [
 	{
@@ -98,7 +98,7 @@ const SideBar = () => {
 	}
 
 	const handleSwitchEnv = (checked: boolean) => {
-		setCurrentChainIdState(POLYGON_MUMBAI)
+		setCurrentChainIdState(checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET)
 		setIsTestnetEnv(checked)
 	}
 

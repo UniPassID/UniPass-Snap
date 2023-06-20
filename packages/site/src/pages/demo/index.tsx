@@ -1,8 +1,13 @@
 import { useState } from 'react'
 import { useTheme } from '@/context'
-import { Button, upNotify, Dialog, Slider, Tooltip, Switch, CheckBox, Radio, Input } from '@/components'
+import { Button, upNotify, Dialog, Slider, Tooltip, Switch, CheckBox, Radio, Input, Icon } from '@/components'
 import { useForm } from 'react-hook-form'
 import styles from './_demo.module.scss'
+import Select from 'rc-select'
+import USDT from '@/assets/svg/USDT.svg'
+import USDC from '@/assets/svg/USDC.svg'
+
+const Option = Select.Option
 
 const App: React.FC = () => {
 	const { theme, toggleTheme } = useTheme()
@@ -29,7 +34,18 @@ const App: React.FC = () => {
 		<div className={styles.app}>
 			<div>This is UniPass Interface - Signer</div>
 
-			<div>{theme}</div>
+			<Select defaultValue="USDT" onChange={console.log}>
+				<Option value="USDT">
+					<Icon src={USDT} width={20} height={20} />
+					USDT
+				</Option>
+				<Option value="USDC">
+					<Icon src={USDC} width={20} height={20} />
+					USDC
+				</Option>
+			</Select>
+
+			{/* <div>{theme}</div>
 			<Button onClick={() => toggleTheme()}>toggleTheme</Button>
 			<div>&nbsp;</div>
 			<h1>Button</h1>
@@ -162,19 +178,19 @@ const App: React.FC = () => {
 			<br />
 			<br />
 			<br />
-			<Tooltip title="this is top title" placement='top'>
+			<Tooltip title="this is top title" placement="top">
 				<div>top</div>
 			</Tooltip>
 			<br />
 			<br />
 			<br />
-			<Tooltip title="this is top title" placement='right'>
+			<Tooltip title="this is top title" placement="right">
 				<div>right</div>
 			</Tooltip>
 			<br />
 			<br />
 			<br />
-			<Tooltip title="this is top title" placement='left'>
+			<Tooltip title="this is top title" placement="left">
 				<div>left</div>
 			</Tooltip>
 			<br />
@@ -296,7 +312,7 @@ const App: React.FC = () => {
 				<Input.Counter placeholder="Counter" name="Counter" formField={rest} autoComplete="off" />
 
 				<Button type="submit">Submit</Button>
-			</form>
+			</form> */}
 		</div>
 	)
 }

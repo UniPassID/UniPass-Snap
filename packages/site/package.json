@@ -40,6 +40,7 @@
 		"numbro": "^2.3.6",
 		"qrcode.react": "^3.1.0",
 		"rc-checkbox": "3.0.1",
+		"rc-select": "^14.5.2",
 		"rc-slider": "10.2.0",
 		"rc-switch": "4.1.0",
 		"rc-tooltip": "6.0.1",

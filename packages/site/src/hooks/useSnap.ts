@@ -35,6 +35,7 @@ export const useSnap = () => {
 		try {
 			await connectSnap()
 			setInstalledSnap(await getSnap())
+			upNotify.success('connect success')
 		} catch (e: any) {
 			upNotify.error(e.message)
 		}

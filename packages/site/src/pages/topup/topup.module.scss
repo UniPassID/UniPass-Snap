@@ -1,0 +1,195 @@
+.topup {
+    display: flex;
+    align-items: flex-start;
+    flex-flow: row nowrap;
+    justify-content: center;
+
+    .balance {
+        display: flex;
+        align-items: flex-start;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        width: 400px;
+        height: 720px;
+        padding: 40px;
+        border-right: 1px solid;
+        box-sizing: border-box;
+        border-image: linear-gradient(to bottom, rgb(240, 243, 250), rgba(240, 243, 250, 0.1)) 1;
+
+        .tips {
+            font-weight: 500;
+            font-size: 20px;
+            line-height: 28px;
+            color: #1F202A;
+        }
+
+        .assets {
+            margin-top: 48px;
+
+            .title {
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 20px;
+                color: #5E5F6E;
+            }
+
+            .items {
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 20px;
+
+                .Arbitrum {
+                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    flex-flow: row nowrap;
+                    justify-content: space-between;
+                    color: #2799E4;
+                    margin: 16px 0;
+
+                    .divider {
+                        height: 1px;
+                        width: 60%;
+                        background-color: #2799E4;
+                    }
+                }
+
+                .Polygon {
+                    display: flex;
+                    align-items: center;
+                    flex-flow: row nowrap;
+                    justify-content: space-between;
+                    color: #864AEC;
+                    margin: 16px 0;
+
+                    .divider {
+                        height: 1px;
+                        width: 60%;
+                        background-color: #864AEC;
+                    }
+                }
+
+                .usd {
+                    display: flex;
+                    align-items: center;
+                    flex-flow: row nowrap;
+                    justify-content: space-between;
+                    height: 52px;
+
+                    .coin {
+                        display: flex;
+                        align-items: center;
+                        flex-flow: row nowrap;
+                        justify-content: flex-start;
+
+                        img {
+                            display: inline-block;
+                            margin-right: 8px;
+                        }
+
+                        .symbol {
+                            font-weight: 500;
+                            font-size: 16px;
+                            line-height: 24px;
+                            color: #1F202A;
+                        }
+                    }
+
+                    .value {
+                        display: flex;
+                        align-items: center;
+                        flex-flow: row nowrap;
+                        justify-content: center;
+                        font-weight: 500;
+                        font-size: 20px;
+                        line-height: 28px;
+                        color: #1F202A;
+
+                        .num {
+                            margin-right: 16px;
+                        }
+                    }
+                }
+
+                .divider {
+                    height: 1px;
+                    width: 100%;
+                    background-color: #F0F0F5;
+                    margin: 8px 0;
+                }
+            }
+
+            .empty {
+                display: flex;
+                align-items: center;
+                flex-flow: column nowrap;
+                justify-content: flex-start;
+
+                img {
+                    display: inline-block;
+                    margin-top: 64px;
+                    margin-bottom: 12px;
+                }
+
+                .tips {
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: #B9BABE;
+                    display: inline-block;
+                    margin-bottom: 64px;
+                }
+            }
+        }
+    }
+
+    .recharge {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+        padding: 40px;
+        height: 720px;
+
+        .amount {
+            .title {
+                font-weight: 500;
+                font-size: 28px;
+                line-height: 40px;
+                color: #1F202A;
+            }
+
+            .selected_token {
+                .title {
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: #5E5F6E;
+                }
+            }
+
+            .transfer_info {
+                .item {
+                    padding: 20px 0;
+                    border-top: 1px solid #F0F0F5;
+
+                    .title {
+                        font-weight: 400;
+                        font-size: 14px;
+                        line-height: 20px;
+                        color: #5E5F6E;
+                        margin-bottom: 16px;
+                    }
+                }
+            }
+        }
+
+        .topup_btn {
+            width: 100%;
+            button {
+                width: 100%;
+            }
+        }
+    }
+}

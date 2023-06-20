@@ -1,24 +1,25 @@
-import { useState } from 'react'
-import { useRecoilValue } from 'recoil'
+import { useRecoilValue, useRecoilState } from 'recoil'
 import { useAsyncEffect } from 'ahooks'
-import { smartAccountState } from '@/store'
+import { smartAccountState, metamaskAccountTokenListState } from '@/store'
 import { upNotify } from '@/components'
 import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
 import { etherToWei, getBalancesByMulticall } from '@/utils'
-import { TokenInfo } from '@/types/token'
 import { hooks, metaMask } from '@/utils'
 import { makeERC20Contract } from '@/utils/make_contract'
+import { TokenInfo } from '@/types'
 
 const { useAccount, useProvider } = hooks
 
 export const useMetaMask = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
-	const [tokens, setTokens] = useState<Array<TokenInfo>>([])
+	const [, setSmartAccountTokenList] = useRecoilState(metamaskAccountTokenListState)
 
 	const provider = useProvider()
 	const metamaskAccount = useAccount()
 
 	const queryERC20Balances = async () => {
+		console.log(`begin queryERC20Balances`)
+
 		if (!metamaskAccount) return
 		const tasks = CHAIN_CONFIGS.map((chain) => {
 			return getBalancesByMulticall(metamaskAccount, chain.tokens, chain.rpcUrl)
@@ -26,10 +27,17 @@ export const useMetaMask = () => {
 
 		const results = await Promise.all(tasks)
 
-		setTokens(results.flat())
+		setSmartAccountTokenList(results.flat())
 	}
 
 	useAsyncEffect(queryERC20Balances, [metamaskAccount])
+
+	const connectEagerly = async () => {
+		console.log('connectEagerly')
+		await metaMask.connectEagerly().catch(console.log)
+	}
+
+	useAsyncEffect(connectEagerly, [])
 
 	const connect = async () => {
 		try {
@@ -39,22 +47,18 @@ export const useMetaMask = () => {
 		}
 	}
 
-	const connectEagerly = async () => {
-		await metaMask.connectEagerly().catch(console.log)
-	}
-
 	const switchCurrentChain = async (chainId: number) => {
 		await metaMask.activate(getAddChainParameters(chainId))
 	}
 
-	const recharge = async () => {
+	const recharge = async (amount: string, token: TokenInfo) => {
 		if (!provider) return
 		try {
 			await switchCurrentChain(80001)
 
-			const contract = makeERC20Contract('0x87F0E95E11a49f56b329A1c143Fb22430C07332a', provider, metamaskAccount)
+			const contract = makeERC20Contract(token.contractAddress, provider, metamaskAccount)
 
-			const tx = await contract.transfer(smartAccount, etherToWei('1', 6).toHexString())
+			const tx = await contract.transfer(smartAccount, etherToWei(amount, token.decimals).toHexString())
 
 			const result = await tx.wait()
 
@@ -73,5 +77,5 @@ export const useMetaMask = () => {
 		}
 	}
 
-	return { metamaskAccount, tokens, connectEagerly, connect, recharge }
+	return { metamaskAccount, connectEagerly, connect, recharge }
 }

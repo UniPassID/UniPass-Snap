@@ -44,7 +44,8 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 	useLayoutEffect(() => {
 		localStorage.setItem('theme', theme)
-		document.querySelector('body')?.setAttribute('data-theme', theme)
+		// TODO: theme
+		document.querySelector('body')?.setAttribute('data-theme', 'light')
 	}, [theme])
 
 	// add event listener for system prefer
@@ -64,7 +65,7 @@ const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 		setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'))
 	}
 
-	return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
+	return <ThemeContext.Provider value={{ theme: 'light', toggleTheme }}>{children}</ThemeContext.Provider>
 }
 
 export { ThemeProvider, useTheme }

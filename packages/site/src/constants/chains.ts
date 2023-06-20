@@ -23,6 +23,15 @@ const MATIC: AddEthereumChainParameter['nativeCurrency'] = {
 	decimals: 18
 }
 
+export const POLYGON_MUMBAI_USDC_ADDRESS = '0x87F0E95E11a49f56b329A1c143Fb22430C07332a'
+export const POLYGON_MUMBAI_USDT_ADDRESS = '0x569F5fF11E259c8e0639b4082a0dB91581a6b83e'
+
+export const POLYGON_MAINNET_USDC_ADDRESS = '0x2791bca1f2de4661ed88a30c99a7a9449aa84174'
+export const POLYGON_MAINNET_USDT_ADDRESS = '0xc2132D05D31c914a87C6611C10748AEb04B58e8F'
+
+export const ARBITRUM_MAINNET_USDC_ADDRESS = '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8'
+export const ARBITRUM_MAINNET_USDT_ADDRESS = '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9'
+
 export const CHAIN_CONFIGS = [
 	{
 		name: 'polygon-mumbai',
@@ -33,14 +42,14 @@ export const CHAIN_CONFIGS = [
 		tokens: [
 			{
 				chainId: POLYGON_MUMBAI,
-				contractAddress: '0x87F0E95E11a49f56b329A1c143Fb22430C07332a',
+				contractAddress: POLYGON_MUMBAI_USDC_ADDRESS,
 				name: 'USDC',
 				symbol: 'USDC',
 				decimals: 6
 			},
 			{
 				chainId: POLYGON_MUMBAI,
-				contractAddress: '0x569F5fF11E259c8e0639b4082a0dB91581a6b83e',
+				contractAddress: POLYGON_MUMBAI_USDT_ADDRESS,
 				name: 'USDT',
 				symbol: 'USDT',
 				decimals: 6
@@ -57,14 +66,14 @@ export const CHAIN_CONFIGS = [
 		tokens: [
 			{
 				chainId: POLYGON_MAINNET,
-				contractAddress: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+				contractAddress: POLYGON_MAINNET_USDC_ADDRESS,
 				name: 'USDC',
 				symbol: 'USDC',
 				decimals: 6
 			},
 			{
 				chainId: POLYGON_MAINNET,
-				contractAddress: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+				contractAddress: POLYGON_MAINNET_USDT_ADDRESS,
 				name: 'Tether',
 				symbol: 'USDT',
 				decimals: 6
@@ -81,14 +90,14 @@ export const CHAIN_CONFIGS = [
 		tokens: [
 			{
 				chainId: ARBITRUM_MAINNET,
-				contractAddress: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
+				contractAddress: ARBITRUM_MAINNET_USDC_ADDRESS,
 				name: 'USDC',
 				symbol: 'USDC',
 				decimals: 6
 			},
 			{
 				chainId: ARBITRUM_MAINNET,
-				contractAddress: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+				contractAddress: ARBITRUM_MAINNET_USDT_ADDRESS,
 				name: 'USDT',
 				symbol: 'USDT',
 				decimals: 6

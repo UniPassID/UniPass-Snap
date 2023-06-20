@@ -33,8 +33,8 @@ const menus: Array<{ name: MenuType }> = [
 ]
 
 const SideBar = () => {
+	useAccount()
 	const { isFlask, installedSnap, handleConnectSnap } = useSnap()
-
 	const [showActions, { toggle }] = useBoolean(false)
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [, setCurrentChainIdState] = useRecoilState(currentChainIdState)
@@ -47,7 +47,6 @@ const SideBar = () => {
 
 	const connect = async () => {
 		await handleConnectSnap()
-		upNotify.success('connect success')
 	}
 
 	const renderActions = () => {
@@ -164,9 +163,7 @@ const SideBar = () => {
 						</div>
 					)}
 				</Popover>
-				{/* {renderActions()} */}
-				{/* <br />
-				 */}
+				{renderActions()}
 			</div>
 		</div>
 	)

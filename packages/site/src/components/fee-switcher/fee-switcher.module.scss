@@ -1,0 +1,39 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  flex-flow: row nowrap;
+  justify-content: center;
+  width: 220px;
+  padding: 4px;
+  height: 48px;
+  background: #F7F7FA;
+  border-radius: 100px;
+
+  .item {
+      display: flex;
+      align-items: center;
+      flex-flow: row nowrap;
+      justify-content: center;
+      height: 50px;
+      border-radius: 100px;
+      width: 50%;
+      text-align: center;
+      line-height: 50px;
+      background-color: transparent;
+      cursor: pointer;
+      font-weight: 400;
+      font-size: 14px;
+      color: #5E5F6E;
+      transition: all .2s ease-in-out;
+
+      span {
+          display: inline-block;
+          margin-left: 8px;
+      }
+  }
+
+  .selected {
+      background-color: #FFFFFF;
+      color: #1F202A;
+  }
+}

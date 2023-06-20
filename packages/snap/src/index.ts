@@ -1,6 +1,7 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types'
 import { panel, text } from '@metamask/snaps-ui'
 import { getMasterKeyAddress, signMessage } from './rpc'
+import { arrayify, hexlify } from 'ethers/lib/utils'
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -36,7 +37,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
 					content: panel([text(`Hello, **${origin}**!`), text((request.params as any).message)])
 				}
 			})
-			return signMessage((request.params as any).message)
+			return signMessage(arrayify((request.params as any).message))
 		default:
 			throw new Error('Method not found.')
 	}

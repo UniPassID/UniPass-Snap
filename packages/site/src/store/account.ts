@@ -1,3 +1,4 @@
+import { POLYGON_MUMBAI } from '@/constants'
 import { TokenInfo } from '@/types'
 import { SmartAccount } from '@unipasswallet/smart-account'
 import { atom } from 'recoil'
@@ -19,7 +20,13 @@ const smartAccountTotalBalanceState = atom<string>({
 
 const smartAccountInsState = atom<SmartAccount>({
 	key: 'smartAccountInsState',
-	default: undefined
+	default: undefined,
+	dangerouslyAllowMutability: true
 })
 
-export { smartAccountState, smartAccountTokenListState, smartAccountTotalBalanceState, smartAccountInsState }
+export {
+	smartAccountState,
+	smartAccountTokenListState,
+	smartAccountTotalBalanceState,
+	smartAccountInsState
+}

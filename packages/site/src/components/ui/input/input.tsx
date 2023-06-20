@@ -8,6 +8,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLElement> {
 	formField: UseFormReturn<any>,
 	name: string
 	label?: string
+	extraMessage?: string
 	inputRef?: React.MutableRefObject<HTMLInputElement | null>
 	disabled?: boolean
 	allowClose?: boolean
@@ -16,7 +17,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLElement> {
 }
 
 const Input: React.FC<InputProps> = (props) => {
-	const { disabled, allowClose = false, suffix, style, formField, validateShame, inputRef, ...restProps } = props
+	const { disabled, allowClose = false, suffix, style, formField, validateShame, extraMessage, inputRef, ...restProps } = props
 	const {
 		resetField,
 		register,
@@ -50,7 +51,10 @@ const Input: React.FC<InputProps> = (props) => {
 
 	return (
 		<div className={wrapperClassNames} style={style}>
-			<span className="up-input-title">{props.label || props.name || ''}</span>
+			<div className="up-input-title-wrapper">
+				<span className="up-input-title">{props.label || props.name || ''}</span>
+				{ extraMessage && <span className="up-input-title">{extraMessage}</span>}
+			</div>
 			<div className={contentClassNames}>
 				<input
 					className="up-input-inner"

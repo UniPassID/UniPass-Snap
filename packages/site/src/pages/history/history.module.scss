@@ -1,0 +1,65 @@
+.history {
+  height: 640px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    color: var(--up-text-primary);
+    font-size: 28px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .send {
+    display: flex;
+    align-items: center;
+    .send-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px !important;
+      background-color: #F9F3FF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .chain-icon {
+      position: absolute;
+      bottom: 0px;
+      right: -8px;
+    }
+  }
+}
+
+.up-table {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  thead {
+    color: var(--up-text-third);
+    height: 28px;
+    font-size: 12px;
+  }
+  .up-table-row {
+    font-size: 16px;
+    height: 70px;
+    color: var(--up-text-primary);
+    :first-child {
+      border-radius: 16px 0 0 16px;
+    }
+    :last-child {
+      border-radius: 0 16px 16px 0;
+    }
+  }
+  td, th {
+    padding: 0 20px;
+  }
+  tbody tr:hover {
+    background-color: var(--up-content-background);
+    cursor: pointer;
+  }
+}

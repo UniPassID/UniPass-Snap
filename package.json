@@ -36,5 +36,8 @@
 	"packageManager": "yarn@3.2.1",
 	"engines": {
 		"node": ">=16.0.0"
+	},
+	"dependencies": {
+		"rc-table": "^7.32.1"
 	}
 }

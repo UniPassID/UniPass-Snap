@@ -1,4 +1,4 @@
-import { Wallet } from 'ethers'
+import { Bytes, Wallet } from 'ethers'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
 
 function getEntropy() {
@@ -15,7 +15,7 @@ export async function getMasterKeyAddress(): Promise<string> {
 	return new Wallet(entropy).address
 }
 
-export async function signMessage(message: string): Promise<string> {
+export async function signMessage(message: string | Bytes): Promise<string> {
 	const entropy = await getEntropy()
 	return new Wallet(entropy).signMessage(message)
 }

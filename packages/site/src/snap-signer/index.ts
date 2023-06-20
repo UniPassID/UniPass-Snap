@@ -1,6 +1,7 @@
 import { signMessageWithSnap, signTransactionWithSnap } from "@/utils";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
-import { Bytes, Signer } from "ethers";
+import { Bytes, Signer } from "ethers"; 
+import { hexlify } from "ethers/lib/utils";
 
 export class SnapSigner extends Signer {
   private address: string
@@ -13,8 +14,8 @@ export class SnapSigner extends Signer {
     return Promise.resolve(this.address)
   }
 
-  signMessage(message: string | Bytes): Promise<string> {
-    return signMessageWithSnap(message)
+  async signMessage(message: string | Bytes): Promise<string> {
+    return await signMessageWithSnap(hexlify(message))
   }
 
   signTransaction(transaction: TransactionRequest): Promise<string> {

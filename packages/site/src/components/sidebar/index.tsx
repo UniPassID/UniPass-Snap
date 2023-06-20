@@ -2,7 +2,7 @@ import { useRecoilValue, useRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
 import { useAccount, useSnap } from '@/hooks'
-import { Button, Icon, Switch, upNotify } from '@/components'
+import { Button, Icon, Popover, Switch, upNotify } from '@/components'
 import { smartAccountState, currentSideBarState, isTestnetEnvState, currentChainIdState } from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
@@ -12,9 +12,13 @@ import TopUpSelected from '@/assets/svg/TopUpSelected.svg'
 import History from '@/assets/svg/History.svg'
 import HistorySelected from '@/assets/svg/HistorySelected.svg'
 import More from '@/assets/svg/More.svg'
+import Testnet from '@/assets/svg/Testnet.svg'
+import Disconnect from '@/assets/svg/Disconnect.svg'
+import Close from '@/assets/svg/Close.svg'
 import styles from './sidebar.module.scss'
 import { formatAddress } from '@/utils'
 import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
+import { useBoolean } from 'ahooks'
 
 const menus: Array<{ name: MenuType }> = [
 	{
@@ -30,8 +34,9 @@ const menus: Array<{ name: MenuType }> = [
 
 const SideBar = () => {
 	const { isFlask, installedSnap, handleConnectSnap } = useSnap()
+
+	const [showActions, { toggle }] = useBoolean(false)
 	const smartAccount = useRecoilValue(smartAccountState)
-	const { handleQueryERC20Balance } = useAccount()
 	const [, setCurrentChainIdState] = useRecoilState(currentChainIdState)
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
 	const [isTestnetEnv, setIsTestnetEnv] = useRecoilState(isTestnetEnvState)
@@ -124,14 +129,44 @@ const SideBar = () => {
 				</div>
 			</div>
 			<div className={styles.menus}>
-				{/* <div className={styles.menu}> */}
-				{/* <Icon src={More} width={20} height={20} />
-					More */}
-				{renderActions()}
-				<br />
-				<Switch checked={isTestnetEnv} onChange={handleSwitchEnv} />
-				<span>Testnet</span>
-				{/* </div> */}
+				<Popover
+					placement="top"
+					trigger="click"
+					visible={showActions}
+					onVisibleChange={toggle}
+					overlay={
+						<div className={styles.more_overlay}>
+							<div className={styles.item}>
+								<div className={styles.left}>
+									<Icon src={Testnet} height={20} width={20} />
+									<span>Testnet</span>
+								</div>
+								<Switch checked={isTestnetEnv} onChange={handleSwitchEnv} />
+							</div>
+							<div className={styles.item}>
+								<div className={styles.left}>
+									<Icon src={Disconnect} height={20} width={20} />
+									<span>Disconnect</span>
+								</div>
+							</div>
+						</div>
+					}
+				>
+					{showActions ? (
+						<div className={styles.menu}>
+							<Icon src={Close} width={20} height={20} />
+							Close
+						</div>
+					) : (
+						<div className={styles.menu}>
+							<Icon src={More} width={20} height={20} />
+							More
+						</div>
+					)}
+				</Popover>
+				{/* {renderActions()} */}
+				{/* <br />
+				 */}
 			</div>
 		</div>
 	)

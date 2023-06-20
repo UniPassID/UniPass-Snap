@@ -1,0 +1,86 @@
+$popover-arrow-width: 6px;
+
+.up-popover {
+    position: absolute;
+    z-index: 1070;
+    display: block;
+    visibility: visible;
+    background-color: transparent;
+
+    &-hidden {
+        display: none;
+    }
+
+    &-inner {
+        line-height: 20px;
+        font-size: 12px;
+        padding: 8px 12px;
+        color: var(--up-tooltip-color);
+        text-align: left;
+        text-decoration: none;
+        background-color: #fff;
+        box-shadow: var(--up-tooltip-box-shadow);
+        border-radius: 8px;
+    }
+}
+
+.up-popover.up-popover-animation-appear,
+.up-popover.up-popover-animation-enter {
+    opacity: 0;
+}
+
+.up-popover.up-popover-animation-enter,
+.up-popover.up-popover-animation-leave {
+    display: block;
+}
+
+.up-popover-animation-enter,
+.up-popover-animation-appear {
+    opacity: 0;
+    animation-duration: 0.1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    animation-play-state: paused;
+}
+
+.up-popover-animation-leave {
+    animation-duration: 0.1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease-in-out;
+    animation-play-state: paused;
+}
+
+.up-popover-animation-enter.up-popover-animation-enter-active,
+.up-popover-animation-appear.up-popover-animation-appear-active {
+    animation-name: upToolTipAnimationEnter;
+    animation-play-state: running;
+}
+
+.up-popover-animation-leave.up-popover-animation-leave-active {
+    animation-name: upToolTipAnimationLeave;
+    animation-play-state: running;
+}
+
+@keyframes upToolTipAnimationEnter {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes upToolTipAnimationLeave {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+}

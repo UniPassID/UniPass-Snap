@@ -11,5 +11,6 @@ export { default as Switch } from './ui/switch'
 export { default as CheckBox } from './ui/checkbox'
 export { default as Radio } from './ui/radio'
 export { default as Input } from './ui/input'
+export { default as Popover } from './ui/popover'
 
 export { default as SideBar } from './sidebar'

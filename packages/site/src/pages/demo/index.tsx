@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTheme } from '@/context'
-import { Button, upNotify, Dialog, Slider, Tooltip, Switch, CheckBox, Radio, Input, Icon } from '@/components'
+import { Button, upNotify, Dialog, Slider, Tooltip, Switch, CheckBox, Radio, Input, Icon, Popover } from '@/components'
 import { useForm } from 'react-hook-form'
 import styles from './_demo.module.scss'
 import Select from 'rc-select'
@@ -44,7 +44,25 @@ const App: React.FC = () => {
 					USDC
 				</Option>
 			</Select>
-
+			<Popover
+				placement="top"
+				overlay={
+					<>
+						<div>123</div>
+						<div>123</div>
+						<div>123</div>
+					</>
+				}
+				visible={true}
+			>
+				<div>top</div>
+			</Popover>
+			<Switch
+				onChange={(value, event) => {
+					console.log(`switch checked: ${value}`, event)
+				}}
+			/>
+			<br />
 			{/* <div>{theme}</div>
 			<Button onClick={() => toggleTheme()}>toggleTheme</Button>
 			<div>&nbsp;</div>

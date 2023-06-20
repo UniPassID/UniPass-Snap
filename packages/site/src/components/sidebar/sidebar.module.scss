@@ -51,3 +51,42 @@
         }
     }
 }
+
+.more_overlay {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column nowrap;
+    align-items: center;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #5E5F6E;
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row nowrap;
+        align-items: center;
+        padding: 12px;
+        width: 164px;
+        height: 44px;
+        border-radius: 12px;
+        cursor: pointer;
+
+        &:hover {
+            background: #F7F7FA;
+        }
+
+        .left {
+            display: flex;
+            justify-content: flex-start;
+            flex-flow: row nowrap;
+            align-items: center;
+
+            img {
+                display: inline-block;
+                margin-right: 12px;
+            }
+        }
+    }
+}

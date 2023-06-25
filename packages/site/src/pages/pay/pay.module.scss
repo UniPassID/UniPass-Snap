@@ -1,102 +1,115 @@
 .pay {
-  height: 640px;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  .row {
-    display: flex;
-  }
-  .title {
-    color: var(--up-text-primary);
-    font-size: 28px;
-  }
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  .form {
-    flex: 1;
-    padding-bottom: 16px;
-    overflow-y: scroll;
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  .transfer {
-    .sub-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      .controller {
-        display: flex;
-      }
-      .icon {
-        display: flex;
-        margin-left: 8px;
-        width: 32px;
-        height: 32px;
-        border-radius: 12px;
-        border: 1px solid transparent;
-        align-items: center;
-        justify-content: center;
-      }
-      .icon:hover {
-        border-color: #E1E6F0;
-        cursor: pointer;
-      }
-    }
-    .token-selector-wrapper {
-      width: 128px;
-      margin-right: 16px;
-    }
-    .amount-wrapper {
-      flex: 1
-    }
-    .frozen-transfer {
-      display: flex;
-      justify-content: space-between;
-      border: 1px solid #E1E6F0;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
-      .frozen-detail {
-        display: flex;
-        align-items: center;
-      }
-      .desc {
-        font-size: 14px;
-        padding-right: 12px;
-        color: var(--up-text-secondary)
-      }
-    }
-  }
-  .network-fee {
-    padding: 12px 0;
-    .network-fee-title {
-      font-size: 14px;
-      color: var(--up-text-secondary);
-      margin-bottom: 16px;
-    }
-    .switcher-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .network-fee-total {
-        font-size: 20px;
-        color: var(--up-text-primary)
-      }
-      .switcher {
-        display: flex;
-        align-items: center;
-        .switch-label {
-          color: var(--up-text-secondary);
-          margin-right: 12px;
-        }
-      }
-    }
-    .pay-btn {
-      width: 100%;
-      margin-top: 28px;
-    }
-  }
+	height: 720px;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	.content {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		overflow: auto;
+		.row {
+			display: flex;
+		}
+		.title {
+			color: var(--up-text-primary);
+			font-size: 28px;
+		}
+		::-webkit-scrollbar {
+			display: none;
+		}
+		.form {
+			flex: 1;
+			padding-bottom: 16px;
+			overflow-y: scroll;
+			::-webkit-scrollbar {
+				display: none;
+			}
+		}
+		.transfer {
+			.sub-title {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-bottom: 12px;
+				padding-top: 24px;
+				.controller {
+					display: flex;
+				}
+				.icon {
+					display: flex;
+					margin-left: 8px;
+					width: 32px;
+					height: 32px;
+					border-radius: 12px;
+					border: 1px solid transparent;
+					align-items: center;
+					justify-content: center;
+				}
+				.icon:hover {
+					border-color: #e1e6f0;
+					cursor: pointer;
+				}
+			}
+			.token-selector-wrapper {
+				width: 140px;
+				margin-right: 16px;
+			}
+			.amount-wrapper {
+				flex: 1;
+			}
+			.frozen-transfer {
+				display: flex;
+				justify-content: space-between;
+				border: 1px solid #e1e6f0;
+				border-radius: 12px;
+				padding: 16px;
+				margin-bottom: 20px;
+				.frozen-detail {
+					display: flex;
+					align-items: center;
+				}
+				.desc {
+					font-size: 14px;
+					padding-right: 12px;
+					color: var(--up-text-secondary);
+				}
+			}
+		}
+		.has-divider {
+			border-top: 1px dashed #e1e6f0;
+		}
+	}
+	.controller {
+		.network-fee {
+			padding-top: 12px;
+			.network-fee-title {
+				font-size: 14px;
+				color: var(--up-text-secondary);
+				margin-bottom: 16px;
+			}
+			.switcher-wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				.network-fee-total {
+					font-size: 20px;
+					color: var(--up-text-primary);
+				}
+				.switcher {
+					display: flex;
+					align-items: center;
+					.switch-label {
+						color: var(--up-text-secondary);
+						margin-right: 12px;
+					}
+				}
+			}
+			.pay-btn {
+				width: 100%;
+				margin-top: 28px;
+			}
+		}
+	}
 }

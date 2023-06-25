@@ -4,6 +4,15 @@ $select-prefix: 'rc-select';
     box-sizing: border-box;
 }
 
+.up-select-title {
+    display: inline-block;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--up-text-primary);
+    margin-bottom: 8px;
+}
+
 .rc-select {
     display: inline-block;
     position: relative;
@@ -39,9 +48,17 @@ $select-prefix: 'rc-select';
         }
     }
 
+    &-selection-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+
     &-selector {
         width: 100%;
         height: 100%;
+        padding: 10px 16px;
     }
 
     &-selection-search {
@@ -65,8 +82,20 @@ $select-prefix: 'rc-select';
                 width: 0;
                 height: 0;
                 display: inline-block;
-                border-top-color: #999;
-                transform: translateY(5px);
+                border-left-color: #999;
+                position: absolute;
+                top: 8px;
+                right: -5px;
+                transform-origin: 2.5px center;
+                transition: transform 0.12s ease-out ;
+            }
+        }
+    }
+
+    &-open {
+        .rc-select-arrow {
+            &-icon::after {
+                transform: translateX(-2.5px) rotate(-90deg)
             }
         }
     }
@@ -105,6 +134,14 @@ $select-prefix: 'rc-select';
 
         .rc-select-item-option-state {
             display: none;
+        }
+        &-option {
+            display: flex;
+            align-items: center;
+        }
+        &-option-content {
+            display: flex;
+            align-items: center;
         }
     }
 }

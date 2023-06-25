@@ -1,8 +1,8 @@
 import { Icon, Input } from '@/components'
 import { useTransfer } from '@/hooks/useTransfer'
-import { UseFormReturn, useFieldArray } from 'react-hook-form'
+import { UseFormReturn, useFieldArray, Controller } from 'react-hook-form'
 import styles from './pay.module.scss'
-import { useState, forwardRef, useImperativeHandle, useRef, useMemo, useCallback } from 'react'
+import { useState, forwardRef, useImperativeHandle, useRef, useMemo, useCallback, useEffect } from 'react'
 import EditSvg from '@/assets/svg/Edit.svg'
 import DeleteSvg from '@/assets/svg/Delete.svg'
 import USDCSvg from '@/assets/svg/USDC.svg'
@@ -10,11 +10,20 @@ import USDTSvg from '@/assets/svg/USDT.svg'
 import { etherToWei, formatAddress, weiToEther } from '@/utils'
 import { BigNumber } from 'ethers'
 import { Transaction } from '@/types/transaction'
+import Select, { Option } from 'rc-select'
+import numbor from 'numbro'
+import clsx from 'clsx'
 
 export interface TransferRef {
 	freeze: () => void
 	isActive: () => HTMLDivElement | null
 	isValidAmount: () => boolean
+}
+
+const getItemClsx = (index: number) => {
+	return clsx(styles.transfer, {
+		[styles['has-divider']]: index
+	})
 }
 
 const Transfer = forwardRef<
@@ -48,6 +57,13 @@ const Transfer = forwardRef<
 			setEditable(true)
 		}
 	}
+
+	// auto expand
+	useEffect(() => {
+		if (txs.length === 1) {
+			setEditable(true)
+		}
+	}, [txs.length])
 
 	const getTokenContractAddress = useCallback(
 		function (contractAddress: string) {
@@ -87,7 +103,9 @@ const Transfer = forwardRef<
 			isValidAmount: () => {
 				try {
 					const currentToken = getTokenContractAddress(tx.token)
-					return etherToWei(availableBalance, currentToken?.decimals).gte(etherToWei(tx.amount || '0', currentToken?.decimals))
+					return etherToWei(availableBalance, currentToken?.decimals).gte(
+						etherToWei(tx.amount || '0', currentToken?.decimals)
+					)
 				} catch (e) {
 					return false
 				}
@@ -96,44 +114,58 @@ const Transfer = forwardRef<
 		[availableBalance, tx.token, tx.amount, getTokenContractAddress]
 	)
 
-	
-
 	return (
-		<div className={styles.transfer} key={fields[index].id}>
-			<div className={styles['sub-title']}>
-				{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment{index + 1}</div> : <div></div>}
-				<div className={styles.controller}>
-					{txs.length > 1 && (
-						<div className={styles.icon} onClick={() => handleRemove(index)}>
-							<Icon src={DeleteSvg} />
-						</div>
-					)}
-					{!editable && (
-						<div className={styles.icon} onClick={() => handleEdit()}>
-							<Icon src={EditSvg} />
-						</div>
-					)}
+		<div className={getItemClsx(index)} key={fields[index].id}>
+			{(txs.length > 1 || !editable) ? (
+				<div className={styles['sub-title']}>
+					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment{index + 1}</div> : <div></div>}
+					<div className={styles.controller}>
+						{txs.length > 1 && (
+							<div className={styles.icon} onClick={() => handleRemove(index)}>
+								<Icon src={DeleteSvg} />
+							</div>
+						)}
+						{!editable && (
+							<div className={styles.icon} onClick={() => handleEdit()}>
+								<Icon src={EditSvg} />
+							</div>
+						)}
+					</div>
 				</div>
-			</div>
+			): <div style={{height: '20px'}}></div>}
+
 			{editable ? (
 				<>
 					<div ref={posRef} className={styles.row}>
 						<div className={styles['token-selector-wrapper']}>
-							<select {...formField.register(`txs.${index}.token`)}>
-								{availableTokens.map((token) => (
-									<option key={token.contractAddress} value={token.contractAddress}>
-										{token.symbol}
-									</option>
-								))}
-							</select>
+							<span className="up-select-title">TOKEN</span>
+							<Controller
+								control={formField.control}
+								name={`txs.${index}.token`}
+								render={({ field: { onChange, value } }) => (
+									<Select onChange={onChange} value={value}>
+										{availableTokens.map((token) => (
+											<Option key={token.contractAddress} value={token.contractAddress}>
+												<Icon
+													src={token.symbol === 'USDC' ? USDCSvg : USDTSvg}
+													style={{ marginRight: '12px' }}
+													width={20}
+													height={20}
+												/>{' '}
+												{token.symbol}
+											</Option>
+										))}
+									</Select>
+								)}
+							/>
 						</div>
 						<div className={styles['amount-wrapper']}>
 							<Input
 								type="number"
 								placeholder="Input amount"
 								formField={formField}
-								extraMessage={`Available: ${availableBalance}`}
-								label="Amount"
+								extraMessage={`AVAILABLE: ${numbor(availableBalance).format({ thousandSeparated: true, mantissa: 2 })}`}
+								label="AMOUNT"
 								name={`txs.${index}.amount`}
 							/>
 						</div>
@@ -142,7 +174,7 @@ const Transfer = forwardRef<
 						type="text"
 						placeholder="Input recipient address"
 						formField={formField}
-						label="Address"
+						label="ADDRESS"
 						name={`txs.${index}.to`}
 					/>
 				</>

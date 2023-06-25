@@ -44,7 +44,7 @@ const App: React.FC = () => {
 					USDC
 				</Option>
 			</Select>
-			<Popover
+			{/* <Popover
 				placement="top"
 				overlay={
 					<>
@@ -56,12 +56,12 @@ const App: React.FC = () => {
 				visible={true}
 			>
 				<div>top</div>
-			</Popover>
-			<Switch
+			</Popover> */}
+			{/* <Switch
 				onChange={(value, event) => {
 					console.log(`switch checked: ${value}`, event)
 				}}
-			/>
+			/> */}
 			<br />
 			{/* <div>{theme}</div>
 			<Button onClick={() => toggleTheme()}>toggleTheme</Button>

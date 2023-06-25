@@ -184,11 +184,11 @@ const Pay: React.FC = () => {
 			console.log('res: ', res)
 			addHistory(address, {
 				hash: res.hash,
-				chainId, 
+				chainId,
 				status: TransactionStatus.Pending,
 				timestamp: Date.now(),
 				txs,
-				fee,
+				fee
 			})
 			waitResponse(res, address, chainId)
 			setIsPaying(false)
@@ -204,48 +204,52 @@ const Pay: React.FC = () => {
 
 	return (
 		<div className={styles.pay}>
-			<div className={styles.title}>Pay</div>
-			<div className={styles.form}>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					{fields.map((item, index) => {
-						return (
-							<Transfer
-								ref={(ref) => saveTransferRef(ref, index)}
-								key={item.id}
-								index={index}
-								remove={handleRemove}
-								formField={useFormReturn}
-								onEdit={handleEdit}
-							/>
-						)
-					})}
-					<Button type="button" onClick={addMore}>
-						+ Add Another Payment
-					</Button>
-					<div ref={formBottomRef}></div>
-				</form>
-			</div>
-			<div className={styles['network-fee']}>
-				<div className={styles['network-fee-title']}>NETWORK FEE</div>
-				<div className={styles['switcher-wrapper']}>
-					<div className={styles['network-fee-total']}>
-						{weiToEther(selectedGas?.amount || 0, selectedGas?.decimals)} {selectedGas?.symbol}
-					</div>
-					<div className={styles.switcher}>
-						<div className={styles['switch-label']}>Pay with</div>
-						<FeeSwitcher onSwitchToken={handleSwitchToken} />
-					</div>
+			<div className={styles.content}>
+				<div className={styles.title}>PAY</div>
+				<div className={styles.form}>
+					<form onSubmit={handleSubmit(onSubmit)}>
+						{fields.map((item, index) => {
+							return (
+								<Transfer
+									ref={(ref) => saveTransferRef(ref, index)}
+									key={item.id}
+									index={index}
+									remove={handleRemove}
+									formField={useFormReturn}
+									onEdit={handleEdit}
+								/>
+							)
+						})}
+						<Button type="button" onClick={addMore}>
+							+ Add Another Payment
+						</Button>
+						<div ref={formBottomRef}></div>
+					</form>
 				</div>
-				<Button
-					className={styles['pay-btn']}
-					disabled={isPaying}
-					size="lg"
-					icon={<Icon src={Send} size="md" />}
-					type="submit"
-					onClick={onSubmit}
-				>
-					Pay
-				</Button>
+			</div>
+			<div className={styles.controller}>
+				<div className={styles['network-fee']}>
+					<div className={styles['network-fee-title']}>NETWORK FEE</div>
+					<div className={styles['switcher-wrapper']}>
+						<div className={styles['network-fee-total']}>
+							{weiToEther(selectedGas?.amount || 0, selectedGas?.decimals)} {selectedGas?.symbol}
+						</div>
+						<div className={styles.switcher}>
+							<div className={styles['switch-label']}>Pay with</div>
+							<FeeSwitcher onSwitchToken={handleSwitchToken} />
+						</div>
+					</div>
+					<Button
+						className={styles['pay-btn']}
+						disabled={isPaying}
+						size="md"
+						icon={<Icon src={Send} size="md" />}
+						type="submit"
+						onClick={onSubmit}
+					>
+						Pay
+					</Button>
+				</div>
 			</div>
 		</div>
 	)

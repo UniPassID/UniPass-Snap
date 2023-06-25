@@ -11,7 +11,11 @@ import { ARBITRUM_MAINNET } from '@/constants'
 import Arbitrum from '@/assets/svg/Arbitrum.svg'
 import Polygon from '@/assets/svg/Polygon.svg'
 import PaySvg from '@/assets/svg/PaymentSelected.svg'
-import { Icon } from '@/components'
+import { Dialog, Icon } from '@/components'
+import { useState } from 'react'
+import ExploreButton from '@/assets/svg/ExploreButton.svg'
+import RecordDetail from './record'
+import './history.dialog.scss'
 
 const columns = [
 	{
@@ -69,6 +73,8 @@ const columns = [
 const History: React.FC = () => {
 	const address = useRecoilValue(smartAccountState)
 	const historyData = getHistory(address)
+	const [currentRecord, setCurrentRecord] = useState<TransactionRecord>()
+	const [showDetail, setShowDetail] = useState<boolean>(false)
 
 	const formatHistoryData = (records: TransactionRecord[]) => {
 		return records.map((record) => {
@@ -82,22 +88,48 @@ const History: React.FC = () => {
 		})
 	}
 
+	const showRecordDetail = (record: TransactionRecord) => {
+		setCurrentRecord(record)
+		setShowDetail(true)
+	}
+
 	return (
 		<div className={styles.history}>
 			<div className={styles.title}>PAYMENT HISTORY</div>
-			<Table
-				columns={columns}
-				className={styles['up-table']}
-				rowClassName={styles['up-table-row']}
-				data={formatHistoryData(historyData)}
-				scroll={{ y: 480 }}
-				onRow={(record, index) => {
-					return { onClick: () => {
-						console.log('row clicked', record)
-					} }
+			<div className={styles.table}>
+				<Table
+					columns={columns}
+					className={styles['up-table']}
+					rowClassName={styles['up-table-row']}
+					data={formatHistoryData(historyData)}
+					scroll={{ y: 570 }}
+					onRow={(record) => {
+						return {
+							onClick: () => {
+								showRecordDetail(record.raw)
+							}
+						}
+					}}
+					sticky={true}
+				/>
+			</div>
+			<Dialog
+				title={
+					<div>
+						Payment Details<span className="status-tag">{currentRecord?.status}</span>
+					</div>
+				}
+				className="up-history-dialog"
+				extraController={<Icon src={ExploreButton} style={{ marginRight: '10px' }} width={24} height={24}></Icon>}
+				showConfirmButton={false}
+				showCancelButton={false}
+				isOpen={showDetail}
+				onRequestClose={() => {
+					setShowDetail(false)
 				}}
-				sticky={true}
-			/>
+			>
+				<RecordDetail record={currentRecord!} />
+			</Dialog>
 		</div>
 	)
 }

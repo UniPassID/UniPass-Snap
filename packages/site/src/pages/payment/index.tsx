@@ -1,5 +1,5 @@
 import Assets from './assets'
-import Pay from './pay'
+import Pay from '../pay'
 import styles from './payment.module.scss'
 
 const Payment = () => {
@@ -8,9 +8,7 @@ const Payment = () => {
 			<div className={styles.overview}>
 				<Assets />
 			</div>
-			<div className={styles.pay}>
-				<Pay />
-			</div>
+			<Pay />
 		</div>
 	)
 }

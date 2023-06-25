@@ -4,7 +4,7 @@ import { close_svg } from '../notify/icons'
 import Button from '../button'
 
 interface DialogProps extends Props {
-	title: string
+	title?: string | React.ReactNode
 	isOpen: boolean
 	confirmText?: string
 	showConfirmButton?: boolean
@@ -14,6 +14,7 @@ interface DialogProps extends Props {
 	onConfirm?: React.MouseEventHandler
 	onCancel?: React.MouseEventHandler
 	extra?: React.ReactNode
+	extraController?: React.ReactNode
 	children: React.ReactNode
 }
 
@@ -29,6 +30,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
 		onConfirm,
 		onCancel,
 		extra,
+		extraController,
+		className,
 		...rest
 	} = props
 
@@ -36,7 +39,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 		<Modal
 			bodyOpenClassName="up_dialog_body"
 			overlayClassName="up_dialog_overlay"
-			className="up_dialog_content"
+			className={`up_dialog_content ${className}`}
 			contentLabel="UniPass Modal"
 			closeTimeoutMS={300}
 			appElement={rest.appElement || document.querySelector('body')!}
@@ -46,6 +49,9 @@ const Dialog: React.FC<DialogProps> = (props) => {
 				<div className="up_dialog_title" style={{ textAlign: center ? 'center' : 'left' }}>
 					{title}
 				</div>
+				{
+					extraController
+				}
 				<div className="up_dialog_close" onClick={rest?.onRequestClose}>
 					{close_svg}
 				</div>

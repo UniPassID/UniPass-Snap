@@ -1,0 +1,33 @@
+.up-history-dialog {
+  width: 440px !important;
+  height: 540px !important;
+
+  .status-tag {
+    color: #E85050;
+    background-color: #FDEEEE;
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+  }
+
+  .record {
+    .row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 20px 0;
+      .label {
+        color: var(--up-text-primary)
+      }
+      .content {
+        width: 260px;
+        text-align: right;
+        word-break: break-all;
+        word-wrap: break-word;
+        color: var(--up-text-secondary)
+      }
+    }
+  }
+}
+

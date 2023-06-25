@@ -45,9 +45,10 @@ export function getHistory(address: string): TransactionRecord[] {
   try {
 		const historyKey = `${address}_his`
 		const allTxs = localStorage.getItem(historyKey) || '[]'
-		return JSON.parse(allTxs) as TransactionRecord[]
+		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
+		return parsedTxs.sort((pre, next) => next.timestamp - pre.timestamp)
 	} catch (e) {
-		console.error('[history updateHistory]', e)
+		console.error('[history getHistory]', e)
 	}
   return []
 }

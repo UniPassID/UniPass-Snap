@@ -77,6 +77,13 @@ export const signMessageWithSnap = async (message: string | Bytes) => {
 	})) as string
 }
 
+export const getSignSig = async (address: string) => {
+	return await window.ethereum.request<{ loginMessage: string; loginSignature: string }>({
+		method: 'wallet_invokeSnap',
+		params: { snapId: defaultSnapOrigin, request: { method: 'getSignSig', params: { address }}}
+	})
+}
+
 export const signTransactionWithSnap = async (transaction: TransactionRequest) => {
 	return (await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',

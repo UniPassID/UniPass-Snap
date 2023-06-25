@@ -8,6 +8,7 @@ import { CHAIN_CONFIGS, CUSTOM_AUTH_APPID } from '@/constants'
 import { SmartAccount } from '@unipasswallet/smart-account'
 import { upNotify } from '@/components'
 import { SnapSigner } from '@/snap-signer'
+import { fetchAccessToken } from '@/utils/account'
 
 export const useSnap = () => {
 	const [isFlask, setHasFlaskDetected] = useRecoilState(flaskState)
@@ -57,6 +58,10 @@ export const useSnap = () => {
 				window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)
 				setSmartAccountState(smartAccountAddress)
 				setSmartAccountInsState(smartAccount)
+				fetchAccessToken({
+					accountAddress: smartAccountAddress,
+					providerIdentifier: masterKeyAddress,
+				})
 			} catch (e: any) {
 				upNotify.error(e.message)
 			}

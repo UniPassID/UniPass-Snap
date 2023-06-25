@@ -2,6 +2,8 @@ import { useMemo } from 'react'
 import { BigNumber } from 'ethers'
 import { currentChainIdState, smartAccountTokenListState } from '@/store'
 import { useRecoilValue } from 'recoil'
+import { CHAIN_CONFIGS } from '@/constants'
+import { TokenInfo } from '@/types'
 
 export const usePay = () => {
 	const tokens = useRecoilValue(smartAccountTokenListState)

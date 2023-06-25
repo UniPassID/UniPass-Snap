@@ -30,7 +30,7 @@ const columns = [
 					<div className={styles['send-icon']}>
 						<Icon width={20} height={20} src={PaySvg} />
 						<div className={styles['chain-icon']}>
-							<Icon width={16} height={16} src={chainId == ARBITRUM_MAINNET ? Arbitrum : Polygon} />
+							<Icon width={16} height={16} src={chainId === ARBITRUM_MAINNET ? Arbitrum : Polygon} />
 						</div>
 					</div>
 					<span style={{ marginLeft: '24px' }}>Sent</span>
@@ -103,6 +103,9 @@ const History: React.FC = () => {
 					rowClassName={styles['up-table-row']}
 					data={formatHistoryData(historyData)}
 					scroll={{ y: 570 }}
+					rowKey={(record) => {
+						return `${record.raw.hash}-${record.raw.chainId}`
+					}}
 					onRow={(record) => {
 						return {
 							onClick: () => {
@@ -120,7 +123,7 @@ const History: React.FC = () => {
 					</div>
 				}
 				className="up-history-dialog"
-				extraController={<Icon src={ExploreButton} style={{ marginRight: '10px' }} width={24} height={24}></Icon>}
+				extraController={<Icon src={ExploreButton} style={{ marginRight: '20px' }} width={24} height={24}></Icon>}
 				showConfirmButton={false}
 				showCancelButton={false}
 				isOpen={showDetail}

@@ -1,7 +1,7 @@
 import { usePay } from '@/hooks/usePay'
 import { useFieldArray, useForm } from 'react-hook-form'
 import Transfer from './transfer'
-import { Button, Icon, upNotify } from '@/components'
+import { Button, Dialog, Icon, upNotify } from '@/components'
 import { etherToWei, weiToEther } from '@/utils'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BigNumber } from 'ethers'
@@ -15,13 +15,7 @@ import FeeSwitcher from '@/components/fee-switcher'
 import Send from '@/assets/svg/Send.svg'
 import { Transactions, Transaction, TransactionStatus } from '@/types/transaction'
 import { addHistory } from '@/utils/history'
-import { waitResponse } from '@/utils/transaction'
-
-const DEFAULT_FORM_ITEM = {
-	amount: '',
-	to: '',
-	token: '0x87F0E95E11a49f56b329A1c143Fb22430C07332a'
-}
+import { getTokenBySymbol, waitResponse } from '@/utils/transaction'
 
 const Pay: React.FC = () => {
 	const { SINGLE_GAS } = usePay()
@@ -32,6 +26,16 @@ const Pay: React.FC = () => {
 	const smartAccount = useRecoilValue(smartAccountInsState)
 	const address = useRecoilValue(smartAccountState)
 	const [isPaying, setIsPaying] = useState<boolean>(false)
+	const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
+	const [deletingIndex, setDeletingIndex] = useState<number>()
+
+	const DEFAULT_FORM_ITEM = useMemo(() => {
+		return {
+			amount: '',
+			to: '',
+			token: getTokenBySymbol('USDT', chainId)?.contractAddress || ''
+		}
+	}, [chainId])
 
 	const useFormReturn = useForm<Transactions>({
 		mode: 'onChange',
@@ -41,6 +45,13 @@ const Pay: React.FC = () => {
 	})
 
 	const { handleSubmit, watch, setError, reset, ...rest } = useFormReturn
+
+	// clear txs when chainId changed
+	useEffect(() => {
+		reset({
+			txs: [DEFAULT_FORM_ITEM]
+		})
+	}, [DEFAULT_FORM_ITEM, reset])
 
 	const txs = useFormReturn.watch('txs')
 
@@ -112,7 +123,6 @@ const Pay: React.FC = () => {
 	}, [txs, setError])
 
 	const addMore = () => {
-		console.log('addMore')
 		if (validator()) {
 			transferRefs.current.forEach((transferRef) => transferRef.freeze())
 			append(DEFAULT_FORM_ITEM)
@@ -141,11 +151,16 @@ const Pay: React.FC = () => {
 	}, [fields.length])
 
 	const handleRemove = (index: number) => {
-		remove(index)
+		setDeletingIndex(index)
+		setDeleteConfirm(true)
+	}
+
+	const doRemove = () => {
+		remove(deletingIndex)
+		setDeleteConfirm(false)
 	}
 
 	const handleEdit = (): boolean => {
-		console.log('handleEdit')
 		if (validator()) {
 			transferRefs.current.forEach((transferRef) => transferRef?.freeze())
 			return true
@@ -181,7 +196,6 @@ const Pay: React.FC = () => {
 			const res = await smartAccount.sendTransactionBatch(formattedTxs, {
 				fee
 			})
-			console.log('res: ', res)
 			addHistory(address, {
 				hash: res.hash,
 				chainId,
@@ -190,6 +204,7 @@ const Pay: React.FC = () => {
 				txs,
 				fee
 			})
+			upNotify.success('Submitted Success')
 			waitResponse(res, address, chainId)
 			setIsPaying(false)
 			reset()
@@ -241,7 +256,7 @@ const Pay: React.FC = () => {
 					</div>
 					<Button
 						className={styles['pay-btn']}
-						disabled={isPaying}
+						loading={isPaying}
 						size="md"
 						icon={<Icon src={Send} size="md" />}
 						type="submit"
@@ -251,6 +266,19 @@ const Pay: React.FC = () => {
 					</Button>
 				</div>
 			</div>
+			<Dialog
+				title="Delete Payment"
+				isOpen={deleteConfirm}
+				onCancel={() => {
+					setDeleteConfirm(false)
+				}}
+				onConfirm={doRemove}
+				onRequestClose={() => {
+					setDeleteConfirm(false)
+				}}
+			>
+				{"Are you sure you want to delete this transaction?"}
+			</Dialog>
 		</div>
 	)
 }

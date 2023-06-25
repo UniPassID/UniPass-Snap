@@ -30,7 +30,7 @@ const RecordDetail: React.FC<{
 			</div>
       <div className="row">
 				<div className="label">Fee</div>
-				<div className="content">{record.fee ? weiToEther(record.fee.amount, getTokenByContractAddress(record.fee.token)?.decimals) : 'Free'}</div>
+				<div className="content">{record.fee ? `${weiToEther(record.fee.amount, getTokenByContractAddress(record.fee.token)?.decimals)} ${getTokenByContractAddress(record.fee.token)?.symbol}` : 'Free'}</div>
 			</div>
       <div className="row">
 				<div className="label">Time</div>

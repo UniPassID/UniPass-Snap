@@ -3,6 +3,10 @@ import { useRequest } from 'ahooks'
 import { smartAccountState, smartAccountTokenListState, isTestnetEnvState } from '@/store'
 import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from '@/constants'
 import { getBalancesByMulticall } from '@/utils'
+import { useEffect } from 'react'
+import { getDefaultTokenList } from '@/constants/tokens'
+import axios from 'axios'
+import { sign } from '@/request'
 
 export const useAccount = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
@@ -31,6 +35,13 @@ export const useAccount = () => {
 		pollingInterval: 10000,
 		debounceWait: 800
 	})
+
+	// reset balance after switch env
+	useEffect(() => {
+		const chainIds = isTestnetEnv ? TESTNET_CHAIN_IDS : MAINNET_CHAIN_IDS
+		const defaultTokenList = getDefaultTokenList(chainIds)
+		setSmartAccountTokenList(defaultTokenList)
+	}, [isTestnetEnv, setSmartAccountTokenList])
 
 	return { smartAccount, queryERC20Balances, tokens, handleQueryERC20Balance }
 }

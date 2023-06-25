@@ -51,7 +51,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 	}
 
 	return (
-		<button className={classes} disabled={disabled} {...rest} type={type}>
+		<button className={classes} disabled={disabled || loading} {...rest} type={type}>
 			<div className="up_button_content">
 				{renderIcon()}
 				{(icon || loading) && <div className="up_button_divider"></div>}

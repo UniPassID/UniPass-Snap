@@ -39,7 +39,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 		<Modal
 			bodyOpenClassName="up_dialog_body"
 			overlayClassName="up_dialog_overlay"
-			className={`up_dialog_content ${className}`}
+			className={`${className} up_dialog_content`}
 			contentLabel="UniPass Modal"
 			closeTimeoutMS={300}
 			appElement={rest.appElement || document.querySelector('body')!}
@@ -49,9 +49,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 				<div className="up_dialog_title" style={{ textAlign: center ? 'center' : 'left' }}>
 					{title}
 				</div>
-				{
-					extraController
-				}
+				{extraController}
 				<div className="up_dialog_close" onClick={rest?.onRequestClose}>
 					{close_svg}
 				</div>

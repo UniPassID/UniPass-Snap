@@ -25,7 +25,10 @@ export const Balance: React.FC<{
 	metamaskAccount?: string
 	setCheckAssets: Dispatch<SetStateAction<string | undefined>>
 	connect: () => Promise<void>
-}> = ({ checkedAssets, metamaskAccount, setCheckAssets, connect }) => {
+	openQrCodeDialog: () => void
+}> = ({ checkedAssets, metamaskAccount, setCheckAssets, connect, openQrCodeDialog }) => {
+	console.log(metamaskAccount)
+
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const tokens = useRecoilValue(metamaskAccountTokenListState)
 
@@ -56,6 +59,7 @@ export const Balance: React.FC<{
 				</div>
 			)
 		}
+
 		return isTestnetEnv ? (
 			<div className={styles.assets}>
 				<div className={styles.title}>ASSETS</div>
@@ -64,35 +68,27 @@ export const Balance: React.FC<{
 						<span>On Polygon</span>
 						<div className={styles.divider} />
 					</div>
-					<div className={styles.usd}>
+					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDT_ADDRESS)}>
 						<div className={styles.coin}>
 							<Icon src={USDT} width={40} height={40} />
 							<span className={styles.symbol}>USDT</span>
 						</div>
 						<div className={styles.value}>
 							<div className={styles.num}>{getBalance(POLYGON_MUMBAI_USDT_ADDRESS)}</div>
-							<Radio
-								value={POLYGON_MUMBAI_USDT_ADDRESS}
-								checked={checkedAssets === POLYGON_MUMBAI_USDT_ADDRESS}
-								onChange={() => setCheckAssets(POLYGON_MUMBAI_USDT_ADDRESS)}
-							>
+							<Radio value={POLYGON_MUMBAI_USDT_ADDRESS} checked={checkedAssets === POLYGON_MUMBAI_USDT_ADDRESS}>
 								{''}
 							</Radio>
 						</div>
 					</div>
 					<div className={styles.divider}></div>
-					<div className={styles.usd}>
+					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDC_ADDRESS)}>
 						<div className={styles.coin}>
 							<Icon src={USDC} width={40} height={40} />
 							<span className={styles.symbol}>USDC</span>
 						</div>
 						<div className={styles.value}>
 							<div className={styles.num}>{getBalance(POLYGON_MUMBAI_USDC_ADDRESS)}</div>
-							<Radio
-								value={POLYGON_MUMBAI_USDC_ADDRESS}
-								checked={checkedAssets === POLYGON_MUMBAI_USDC_ADDRESS}
-								onChange={() => setCheckAssets(POLYGON_MUMBAI_USDC_ADDRESS)}
-							>
+							<Radio value={POLYGON_MUMBAI_USDC_ADDRESS} checked={checkedAssets === POLYGON_MUMBAI_USDC_ADDRESS}>
 								{''}
 							</Radio>
 						</div>
@@ -107,35 +103,27 @@ export const Balance: React.FC<{
 						<span>On Arbitrum</span>
 						<div className={styles.divider} />
 					</div>
-					<div className={styles.usd}>
+					<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDT_ADDRESS)}>
 						<div className={styles.coin}>
 							<Icon src={USDT} width={40} height={40} />
 							<span className={styles.symbol}>USDT</span>
 						</div>
 						<div className={styles.value}>
 							<div className={styles.num}>{getBalance(ARBITRUM_MAINNET_USDT_ADDRESS)}</div>
-							<Radio
-								value={ARBITRUM_MAINNET_USDT_ADDRESS}
-								checked={checkedAssets === ARBITRUM_MAINNET_USDT_ADDRESS}
-								onChange={() => setCheckAssets(ARBITRUM_MAINNET_USDT_ADDRESS)}
-							>
+							<Radio value={ARBITRUM_MAINNET_USDT_ADDRESS} checked={checkedAssets === ARBITRUM_MAINNET_USDT_ADDRESS}>
 								{''}
 							</Radio>
 						</div>
 					</div>
 					<div className={styles.divider}></div>
-					<div className={styles.usd}>
+					<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDC_ADDRESS)}>
 						<div className={styles.coin}>
 							<Icon src={USDC} width={40} height={40} />
 							<span className={styles.symbol}>USDC</span>
 						</div>
 						<div className={styles.value}>
 							<div className={styles.num}>{getBalance(ARBITRUM_MAINNET_USDC_ADDRESS)}</div>
-							<Radio
-								value={ARBITRUM_MAINNET_USDC_ADDRESS}
-								checked={checkedAssets === ARBITRUM_MAINNET_USDC_ADDRESS}
-								onChange={() => setCheckAssets(ARBITRUM_MAINNET_USDC_ADDRESS)}
-							>
+							<Radio value={ARBITRUM_MAINNET_USDC_ADDRESS} checked={checkedAssets === ARBITRUM_MAINNET_USDC_ADDRESS}>
 								{''}
 							</Radio>
 						</div>
@@ -146,35 +134,27 @@ export const Balance: React.FC<{
 						<span>On Polygon</span>
 						<div className={styles.divider} />
 					</div>
-					<div className={styles.usd}>
+					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDT_ADDRESS)}>
 						<div className={styles.coin}>
 							<Icon src={USDT} width={40} height={40} />
 							<span className={styles.symbol}>USDT</span>
 						</div>
 						<div className={styles.value}>
 							<div className={styles.num}>{getBalance(POLYGON_MAINNET_USDT_ADDRESS)}</div>
-							<Radio
-								value={POLYGON_MAINNET_USDT_ADDRESS}
-								checked={checkedAssets === POLYGON_MAINNET_USDT_ADDRESS}
-								onChange={() => setCheckAssets(POLYGON_MAINNET_USDT_ADDRESS)}
-							>
+							<Radio value={POLYGON_MAINNET_USDT_ADDRESS} checked={checkedAssets === POLYGON_MAINNET_USDT_ADDRESS}>
 								{''}
 							</Radio>
 						</div>
 					</div>
 					<div className={styles.divider}></div>
-					<div className={styles.usd}>
+					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDC_ADDRESS)}>
 						<div className={styles.coin}>
 							<Icon src={USDC} width={40} height={40} />
 							<span className={styles.symbol}>USDC</span>
 						</div>
 						<div className={styles.value}>
 							<div className={styles.num}>{getBalance(POLYGON_MAINNET_USDC_ADDRESS)}</div>
-							<Radio
-								value={POLYGON_MAINNET_USDC_ADDRESS}
-								checked={checkedAssets === POLYGON_MAINNET_USDC_ADDRESS}
-								onChange={() => setCheckAssets(POLYGON_MAINNET_USDC_ADDRESS)}
-							>
+							<Radio value={POLYGON_MAINNET_USDC_ADDRESS} checked={checkedAssets === POLYGON_MAINNET_USDC_ADDRESS}>
 								{''}
 							</Radio>
 						</div>
@@ -198,7 +178,7 @@ export const Balance: React.FC<{
 				{renderAssets()}
 			</div>
 			<div className={styles.qrcode_btn}>
-				<Button size="md" btnType="gray" icon={<Icon src={QRCode} size="lg" />}>
+				<Button size="md" btnType="gray" icon={<Icon src={QRCode} size="lg" />} onClick={openQrCodeDialog}>
 					Top up via QRcode
 				</Button>
 			</div>

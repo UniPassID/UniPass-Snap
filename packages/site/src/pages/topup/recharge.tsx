@@ -24,7 +24,6 @@ export const ReCharge: React.FC<{
 		mode: 'onChange'
 	})
 	const { handleSubmit } = methods
-	console.log(methods.formState.errors)
 
 	const selectedToken = useMemo(() => {
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
@@ -33,7 +32,6 @@ export const ReCharge: React.FC<{
 	}, [tokens, checkedAssets])
 
 	const onSubmit = (data: any) => {
-		console.log(data)
 		if (selectedToken) recharge(data.Amount, selectedToken)
 	}
 
@@ -43,13 +41,16 @@ export const ReCharge: React.FC<{
 				<div className={styles.title}>Top Up</div>
 				<form>
 					<Input
-						type="number"
 						name="Amount"
 						formField={methods}
 						validateShame={{
 							max: {
 								value: selectedToken ? parseFloat(weiToEther(selectedToken.balance || 0, selectedToken.decimals)) : 0,
 								message: 'Insufficient Funds'
+							},
+							pattern: {
+								value: /^\d{1,5}$|(?=^.{1,5}$)^\d+\.\d{0,2}$/,
+								message: 'Incorrect Amount'
 							},
 							required: true
 						}}

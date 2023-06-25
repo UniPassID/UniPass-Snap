@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { useAsyncEffect, useBoolean } from 'ahooks'
 import { smartAccountState, metamaskAccountTokenListState } from '@/store'
@@ -13,15 +14,18 @@ const { useAccount, useProvider } = hooks
 export const useMetaMask = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [, setSmartAccountTokenList] = useRecoilState(metamaskAccountTokenListState)
-	const [rechargeLoading, { setTrue, setFalse }] = useBoolean(false)
+	const [rechargeLoading, { setTrue: startReChargeLoading, setFalse: endReChargeLoading }] = useBoolean(false)
+	const [isRechargeDialogOpen, { setTrue: openRechargeDialog, setFalse: closeRechargeDialog }] = useBoolean(false)
+	const [selectedToken, setToken] = useState<TokenInfo | undefined>(undefined)
+	const [transactionAmount, setTransactionAmount] = useState<string>('')
+	const [transactionHash, setTransactionHash] = useState<string>('')
 
 	const provider = useProvider()
 	const metamaskAccount = useAccount()
 
 	const queryERC20Balances = async () => {
-		console.log(`begin queryERC20Balances`)
-
 		if (!metamaskAccount) return
+		console.log(`begin queryERC20Balances`)
 		const tasks = CHAIN_CONFIGS.map((chain) => {
 			return getBalancesByMulticall(metamaskAccount, chain.tokens, chain.rpcUrl)
 		})
@@ -34,6 +38,7 @@ export const useMetaMask = () => {
 	useAsyncEffect(queryERC20Balances, [metamaskAccount])
 
 	const connectEagerly = async () => {
+		if (metamaskAccount) return
 		console.log('connectEagerly')
 		await metaMask.connectEagerly().catch(console.log)
 	}
@@ -54,19 +59,22 @@ export const useMetaMask = () => {
 
 	const recharge = async (amount: string, token: TokenInfo) => {
 		if (!provider) return
+		console.log(typeof amount)
+
 		try {
-			setTrue()
-			await switchCurrentChain(80001)
+			startReChargeLoading()
 
+			await switchCurrentChain(token.chainId)
 			const contract = makeERC20Contract(token.contractAddress, provider, metamaskAccount)
-
 			const tx = await contract.transfer(smartAccount, etherToWei(amount, token.decimals).toHexString())
-
 			const result = await tx.wait()
 
 			if (result.status === 1) {
 				console.log(result.transactionHash)
-				upNotify.success('recharge success')
+				setToken(token)
+				setTransactionAmount(amount)
+				setTransactionHash(result.transactionHash)
+				openRechargeDialog()
 			} else {
 				upNotify.error('recharge failed')
 			}
@@ -77,9 +85,28 @@ export const useMetaMask = () => {
 				upNotify.error(message)
 			}
 		} finally {
-			setFalse()
+			endReChargeLoading()
 		}
 	}
 
-	return { metamaskAccount, connectEagerly, connect, recharge, rechargeLoading }
+	const openExplore = () => {
+		const token = CHAIN_CONFIGS.find((chain) => selectedToken?.chainId === chain.chainId)
+
+		if (token) {
+			window.open(`${token.explorer}/tx/${transactionHash}`, '_blank')
+		}
+	}
+
+	return {
+		metamaskAccount,
+		connectEagerly,
+		connect,
+		recharge,
+		rechargeLoading,
+		isRechargeDialogOpen,
+		closeRechargeDialog,
+		transactionAmount,
+		selectedToken,
+		openExplore
+	}
 }

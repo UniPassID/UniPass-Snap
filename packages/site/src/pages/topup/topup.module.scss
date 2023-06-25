@@ -99,6 +99,7 @@
                     flex-flow: row nowrap;
                     justify-content: space-between;
                     height: 52px;
+                    cursor: pointer;
 
                     .coin {
                         display: flex;
@@ -168,15 +169,16 @@
     }
 
     .recharge {
-        flex-grow: 0;
-        flex-shrink: 0;
         display: flex;
         align-items: center;
         flex-flow: column nowrap;
         justify-content: space-between;
         padding: 40px;
         height: 720px;
+        width: 560px;
         background-color: #F0F3FA;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
 
         .amount {
             .title {
@@ -329,7 +331,6 @@
     }
 }
 
-
 @keyframes upInputErrorAnimationIn {
     0% {
         opacity: 0;
@@ -339,5 +340,94 @@
     100% {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.success_dialog {
+    text-align: center;
+    width: 400px !important;
+
+    .title {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+        color: #1F202A;
+        margin-top: 20px;
+        margin-bottom: 12px;
+    }
+
+    .tips {
+        color: #5E5F6E;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .explorer {
+        color: #8864FF;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 20px;
+        cursor: pointer;
+    }
+}
+
+.qrcode_dialog {
+    width: 480px !important;
+
+    .qrcode_wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        flex-flow: column nowrap;
+        justify-content: center;
+        width: 240px;
+        height: 240px;
+        margin: 30px auto 28px auto;
+        background: #F7F7FA;
+
+
+        span {
+            position: absolute;
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+        }
+
+        .top_left {
+            top: 0;
+            left: 0;
+            border-left: 2px solid #8864FF;
+            border-top: 2px solid #8864FF;
+        }
+
+        .top_right {
+            top: 0;
+            right: 0;
+            border-right: 2px solid #8864FF;
+            border-top: 2px solid #8864FF;
+        }
+
+        .bottom_left {
+            bottom: 0;
+            left: 0;
+            border-left: 2px solid #8864FF;
+            border-bottom: 2px solid #8864FF;
+        }
+
+        .bottom_right {
+            bottom: 0;
+            right: 0;
+            border-right: 2px solid #8864FF;
+            border-bottom: 2px solid #8864FF;
+        }
+
+        .tips {
+            color: #B9BABE;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 20px;
+            margin-top: 5px;
+        }
     }
 }

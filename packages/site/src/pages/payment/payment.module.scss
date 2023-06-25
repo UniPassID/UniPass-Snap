@@ -3,6 +3,7 @@
     align-items: center;
     flex-flow: row nowrap;
     justify-content: center;
+    width: 960px;
 
     .overview {
         display: flex;
@@ -135,9 +136,5 @@
                 cursor: pointer;
             }
         }
-    }
-
-    .pay {
-        flex: 1;
     }
 }

@@ -42,7 +42,7 @@ const Input: React.FC<InputProps> = (props) => {
 		[styles.topup_input_error]: hasError
 	})
 
-	const reset = () => {
+	const handleResetField = () => {
 		resetField?.(props.name)
 	}
 
@@ -62,7 +62,8 @@ const Input: React.FC<InputProps> = (props) => {
 				/>
 				<div
 					className={styles.up_input_close}
-					onClick={reset}
+					style={{ visibility: hasValue ? 'visible' : 'hidden' }}
+					onClick={handleResetField}
 					onMouseDown={(e) => {
 						e.preventDefault()
 					}}

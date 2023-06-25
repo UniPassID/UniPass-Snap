@@ -23,6 +23,30 @@
             color: #1F202A;
         }
 
+        .metamask {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+
+            .metamask_account {
+                display: flex;
+                align-items: center;
+                flex-flow: row nowrap;
+                justify-content: center;
+                padding: 8px 12px;
+                height: 36px;
+                border: 1px solid #E1E6F0;
+                border-radius: 12px;
+
+                img {
+                    display: inline-block;
+                    margin-right: 8px;
+                }
+            }
+        }
+
         .assets {
             margin-top: 48px;
 
@@ -144,13 +168,15 @@
     }
 
     .recharge {
-        flex: 1;
+        flex-grow: 0;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
         flex-flow: column nowrap;
         justify-content: space-between;
         padding: 40px;
         height: 720px;
+        background-color: #F0F3FA;
 
         .amount {
             .title {
@@ -158,14 +184,110 @@
                 font-size: 28px;
                 line-height: 40px;
                 color: #1F202A;
+                margin-bottom: 20px;
+            }
+
+
+            .topup_input {
+                position: relative;
+                padding: 16px;
+                background-color: #fff;
+                border-radius: 12px;
+                border: 1px solid transparent;
+                transition: all 0.2s;
+
+                &.topup_input_error {
+                    border-color: $secondary-red-3;
+                }
+
+                .topup_input_title {
+                    color: #5E5F6E;
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+
+                .topup_input_content {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .up_input_inner {
+                        width: 400px;
+                        border: 0;
+                        outline: none;
+                        background-color: transparent;
+                        font-weight: 500;
+                        color: #1F202A;
+                        font-size: 48px;
+                        line-height: 64px;
+
+                        &::placeholder {
+                            font-weight: 400;
+                            font-size: 48px;
+                            line-height: 64px;
+                            color: #B9BABE;
+                            user-select: none;
+                        }
+                    }
+
+                    .up_input_close {
+                        width: 20px;
+                        height: 20px;
+                        margin-right: 16px;
+                        cursor: pointer;
+                    }
+                }
+
+                .up_input_error_message {
+                    display: flex;
+                    flex-flow: row nowrap;
+                    align-items: center;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 20px;
+                    color: $secondary-red-3;
+                    margin-top: 8px;
+                    animation-timing-function: ease-in-out;
+                    animation-duration: 0.2s;
+                    animation-name: upInputErrorAnimationIn;
+
+                    span {
+                        display: inline-block;
+                        margin-right: 10px;
+                    }
+                }
             }
 
             .selected_token {
+                margin-top: 28px;
+
                 .title {
                     font-weight: 400;
                     font-size: 14px;
                     line-height: 20px;
                     color: #5E5F6E;
+                }
+
+                .token_info {
+                    display: flex;
+                    align-items: center;
+                    flex-flow: row nowrap;
+                    justify-content: flex-start;
+                    margin-bottom: 20px;
+
+                    .info {
+                        display: flex;
+                        align-items: center;
+                        flex-flow: row nowrap;
+                        justify-content: center;
+                        margin-right: 16px;
+
+                        img {
+                            display: inline-block;
+                            margin-right: 16px;
+                        }
+                    }
                 }
             }
 
@@ -181,15 +303,41 @@
                         color: #5E5F6E;
                         margin-bottom: 16px;
                     }
+
+                    .address {
+                        display: flex;
+                        align-items: center;
+                        flex-flow: row nowrap;
+                        justify-content: flex-start;
+
+                        img {
+                            display: inline-block;
+                            margin-right: 12px;
+                        }
+                    }
                 }
             }
         }
 
         .topup_btn {
             width: 100%;
+
             button {
                 width: 100%;
             }
         }
+    }
+}
+
+
+@keyframes upInputErrorAnimationIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

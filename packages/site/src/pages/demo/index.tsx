@@ -34,7 +34,7 @@ const App: React.FC = () => {
 		<div className={styles.app}>
 			<div>This is UniPass Interface - Signer</div>
 
-			<Select defaultValue="USDT" onChange={console.log}>
+			<Select onChange={console.log}>
 				<Option value="USDT">
 					<Icon src={USDT} width={20} height={20} />
 					USDT
@@ -53,7 +53,6 @@ const App: React.FC = () => {
 						<div>123</div>
 					</>
 				}
-				visible={true}
 			>
 				<div>top</div>
 			</Popover> */}

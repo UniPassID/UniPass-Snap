@@ -1,3 +1,4 @@
-import Icon from './icon'
+import Icon, { TokenIcon } from './icon'
 
+export { TokenIcon }
 export default Icon

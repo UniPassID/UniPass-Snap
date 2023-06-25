@@ -1,5 +1,7 @@
 import React, { ButtonHTMLAttributes, AnchorHTMLAttributes, FunctionComponent } from 'react'
 import clsx from 'clsx'
+import Loading from '@/assets/svg/loading.svg'
+import { Icon } from '@/components'
 
 export type ButtonSize = 'lg' | 'md' | 'sm'
 export type ButtonType = 'filled' | 'gray' | 'tinted'
@@ -10,6 +12,7 @@ export interface BaseButtonProps {
 	size?: ButtonSize
 	btnType?: ButtonType
 	icon?: React.ReactNode | string
+	loading?: boolean
 	children: React.ReactNode
 }
 
@@ -25,19 +28,33 @@ const Button: FunctionComponent<ButtonProps> = ({
 	size = 'md',
 	type = 'button',
 	icon,
+	loading = false,
 	children,
 	...rest
 }) => {
 	const classes = clsx('up_button', className, {
 		[`up_button_${btnType}`]: btnType,
 		[`up_button_${size}`]: size,
-		disabled
+		disabled: disabled || loading
 	})
+
+	const renderIcon = () => {
+		if (loading) {
+			return (
+				<div className="up_button_loading">
+					<Icon src={Loading} size="md" />
+				</div>
+			)
+		}
+
+		return icon
+	}
 
 	return (
 		<button className={classes} disabled={disabled} {...rest} type={type}>
 			<div className="up_button_content">
-				{icon}
+				{renderIcon()}
+				{(icon || loading) && <div className="up_button_divider"></div>}
 				<span>{children}</span>
 			</div>
 			<div className="up_button_mask" />

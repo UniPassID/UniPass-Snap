@@ -79,6 +79,7 @@ const Assets = () => {
 						</div>
 						<div className={styles.balance}>{numbor(USDTBalance).format({ thousandSeparated: true, mantissa: 2 })}</div>
 					</div>
+					<div className={styles.divider}></div>
 					<div className={styles.USD}>
 						<div className={styles.info}>
 							<Icon src={USDC} width={40} height={40} />

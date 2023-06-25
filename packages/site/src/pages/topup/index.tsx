@@ -6,7 +6,7 @@ import { useMetaMask } from '@/hooks'
 
 const TopUp = () => {
 	const [checkedAssets, setCheckAssets] = useState<string | undefined>(undefined)
-	const { metamaskAccount, connect, recharge } = useMetaMask()
+	const { metamaskAccount, connect, recharge, rechargeLoading } = useMetaMask()
 
 	return (
 		<div className={styles.topup}>
@@ -19,7 +19,12 @@ const TopUp = () => {
 				/>
 			</div>
 			<div className={styles.recharge}>
-				<ReCharge metamaskAccount={metamaskAccount} checkedAssets={checkedAssets} recharge={recharge} />
+				<ReCharge
+					metamaskAccount={metamaskAccount}
+					checkedAssets={checkedAssets}
+					recharge={recharge}
+					rechargeLoading={rechargeLoading}
+				/>
 			</div>
 		</div>
 	)

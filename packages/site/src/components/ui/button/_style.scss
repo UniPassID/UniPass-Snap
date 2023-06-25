@@ -22,13 +22,18 @@
 		justify-content: center;
 		align-items: center;
 
-		.up_icon {
-			display: inline-block;
-			margin-right: 6px;
-		}
-
 		span {
 			display: inline-block;
+		}
+
+		.up_button_loading {
+			animation: spin 1s infinite linear;
+			width: 20px;
+			height: 20px;
+		}
+
+		.up_button_divider {
+			width: 8px;
 		}
 	}
 
@@ -47,19 +52,16 @@
 
 	&.up_button_sm {
 		padding: $btn-padding-sm;
-		height: 36px;
 		border-radius: 100px;
 	}
 
 	&.up_button_md {
 		padding: $btn-padding-md;
-		height: 44px;
 		border-radius: 128px;
 	}
 
 	&.up_button_lg {
 		padding: $btn-padding-lg;
-		height: 48px;
 		border-radius: 148px;
 	}
 
@@ -85,8 +87,14 @@
 		opacity: $btn-opacity-disable !important;
 		box-shadow: none;
 
-		> * {
+		>* {
 			pointer-events: none;
 		}
+	}
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
 	}
 }

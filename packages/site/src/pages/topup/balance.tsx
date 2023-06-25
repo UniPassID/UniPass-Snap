@@ -4,6 +4,7 @@ import USDT from '@/assets/svg/USDT.svg'
 import USDC from '@/assets/svg/USDC.svg'
 import QRCode from '@/assets/svg/QRCode.svg'
 import EmptyAssets from '@/assets/svg/EmptyAssets.svg'
+import MetaMaskLinear from '@/assets/svg/MetaMask_Linear.svg'
 import styles from './topup.module.scss'
 import { Button, Icon, Radio } from '@/components'
 import {
@@ -44,7 +45,7 @@ export const Balance: React.FC<{
 		if (!metamaskAccount) {
 			return (
 				<div className={styles.assets}>
-					<div className={styles.title}>Assets</div>
+					<div className={styles.title}>ASSETS</div>
 					<div className={styles.empty}>
 						<Icon src={EmptyAssets} width={120} height={120} />
 						<span className={styles.tips}>Display assets after getting the address</span>
@@ -57,7 +58,7 @@ export const Balance: React.FC<{
 		}
 		return isTestnetEnv ? (
 			<div className={styles.assets}>
-				<div className={styles.title}>Assets</div>
+				<div className={styles.title}>ASSETS</div>
 				<div className={styles.items}>
 					<div className={styles.Polygon}>
 						<span>On Polygon</span>
@@ -100,7 +101,7 @@ export const Balance: React.FC<{
 			</div>
 		) : (
 			<div className={styles.assets}>
-				<div className={styles.title}>Assets</div>
+				<div className={styles.title}>ASSETS</div>
 				<div className={styles.items}>
 					<div className={styles.Arbitrum}>
 						<span>On Arbitrum</span>
@@ -185,10 +186,13 @@ export const Balance: React.FC<{
 
 	return (
 		<>
-			<div className={styles.assets_info}>
+			<div>
 				<div className={styles.metamask}>
 					<Icon src={MetaMask} width={60} height={60} />
-					{metamaskAccount && formatAddress(metamaskAccount)}
+					<div className={styles.metamask_account}>
+						<Icon src={MetaMaskLinear} width={20} height={20} />
+						{metamaskAccount && formatAddress(metamaskAccount)}
+					</div>
 				</div>
 				<p className={styles.tips}>Please connect your MetaMask address first</p>
 				{renderAssets()}

@@ -1,5 +1,5 @@
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { useAsyncEffect } from 'ahooks'
+import { useAsyncEffect, useBoolean } from 'ahooks'
 import { smartAccountState, metamaskAccountTokenListState } from '@/store'
 import { upNotify } from '@/components'
 import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
@@ -13,6 +13,7 @@ const { useAccount, useProvider } = hooks
 export const useMetaMask = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [, setSmartAccountTokenList] = useRecoilState(metamaskAccountTokenListState)
+	const [rechargeLoading, { setTrue, setFalse }] = useBoolean(false)
 
 	const provider = useProvider()
 	const metamaskAccount = useAccount()
@@ -54,6 +55,7 @@ export const useMetaMask = () => {
 	const recharge = async (amount: string, token: TokenInfo) => {
 		if (!provider) return
 		try {
+			setTrue()
 			await switchCurrentChain(80001)
 
 			const contract = makeERC20Contract(token.contractAddress, provider, metamaskAccount)
@@ -74,8 +76,10 @@ export const useMetaMask = () => {
 			if (errorCode !== 'NETWORK_ERROR') {
 				upNotify.error(message)
 			}
+		} finally {
+			setFalse()
 		}
 	}
 
-	return { metamaskAccount, connectEagerly, connect, recharge }
+	return { metamaskAccount, connectEagerly, connect, recharge, rechargeLoading }
 }

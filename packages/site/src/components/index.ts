@@ -2,7 +2,7 @@
 import { Toaster } from 'react-hot-toast'
 export { Toaster }
 export { default as Button } from './ui/button'
-export { default as Icon } from './ui/icon'
+export { default as Icon, TokenIcon } from './ui/icon'
 export { default as upNotify } from './ui/notify'
 export { default as Dialog } from './ui/dialog'
 export { default as Slider } from './ui/slider'

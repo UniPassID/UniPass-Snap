@@ -32,8 +32,8 @@ const StatusDialog = () => {
 
 	const showSnapConnectDialog = useMemo(() => {
 		if (showMetaMaskInstallDialog) return false
-		return !smartAccount
-	}, [showMetaMaskInstallDialog, smartAccount])
+		return !smartAccount || !installedSnap
+	}, [showMetaMaskInstallDialog, smartAccount, installedSnap])
 
 	return (
 		<>

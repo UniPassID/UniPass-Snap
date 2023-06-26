@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { utils } from 'ethers'
 import { useAsyncEffect } from 'ahooks'
 import { useRecoilState } from 'recoil'

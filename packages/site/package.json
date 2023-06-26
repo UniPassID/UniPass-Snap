@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"build": "craco build",
-		"start": "craco start",
+		"build": "sh bin/build.sh",
+		"start": "sh bin/start.sh",
 		"test": "craco test"
 	},
 	"browserslist": {

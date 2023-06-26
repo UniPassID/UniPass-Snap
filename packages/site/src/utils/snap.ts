@@ -1,9 +1,8 @@
-// @ts-nocheck
-
-import { defaultSnapOrigin } from '@/constants'
 import { GetSnapsResponse, Snap } from '@/types'
 import { Bytes } from 'ethers'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
+
+const defaultSnapOrigin = process.env.REACT_APP_SNAP_ORIGIN as string
 
 /**
  * Get the installed snaps in MetaMask.
@@ -11,6 +10,7 @@ import { TransactionRequest } from '@ethersproject/abstract-provider'
  * @returns The snaps installed in MetaMask.
  */
 export const getSnaps = async (): Promise<GetSnapsResponse> => {
+	// @ts-ignore
 	return (await window.ethereum.request({
 		method: 'wallet_getSnaps'
 	})) as unknown as GetSnapsResponse
@@ -26,6 +26,7 @@ export const connectSnap = async (
 	snapId: string = defaultSnapOrigin,
 	params: Record<'version' | string, unknown> = {}
 ) => {
+	// @ts-ignore
 	await window.ethereum.request({
 		method: 'wallet_requestSnaps',
 		params: {
@@ -40,8 +41,9 @@ export const connectSnap = async (
  * @param version - The version of the snap to install (optional).
  * @returns The snap object returned by the extension.
  */
-export const getSnap = async (version?: string): Promise<Snap | undefined> => {
+export const getSnap = async (): Promise<Snap | undefined> => {
 	try {
+		const version = process.env.REACT_APP_SNAP_VERSION
 		const snaps = await getSnaps()
 		return Object.values(snaps).find((snap) => {
 			return snap.id === defaultSnapOrigin && (!version || snap.version === version)
@@ -57,6 +59,7 @@ export const getSnap = async (version?: string): Promise<Snap | undefined> => {
  */
 
 export const sendHello = async () => {
+	// @ts-ignore
 	await window.ethereum.request({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'hello' } }
@@ -64,6 +67,7 @@ export const sendHello = async () => {
 }
 
 export const getMasterKeyAddress = async () => {
+	// @ts-ignore
 	return (await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'getMasterKeyAddress' } }
@@ -71,6 +75,7 @@ export const getMasterKeyAddress = async () => {
 }
 
 export const signMessageWithSnap = async (message: string | Bytes) => {
+	// @ts-ignore
 	return (await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'signMessage', params: { message } } }
@@ -78,6 +83,7 @@ export const signMessageWithSnap = async (message: string | Bytes) => {
 }
 
 export const getSignSig = async (address: string) => {
+	// @ts-ignore
 	return await window.ethereum.request<{ loginMessage: string; loginSignature: string }>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'getSignSig', params: { address } } }
@@ -85,6 +91,7 @@ export const getSignSig = async (address: string) => {
 }
 
 export const signTransactionWithSnap = async (transaction: TransactionRequest) => {
+	// @ts-ignore
 	return (await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
 		params: { snapId: defaultSnapOrigin, request: { method: 'signTransaction', params: { transaction } } }

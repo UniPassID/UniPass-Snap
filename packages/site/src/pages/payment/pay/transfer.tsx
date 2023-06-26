@@ -7,11 +7,10 @@ import EditSvg from '@/assets/svg/Edit.svg'
 import DeleteSvg from '@/assets/svg/Delete.svg'
 import USDCSvg from '@/assets/svg/USDC.svg'
 import USDTSvg from '@/assets/svg/USDT.svg'
-import { etherToWei, formatAddress, weiToEther } from '@/utils'
+import { etherToWei, formatAddress, formatUSDAmount, weiToEther } from '@/utils'
 import { BigNumber } from 'ethers'
 import { Transaction } from '@/types/transaction'
 import Select, { Option } from 'rc-select'
-import numbor from 'numbro'
 import clsx from 'clsx'
 
 export interface TransferRef {
@@ -116,7 +115,7 @@ const Transfer = forwardRef<
 
 	return (
 		<div className={getItemClsx(index)} key={fields[index].id}>
-			{(txs.length > 1 || !editable) ? (
+			{txs.length > 1 || !editable ? (
 				<div className={styles['sub-title']}>
 					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment{index + 1}</div> : <div></div>}
 					<div className={styles.controller}>
@@ -132,7 +131,9 @@ const Transfer = forwardRef<
 						)}
 					</div>
 				</div>
-			): <div style={{height: '20px'}}></div>}
+			) : (
+				<div style={{ height: '20px' }}></div>
+			)}
 
 			{editable ? (
 				<>
@@ -164,7 +165,7 @@ const Transfer = forwardRef<
 								type="number"
 								placeholder="Input amount"
 								formField={formField}
-								extraMessage={`AVAILABLE: ${numbor(availableBalance).format({ thousandSeparated: true, mantissa: 2 })}`}
+								extraMessage={`AVAILABLE: ${formatUSDAmount(availableBalance)}`}
 								label="AMOUNT"
 								name={`txs.${index}.amount`}
 							/>

@@ -16,9 +16,8 @@ import {
 	POLYGON_MUMBAI_USDC_ADDRESS
 } from '@/constants'
 import { isTestnetEnvState, metamaskAccountTokenListState } from '@/store'
-import numbor from 'numbro'
 import { useRecoilValue } from 'recoil'
-import { formatAddress, weiToEther } from '@/utils'
+import { formatAddress, formatUSDAmount, weiToEther } from '@/utils'
 
 export const Balance: React.FC<{
 	checkedAssets?: string
@@ -40,7 +39,7 @@ export const Balance: React.FC<{
 
 		const balance = token ? parseFloat(weiToEther(token.balance || 0, token.decimals)) : 0
 
-		return numbor(balance).format({ thousandSeparated: true, mantissa: 2 })
+		return formatUSDAmount(balance)
 	}
 
 	const renderAssets = () => {
@@ -168,10 +167,12 @@ export const Balance: React.FC<{
 			<div>
 				<div className={styles.metamask}>
 					<Icon src={MetaMask} width={60} height={60} />
-					<div className={styles.metamask_account}>
-						<Icon src={MetaMaskLinear} width={20} height={20} />
-						{metamaskAccount && formatAddress(metamaskAccount)}
-					</div>
+					{metamaskAccount && (
+						<div className={styles.metamask_account}>
+							<Icon src={MetaMaskLinear} width={20} height={20} />
+							{metamaskAccount && formatAddress(metamaskAccount)}
+						</div>
+					)}
 				</div>
 				<p className={styles.tips}>Please connect your MetaMask address first</p>
 				{renderAssets()}

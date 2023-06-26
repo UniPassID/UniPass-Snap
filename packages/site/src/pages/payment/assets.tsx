@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import numbor from 'numbro'
 import ChainSwitcher from '@/components/chain-switcher'
 import { currentChainIdState, currentSideBarState, smartAccountState, smartAccountTokenListState } from '@/store'
 import styles from './payment.module.scss'
-import { formatAddress, weiToEther } from '@/utils'
+import { formatAddress, formatUSDAmount, weiToEther } from '@/utils'
 import { Button, Icon } from '@/components'
 import USDT from '@/assets/svg/USDT.svg'
 import USDC from '@/assets/svg/USDC.svg'
@@ -57,7 +56,7 @@ const Assets = () => {
 				<div className={styles.title}>STABLE COIN BALANCE</div>
 				<div className={styles.value}>
 					<span>$</span>
-					<span>{numbor(totalBalanceOnChain).format({ thousandSeparated: true, mantissa: 2 })}</span>
+					<span>{formatUSDAmount(totalBalanceOnChain)}</span>
 				</div>
 				<Button
 					size="md"
@@ -77,7 +76,7 @@ const Assets = () => {
 								<span className={styles.name}>Tether</span>
 							</div>
 						</div>
-						<div className={styles.balance}>{numbor(USDTBalance).format({ thousandSeparated: true, mantissa: 2 })}</div>
+						<div className={styles.balance}>{formatUSDAmount(USDTBalance)}</div>
 					</div>
 					<div className={styles.divider}></div>
 					<div className={styles.USD}>
@@ -88,7 +87,7 @@ const Assets = () => {
 								<span className={styles.name}>USD Coin</span>
 							</div>
 						</div>
-						<div className={styles.balance}>{numbor(USDCBalance).format({ thousandSeparated: true, mantissa: 2 })}</div>
+						<div className={styles.balance}>{formatUSDAmount(USDCBalance)}</div>
 					</div>
 				</div>
 			</div>

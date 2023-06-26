@@ -1,5 +1,5 @@
 {
-	"name": "@unipasswallet/snap-site",
+	"name": "@unipasswallet/payment-site",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {

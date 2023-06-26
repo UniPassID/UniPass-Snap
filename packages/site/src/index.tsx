@@ -7,7 +7,9 @@ import reportWebVitals from '@/reportWebVitals'
 import App from './App'
 import '@/assets/styles/index.scss'
 
-ReactGA.initialize('UA-000000-00', { debug: true })
+if (process.env.REACT_APP_UNIPASS_GA) {
+	ReactGA.initialize(process.env.REACT_APP_UNIPASS_GA, { debug: process.env.NODE_ENV === 'development' })
+}
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<RecoilRoot>

@@ -5764,6 +5764,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"babel-plugin-transform-remove-console@npm:^6.9.4":
+  version: 6.9.4
+  resolution: "babel-plugin-transform-remove-console@npm:6.9.4"
+  checksum: 1123c3816c6f89c064752199c8796f30265d937f5d8e1e43d3837f1c0e87ed0e6bbd0afa6117ce021c8b93ec1de7154e158674bb22331c7ed6609d10121359df
+  languageName: node
+  linkType: hard
+
 "babel-preset-current-node-syntax@npm:^1.0.0":
   version: 1.0.1
   resolution: "babel-preset-current-node-syntax@npm:1.0.1"
@@ -15712,6 +15719,7 @@ __metadata:
     "@web3-react/types": 8.2.0
     ahooks: ^3.7.7
     axios: ^1.4.0
+    babel-plugin-transform-remove-console: ^6.9.4
     clsx: ^1.2.1
     craco-sass-resources-loader: ^1.1.0
     dayjs: ^1.11.7

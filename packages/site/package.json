@@ -67,6 +67,7 @@
 		"@types/react-copy-to-clipboard": "^5.0.4",
 		"@types/react-dom": "^18.2.5",
 		"@types/react-modal": "^3.16.0",
+		"babel-plugin-transform-remove-console": "^6.9.4",
 		"craco-sass-resources-loader": "^1.1.0"
 	}
 }

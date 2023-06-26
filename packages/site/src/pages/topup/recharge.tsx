@@ -29,6 +29,7 @@ export const ReCharge: React.FC<{
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
 		methods.resetField('Amount')
 		return token
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tokens, checkedAssets])
 
 	const onSubmit = (data: any) => {

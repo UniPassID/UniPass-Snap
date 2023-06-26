@@ -39,8 +39,7 @@ export const useMetaMask = () => {
 
 	const connectEagerly = async () => {
 		if (metamaskAccount) return
-		console.log('connectEagerly')
-		await metaMask.connectEagerly().catch(console.log)
+		await metaMask.connectEagerly().catch()
 	}
 
 	useAsyncEffect(connectEagerly, [])
@@ -59,7 +58,6 @@ export const useMetaMask = () => {
 
 	const recharge = async (amount: string, token: TokenInfo) => {
 		if (!provider) return
-		console.log(typeof amount)
 
 		try {
 			startReChargeLoading()
@@ -70,7 +68,6 @@ export const useMetaMask = () => {
 			const result = await tx.wait()
 
 			if (result.status === 1) {
-				console.log(result.transactionHash)
 				setToken(token)
 				setTransactionAmount(amount)
 				setTransactionHash(result.transactionHash)

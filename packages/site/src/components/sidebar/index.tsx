@@ -1,9 +1,9 @@
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useBoolean } from 'ahooks'
+import { useRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
-import { useSnap } from '@/hooks'
-import { Button, Icon, Popover, Switch } from '@/components'
-import { smartAccountState, currentSideBarState, isTestnetEnvState, currentChainIdState } from '@/store'
+import { Icon, Popover, Switch } from '@/components'
+import { currentSideBarState, isTestnetEnvState, currentChainIdState } from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
 import PaymentSelected from '@/assets/svg/PaymentSelected.svg'
@@ -15,10 +15,8 @@ import More from '@/assets/svg/More.svg'
 import Testnet from '@/assets/svg/Testnet.svg'
 import Disconnect from '@/assets/svg/Disconnect.svg'
 import Close from '@/assets/svg/Close.svg'
-import styles from './sidebar.module.scss'
-import { formatAddress } from '@/utils'
 import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
-import { useBoolean } from 'ahooks'
+import styles from './sidebar.module.scss'
 
 const menus: Array<{ name: MenuType }> = [
 	{
@@ -33,48 +31,10 @@ const menus: Array<{ name: MenuType }> = [
 ]
 
 const SideBar = () => {
-	const { isFlask, installedSnap, handleConnectSnap } = useSnap()
 	const [showActions, { toggle }] = useBoolean(false)
-	const smartAccount = useRecoilValue(smartAccountState)
 	const [, setCurrentChainIdState] = useRecoilState(currentChainIdState)
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
 	const [isTestnetEnv, setIsTestnetEnv] = useRecoilState(isTestnetEnvState)
-
-	const installFlask = () => {
-		window.open('https://metamask.io/flask/', '_blank')
-	}
-
-	const connect = async () => {
-		await handleConnectSnap()
-	}
-
-	const renderActions = () => {
-		if (isFlask == null) {
-			return null
-		}
-
-		if (!installedSnap) {
-			return (
-				<Button onClick={connect} size="sm">
-					Connect
-				</Button>
-			)
-		}
-
-		if (smartAccount) {
-			return <span>{formatAddress(smartAccount)}</span>
-		}
-
-		if (!isFlask) {
-			return (
-				<Button onClick={installFlask} size="sm">
-					Install MetaMask(Snap)
-				</Button>
-			)
-		} else {
-			return null
-		}
-	}
 
 	const getMenuClassName = (name: MenuType) => {
 		return clsx(styles.menu, {
@@ -162,7 +122,6 @@ const SideBar = () => {
 						</div>
 					)}
 				</Popover>
-				{renderActions()}
 			</div>
 		</div>
 	)

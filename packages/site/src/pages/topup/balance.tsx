@@ -27,13 +27,12 @@ export const Balance: React.FC<{
 	connect: () => Promise<void>
 	openQrCodeDialog: () => void
 }> = ({ checkedAssets, metamaskAccount, setCheckAssets, connect, openQrCodeDialog }) => {
-	console.log(metamaskAccount)
-
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const tokens = useRecoilValue(metamaskAccountTokenListState)
 
 	useEffect(() => {
 		setCheckAssets(undefined)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isTestnetEnv])
 
 	const getBalance = (contractAddress: string) => {

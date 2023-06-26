@@ -10,6 +10,7 @@ interface DialogProps extends Props {
 	showConfirmButton?: boolean
 	cancelText?: string
 	showCancelButton?: boolean
+	showClose?: boolean
 	center?: boolean
 	onConfirm?: React.MouseEventHandler
 	onCancel?: React.MouseEventHandler
@@ -27,6 +28,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 		confirmText = 'Confirm',
 		cancelText = 'Cancel',
 		center = false,
+		showClose = true,
 		onConfirm,
 		onCancel,
 		extra,
@@ -50,25 +52,29 @@ const Dialog: React.FC<DialogProps> = (props) => {
 					{title}
 				</div>
 				{extraController}
-				<div className="up_dialog_close" onClick={rest?.onRequestClose}>
-					{close_svg}
-				</div>
+				{showClose ? (
+					<div className="up_dialog_close" onClick={rest?.onRequestClose}>
+						{close_svg}
+					</div>
+				) : null}
 			</div>
 			<div className="up_dialog_children">{children}</div>
-			<div className="up_dialog_footer">
-				{showCancelButton ? (
-					<Button btnType="gray" size="sm" style={{ flex: center ? '1 1 0%' : '0 1 auto' }} onClick={onCancel}>
-						{cancelText}
-					</Button>
-				) : null}
-				{showCancelButton && showConfirmButton ? <div className="up_dialog_footer_divider"></div> : null}
-				{showConfirmButton ? (
-					<Button size="sm" style={{ flex: center ? '1 1 0%' : '0 1 auto' }} onClick={onConfirm}>
-						{confirmText}
-					</Button>
-				) : null}
-			</div>
-			<div className="up_dialog_text_button">{extra || null}</div>
+			{showCancelButton || showConfirmButton ? (
+				<div className="up_dialog_footer">
+					{showCancelButton ? (
+						<Button btnType="gray" size="sm" style={{ flex: center ? '1 1 0%' : '0 1 auto' }} onClick={onCancel}>
+							{cancelText}
+						</Button>
+					) : null}
+					{showCancelButton && showConfirmButton ? <div className="up_dialog_footer_divider"></div> : null}
+					{showConfirmButton ? (
+						<Button size="sm" style={{ flex: center ? '1 1 0%' : '0 1 auto' }} onClick={onConfirm}>
+							{confirmText}
+						</Button>
+					) : null}
+				</div>
+			) : null}
+			{extra && <div className="up_dialog_text_button">{extra}</div>}
 		</Modal>
 	)
 }

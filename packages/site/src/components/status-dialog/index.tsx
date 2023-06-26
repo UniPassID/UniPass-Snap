@@ -1,4 +1,6 @@
+import { useRecoilValue } from 'recoil'
 import { useSnap } from '@/hooks'
+import { smartAccountState } from '@/store'
 import { Button, Dialog, Icon } from '@/components'
 import BobbleBg from '@/assets/svg/Bobble_bg.svg'
 import MetaMask from '@/assets/svg/MetaMask.svg'
@@ -10,9 +12,11 @@ import BankCard from '@/assets/svg/BankCard.svg'
 import DimensionalCode from '@/assets/svg/DimensionalCode.svg'
 import SocialRecovery from '@/assets/svg/SocialRecovery.svg'
 import styles from './status-dialog.module.scss'
+import { useMemo } from 'react'
 
 const StatusDialog = () => {
 	const { isFlask, installedSnap, handleConnectSnap } = useSnap()
+	const smartAccount = useRecoilValue(smartAccountState)
 
 	const installFlask = () => {
 		window.open('https://metamask.io/flask/', '_blank')
@@ -22,11 +26,20 @@ const StatusDialog = () => {
 		await handleConnectSnap()
 	}
 
+	const showMetaMaskInstallDialog = useMemo(() => {
+		return typeof isFlask === 'boolean' && !isFlask
+	}, [isFlask])
+
+	const showSnapConnectDialog = useMemo(() => {
+		if (showMetaMaskInstallDialog) return false
+		return !smartAccount
+	}, [showMetaMaskInstallDialog, smartAccount])
+
 	return (
 		<>
 			<Dialog
 				title=""
-				isOpen={typeof isFlask === 'boolean' && !isFlask}
+				isOpen={showMetaMaskInstallDialog}
 				shouldCloseOnEsc={false}
 				shouldCloseOnOverlayClick={false}
 				showConfirmButton={false}
@@ -50,8 +63,8 @@ const StatusDialog = () => {
 				<div className={styles.alert}>Please refresh this page after the installation.</div>
 			</Dialog>
 			<Dialog
+				isOpen={showSnapConnectDialog}
 				title=""
-				isOpen={!installedSnap && !(typeof isFlask === 'boolean' && !isFlask)}
 				shouldCloseOnEsc={false}
 				shouldCloseOnOverlayClick={false}
 				showConfirmButton={false}

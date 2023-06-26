@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
 import { Icon, Popover, Switch } from '@/components'
-import { currentSideBarState, isTestnetEnvState, currentChainIdState } from '@/store'
+import { currentSideBarState, isTestnetEnvState, currentChainIdState, smartAccountState } from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
 import PaymentSelected from '@/assets/svg/PaymentSelected.svg'
@@ -35,6 +35,7 @@ const SideBar = () => {
 	const [, setCurrentChainIdState] = useRecoilState(currentChainIdState)
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
 	const [isTestnetEnv, setIsTestnetEnv] = useRecoilState(isTestnetEnvState)
+	const [, setSmartAccountState] = useRecoilState(smartAccountState)
 
 	const getMenuClassName = (name: MenuType) => {
 		return clsx(styles.menu, {
@@ -63,6 +64,13 @@ const SideBar = () => {
 	const handleSwitchEnv = (checked: boolean) => {
 		setCurrentChainIdState(checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET)
 		setIsTestnetEnv(checked)
+	}
+
+	const disconnect = () => {
+		window.localStorage.removeItem('up__smartAccountAddress')
+		window.localStorage.removeItem('up__accessToken')
+		setSmartAccountState('')
+		toggle()
 	}
 
 	return (
@@ -101,7 +109,7 @@ const SideBar = () => {
 								</div>
 								<Switch checked={isTestnetEnv} onChange={handleSwitchEnv} />
 							</div>
-							<div className={styles.item}>
+							<div className={styles.item} onClick={disconnect}>
 								<div className={styles.left}>
 									<Icon src={Disconnect} height={20} width={20} />
 									<span>Disconnect</span>

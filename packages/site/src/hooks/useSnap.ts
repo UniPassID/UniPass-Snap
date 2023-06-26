@@ -16,20 +16,19 @@ export const useSnap = () => {
 	const [, setSmartAccountState] = useRecoilState(smartAccountState)
 	const [, setSmartAccountInsState] = useRecoilState(smartAccountInsState)
 
-	useEffect(() => {
-		const localSmartAccountAddress = window.localStorage.getItem('up__smartAccountAddress')
-
-		if (localSmartAccountAddress && utils.isAddress(localSmartAccountAddress)) {
-			setSmartAccountState(localSmartAccountAddress)
-		}
-	}, [])
-
 	useAsyncEffect(async () => {
 		const _isFlask = await isFlaskVersion()
 		console.log(`_isFlask: ${_isFlask}`)
 
 		setHasFlaskDetected(_isFlask)
-		if (_isFlask) setInstalledSnap(await getSnap())
+		if (_isFlask) {
+			const localSmartAccountAddress = window.localStorage.getItem('up__smartAccountAddress')
+
+			if (localSmartAccountAddress && utils.isAddress(localSmartAccountAddress)) {
+				setSmartAccountState(localSmartAccountAddress)
+				setInstalledSnap(await getSnap())
+			}
+		}
 	}, [])
 
 	const handleConnectSnap = async () => {
@@ -60,7 +59,7 @@ export const useSnap = () => {
 				setSmartAccountInsState(smartAccount)
 				fetchAccessToken({
 					accountAddress: smartAccountAddress,
-					providerIdentifier: masterKeyAddress,
+					providerIdentifier: masterKeyAddress
 				})
 			} catch (e: any) {
 				upNotify.error(e.message)

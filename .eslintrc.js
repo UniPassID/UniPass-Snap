@@ -28,7 +28,6 @@ module.exports = {
 					'{}': false
 				}
 			}
-		],
-		'import/no-anonymous-default-export': 'off'
+		]
 	}
 }

@@ -1,7 +1,7 @@
 import type { ReportHandler, Metric } from 'web-vitals'
 
 const sendToGoogleAnalytics = (metric: Metric) => {
-	// const { name, delta, id } = metric
+	const { name, delta, id } = metric
 
 	console.log(metric)
 
@@ -21,7 +21,7 @@ const sendToGoogleAnalytics = (metric: Metric) => {
 	// })
 }
 
-const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+const reportWebVitalsWrap = (onPerfEntry?: ReportHandler) => {
 	if (onPerfEntry && onPerfEntry instanceof Function) {
 		import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
 			getCLS(onPerfEntry)
@@ -33,5 +33,6 @@ const reportWebVitals = (onPerfEntry?: ReportHandler) => {
 	}
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default () => reportWebVitals(sendToGoogleAnalytics)
+const reportWebVitals = () => reportWebVitalsWrap(sendToGoogleAnalytics)
+
+export default reportWebVitals

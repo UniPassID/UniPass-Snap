@@ -15,7 +15,7 @@ import styles from './status-dialog.module.scss'
 import { useMemo } from 'react'
 
 const StatusDialog = () => {
-	const { isFlask, installedSnap, handleConnectSnap } = useSnap()
+	const { isFlask, installedSnap, handleConnectSnap, connectSnapLoading } = useSnap()
 	const smartAccount = useRecoilValue(smartAccountState)
 
 	const installFlask = () => {
@@ -106,7 +106,12 @@ const StatusDialog = () => {
 					<Icon src={SocialRecovery} width={20} height={20} />
 					Social recovery
 				</div>
-				<Button style={{ width: '100%' }} icon={<Icon src={Connect} width={20} height={20} />} onClick={connect}>
+				<Button
+					style={{ width: '100%' }}
+					icon={<Icon src={Connect} width={20} height={20} />}
+					loading={connectSnapLoading}
+					onClick={connect}
+				>
 					Connect Snap
 				</Button>
 			</Dialog>

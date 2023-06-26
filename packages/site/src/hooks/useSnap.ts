@@ -1,5 +1,5 @@
 import { utils } from 'ethers'
-import { useAsyncEffect } from 'ahooks'
+import { useAsyncEffect, useBoolean } from 'ahooks'
 import { useRecoilState } from 'recoil'
 import { flaskState, installedSnapState, smartAccountState, smartAccountInsState } from '@/store'
 import { connectSnap, getMasterKeyAddress, getSnap, isFlaskVersion } from '@/utils'
@@ -14,6 +14,7 @@ export const useSnap = () => {
 	const [installedSnap, setInstalledSnap] = useRecoilState(installedSnapState)
 	const [, setSmartAccountState] = useRecoilState(smartAccountState)
 	const [, setSmartAccountInsState] = useRecoilState(smartAccountInsState)
+	const [connectSnapLoading, { setTrue: startConnectSnap, setFalse: endConnectSnap }] = useBoolean(false)
 
 	useAsyncEffect(async () => {
 		const _isFlask = await isFlaskVersion()
@@ -32,11 +33,14 @@ export const useSnap = () => {
 
 	const handleConnectSnap = async () => {
 		try {
+			startConnectSnap()
 			await connectSnap()
 			setInstalledSnap(await getSnap())
 			upNotify.success('connect success')
 		} catch (e: any) {
 			upNotify.error(e.message)
+		} finally {
+			endConnectSnap()
 		}
 	}
 
@@ -66,5 +70,5 @@ export const useSnap = () => {
 		}
 	}, [installedSnap])
 
-	return { isFlask, installedSnap, handleConnectSnap }
+	return { isFlask, installedSnap, handleConnectSnap, connectSnapLoading }
 }

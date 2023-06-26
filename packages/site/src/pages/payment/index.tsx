@@ -1,5 +1,5 @@
 import Assets from './assets'
-import Pay from '../pay'
+import Pay from './pay'
 import styles from './payment.module.scss'
 
 const Payment = () => {

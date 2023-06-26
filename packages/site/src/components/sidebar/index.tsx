@@ -1,8 +1,8 @@
 import { useRecoilValue, useRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
-import { useAccount, useSnap } from '@/hooks'
-import { Button, Icon, Popover, Switch, upNotify } from '@/components'
+import { useSnap } from '@/hooks'
+import { Button, Icon, Popover, Switch } from '@/components'
 import { smartAccountState, currentSideBarState, isTestnetEnvState, currentChainIdState } from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
@@ -33,7 +33,6 @@ const menus: Array<{ name: MenuType }> = [
 ]
 
 const SideBar = () => {
-	useAccount()
 	const { isFlask, installedSnap, handleConnectSnap } = useSnap()
 	const [showActions, { toggle }] = useBoolean(false)
 	const smartAccount = useRecoilValue(smartAccountState)

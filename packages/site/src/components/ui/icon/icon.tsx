@@ -33,6 +33,7 @@ export const TokenIcon: React.FC<Omit<IconProps, 'src'> & { type: string }> = (p
 		case 'USDC':
 			return <Icon {...restProps} src={USDC} />
 		case 'Polygon':
+		case 'Mumbai':
 			return <Icon {...restProps} src={Polygon} />
 		case 'Arbitrum':
 			return <Icon {...restProps} src={Arbitrum} />

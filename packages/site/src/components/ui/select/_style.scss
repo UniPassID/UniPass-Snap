@@ -66,6 +66,9 @@ $select-prefix: 'rc-select';
     &-show-arrow {
         &.rc-select-multiple .rc-select-selector {
             padding-right: 20px;
+            color: #97989D;
+            font-size: 14px;
+            line-height: 20px;
         }
 
         .rc-select-arrow {
@@ -85,8 +88,12 @@ $select-prefix: 'rc-select';
                 top: 8px;
                 right: -5px;
                 transform-origin: 2.5px center;
-                transition: transform 0.12s ease-out ;
+                transition: transform 0.12s ease-out;
             }
+        }
+
+        .rc-select-selection-placeholder {
+            line-height: 28px;
         }
     }
 
@@ -133,10 +140,12 @@ $select-prefix: 'rc-select';
         .rc-select-item-option-state {
             display: none;
         }
+
         &-option {
             display: flex;
             align-items: center;
         }
+
         &-option-content {
             display: flex;
             align-items: center;

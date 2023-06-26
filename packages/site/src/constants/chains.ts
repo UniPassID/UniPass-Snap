@@ -113,7 +113,7 @@ export const TESTNET_CHAIN_IDS = [POLYGON_MUMBAI]
 export const getChainNameByChainId = (chainId: number) => {
 	switch (chainId) {
 		case POLYGON_MUMBAI:
-			return 'Polygon-Mumbai'
+			return 'Mumbai'
 		case POLYGON_MAINNET:
 			return 'Polygon'
 		case ARBITRUM_MAINNET:

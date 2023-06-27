@@ -17,6 +17,7 @@ import Disconnect from '@/assets/svg/Disconnect.svg'
 import Close from '@/assets/svg/Close.svg'
 import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
 import styles from './sidebar.module.scss'
+import { upGA } from '@/utils'
 
 const menus: Array<{ name: MenuType }> = [
 	{
@@ -59,12 +60,16 @@ const SideBar = () => {
 	const switchSideBarState = (menu: MenuType) => {
 		if (menu === currentSideBar) return
 		setCurrentSideBar(menu)
+		if (menu === 'TopUp') {
+			upGA('topup-click-topup_menu', 'topup')
+		}
 	}
 
 	const handleSwitchEnv = (checked: boolean) => {
 		const chainId = checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET
 		window.localStorage.setItem('up__currentChainId', chainId.toString())
 		setCurrentChainIdState(chainId)
+		upGA('setting-switch-testnet', 'setting', { Environment: checked ? 'Testnet' : 'Mainnet' })
 	}
 
 	const disconnect = () => {
@@ -72,6 +77,7 @@ const SideBar = () => {
 		window.localStorage.removeItem('up__accessToken')
 		setSmartAccountState('')
 		toggle()
+		upGA('setting-click-disconnect', 'setting')
 	}
 
 	return (

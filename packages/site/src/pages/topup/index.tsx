@@ -1,24 +1,24 @@
-import { useMemo, useState } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useEffect, useMemo, useState } from 'react'
+import { useBoolean } from 'ahooks'
+import Select from 'rc-select'
+import { QRCodeSVG } from 'qrcode.react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import { useRecoilValue } from 'recoil'
+import { smartAccountState } from '@/store'
+import { useMetaMask } from '@/hooks'
 import { Balance } from './balance'
 import { ReCharge } from './recharge'
-import styles from './topup.module.scss'
-import { useMetaMask } from '@/hooks'
+import { CHAIN_CONFIGS, getChainNameByChainId } from '@/constants'
 import { Dialog, Icon, TokenIcon, upNotify } from '@/components'
 import Success from '@/assets/svg/Success.svg'
 import NoQRCode from '@/assets/svg/NoQRCode.svg'
 import Copy from '@/assets/svg/Copy.svg'
-import { currentSideBarState, smartAccountState } from '@/store'
-import { useBoolean } from 'ahooks'
-import Select from 'rc-select'
-import { CHAIN_CONFIGS, getChainNameByChainId } from '@/constants'
-import { QRCodeSVG } from 'qrcode.react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import styles from './topup.module.scss'
+import { upGA } from '@/utils'
 
 const TopUp = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [checkedAssets, setCheckAssets] = useState<string | undefined>(undefined)
-	const setCurrentSideBar = useSetRecoilState(currentSideBarState)
 	const {
 		metamaskAccount,
 		connect,
@@ -28,16 +28,38 @@ const TopUp = () => {
 		closeRechargeDialog,
 		transactionAmount,
 		selectedToken,
-		viewInExplore
+		viewInExplore,
+		goToPayment
 	} = useMetaMask()
 	const [qrCodeVisible, { setTrue: openQrCodeDialog, setFalse: closeQrCodeDialog }] = useBoolean(false)
 
-	const [netWork, setNetwork] = useState()
-	const [token, setToken] = useState()
+	const [netWork, setNetwork] = useState<number>()
+	const [token, setToken] = useState<string>()
 
 	const showQRCode = useMemo(() => {
-		return netWork && token
+		return !!netWork && !!token
 	}, [netWork, token])
+
+	useEffect(() => {
+		if (showQRCode) {
+			console.log('showQRCode true')
+			upGA('topup-qrcode-display-qrcode', 'topup', { ChainID: netWork, Token: token })
+		}
+	}, [showQRCode])
+
+	const _setNetwork = (value: number) => {
+		if (!netWork) {
+			upGA('topup-qrcode-choose-network', 'topup', { ChainID: value, Token: token })
+		}
+		setNetwork(value)
+	}
+
+	const _setToken = (value: string) => {
+		if (!token) {
+			upGA('topup-qrcode-choose-token', 'topup', { ChainID: netWork, Token: value })
+		}
+		setToken(value)
+	}
 
 	return (
 		<div className={styles.topup}>
@@ -67,7 +89,7 @@ const TopUp = () => {
 				confirmText="Go to Payment"
 				center={true}
 				className={styles.success_dialog}
-				onConfirm={() => setCurrentSideBar('Payment')}
+				onConfirm={goToPayment}
 				extra={
 					<div className={styles.explorer} onClick={viewInExplore}>
 						View in explorer
@@ -121,7 +143,7 @@ const TopUp = () => {
 				<div className={styles.select}>
 					<div className={styles.items}>
 						<div className={styles.title}>NETWORK</div>
-						<Select placeholder="Choose Network" style={{ width: '190px' }} onChange={setNetwork}>
+						<Select placeholder="Choose Network" style={{ width: '190px' }} value={netWork} onChange={_setNetwork}>
 							{CHAIN_CONFIGS.map((token) => (
 								<Select.Option key={token.chainId} value={token.chainId}>
 									<TokenIcon
@@ -137,7 +159,7 @@ const TopUp = () => {
 					</div>
 					<div className={styles.items}>
 						<div className={styles.title}>TOKEN</div>
-						<Select placeholder="Choose Token" style={{ width: '190px' }} onChange={setToken}>
+						<Select placeholder="Choose Token" style={{ width: '190px' }} value={token} onChange={_setToken}>
 							<Select.Option key="USDT" value="USDT">
 								<TokenIcon type="USDT" style={{ marginRight: '12px' }} width={20} height={20} />
 								USDT

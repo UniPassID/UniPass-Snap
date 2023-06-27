@@ -17,7 +17,7 @@ import {
 } from '@/constants'
 import { isTestnetEnvState, metamaskAccountTokenListState } from '@/store'
 import { useRecoilValue } from 'recoil'
-import { formatAddress, formatUSDAmount, weiToEther } from '@/utils'
+import { formatAddress, formatUSDAmount, upGA, weiToEther } from '@/utils'
 
 export const Balance: React.FC<{
 	checkedAssets?: string
@@ -33,6 +33,11 @@ export const Balance: React.FC<{
 		setCheckAssets(undefined)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isTestnetEnv])
+
+	const topupViaQRCode = () => {
+		openQrCodeDialog()
+		upGA('topup-mm-click-via_QRcode', 'topup')
+	}
 
 	const getBalance = (contractAddress: string) => {
 		const token = tokens.find((token) => contractAddress === token.contractAddress)
@@ -178,7 +183,7 @@ export const Balance: React.FC<{
 				{renderAssets()}
 			</div>
 			<div className={styles.qrcode_btn}>
-				<Button size="md" btnType="gray" icon={<Icon src={QRCode} size="lg" />} onClick={openQrCodeDialog}>
+				<Button size="md" btnType="gray" icon={<Icon src={QRCode} size="lg" />} onClick={topupViaQRCode}>
 					Top up via QRcode
 				</Button>
 			</div>

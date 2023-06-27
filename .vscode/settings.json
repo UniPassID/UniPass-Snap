@@ -6,16 +6,17 @@
 		}
 	],
 	"cSpell.words": [
-		"ahooks",
-		"avax",
-		"bignumber",
-		"clsx",
-		"craco",
-		"ethersproject",
-		"Inpage",
-		"numbro",
-		"qrcode",
-		"topup",
-		"TTFB"
-	]
+    "ahooks",
+    "avax",
+    "bignumber",
+    "clsx",
+    "craco",
+    "ethersproject",
+    "gtag",
+    "Inpage",
+    "numbro",
+    "qrcode",
+    "topup",
+    "TTFB"
+  ]
 }

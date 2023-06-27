@@ -3,8 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"build": "sh bin/build.sh",
-		"start": "sh bin/start.sh",
+		"build:prod": "sh bin/production.sh",
+		"build:test": "sh bin/test.sh",
+		"start": "sh bin/development.sh",
 		"test": "craco test"
 	},
 	"browserslist": {
@@ -47,7 +48,7 @@
 		"react": "^18.2.0",
 		"react-copy-to-clipboard": "^5.1.0",
 		"react-dom": "^18.2.0",
-		"react-ga": "^3.3.1",
+		"react-ga4": "^2.1.0",
 		"react-hook-form": "^7.44.2",
 		"react-hot-toast": "2.4.1",
 		"react-modal": "3.16.1",

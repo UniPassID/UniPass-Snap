@@ -1,4 +1,5 @@
 import { useRecoilValue } from 'recoil'
+import { useMemo } from 'react'
 import { useSnap } from '@/hooks'
 import { smartAccountState } from '@/store'
 import { Button, Dialog, Icon } from '@/components'
@@ -12,7 +13,7 @@ import BankCard from '@/assets/svg/BankCard.svg'
 import DimensionalCode from '@/assets/svg/DimensionalCode.svg'
 import SocialRecovery from '@/assets/svg/SocialRecovery.svg'
 import styles from './status-dialog.module.scss'
-import { useMemo } from 'react'
+import { upGA } from '@/utils'
 
 const StatusDialog = () => {
 	const { isFlask, installedSnap, handleConnectSnap, connectSnapLoading } = useSnap()
@@ -20,9 +21,11 @@ const StatusDialog = () => {
 
 	const installFlask = () => {
 		window.open('https://metamask.io/flask/', '_blank')
+		upGA('login-click-install_metamask', 'login')
 	}
 
 	const connect = async () => {
+		upGA('login-click-connect_snap', 'login')
 		await handleConnectSnap()
 	}
 

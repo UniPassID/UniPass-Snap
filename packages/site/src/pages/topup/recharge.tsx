@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil'
 import { metamaskAccountTokenListState, smartAccountState } from '@/store'
 import Input from './topup-input'
 import { Button, Icon, TokenIcon } from '@/components'
-import { weiToEther } from '@/utils'
+import { upGA, weiToEther } from '@/utils'
 import { getChainNameByChainId } from '@/constants'
 import { TokenInfo } from '@/types'
 import MetaMask from '@/assets/svg/MetaMask.svg'
@@ -28,6 +28,9 @@ export const ReCharge: React.FC<{
 	const selectedToken = useMemo(() => {
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
 		methods.resetField('Amount')
+		if (token) {
+			upGA('topup-mm-choose-token', 'topup', { ChainID: token.chainId, Token: token.symbol })
+		}
 		return token
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [tokens, checkedAssets])

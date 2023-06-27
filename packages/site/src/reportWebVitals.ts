@@ -1,4 +1,4 @@
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 import type { ReportHandler, Metric } from 'web-vitals'
 
 const sendToGoogleAnalytics = (metric: Metric) => {

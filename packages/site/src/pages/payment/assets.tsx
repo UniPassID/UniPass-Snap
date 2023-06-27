@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import ChainSwitcher from '@/components/chain-switcher'
 import { currentChainIdState, currentSideBarState, smartAccountState, smartAccountTokenListState } from '@/store'
 import styles from './payment.module.scss'
-import { formatAddress, formatUSDAmount, openExplore, weiToEther } from '@/utils'
+import { formatAddress, formatUSDAmount, openExplore, upGA, weiToEther } from '@/utils'
 import { Button, Icon } from '@/components'
 import USDT from '@/assets/svg/USDT.svg'
 import USDC from '@/assets/svg/USDC.svg'
@@ -40,7 +40,15 @@ const Assets = () => {
 		return token ? parseFloat(weiToEther(token.balance || 0, token.decimals)) : 0
 	}, [tokens, currentChainId])
 
-	const viewInExplore = () => openExplore(currentChainId, smartAccount, 'address')
+	const viewInExplore = () => {
+		openExplore(currentChainId, smartAccount, 'address')
+		upGA('homepage-click-scan_button', 'homepage', { ChainId: currentChainId, SnapAddress: `_${smartAccount}` })
+	}
+
+	const toTopUp = () => {
+		setCurrentSideBar('TopUp')
+		upGA('topup-click-topup_payment_page', 'topup')
+	}
 
 	return (
 		<>
@@ -51,12 +59,7 @@ const Assets = () => {
 					<span>$</span>
 					<span>{formatUSDAmount(totalBalanceOnChain)}</span>
 				</div>
-				<Button
-					size="md"
-					btnType="gray"
-					icon={<Icon src={TopUpButton} size="lg" />}
-					onClick={() => setCurrentSideBar('TopUp')}
-				>
+				<Button size="md" btnType="gray" icon={<Icon src={TopUpButton} size="lg" />} onClick={toTopUp}>
 					Top Up
 				</Button>
 				<div className={styles.title}>ASSETS</div>

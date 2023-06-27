@@ -4,7 +4,7 @@ import { useAsyncEffect, useBoolean } from 'ahooks'
 import { smartAccountState, metamaskAccountTokenListState } from '@/store'
 import { upNotify } from '@/components'
 import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
-import { etherToWei, getBalancesByMulticall } from '@/utils'
+import { etherToWei, getBalancesByMulticall, openExplore } from '@/utils'
 import { hooks, metaMask } from '@/utils'
 import { makeERC20Contract } from '@/utils/make_contract'
 import { TokenInfo } from '@/types'
@@ -86,13 +86,7 @@ export const useMetaMask = () => {
 		}
 	}
 
-	const openExplore = () => {
-		const token = CHAIN_CONFIGS.find((chain) => selectedToken?.chainId === chain.chainId)
-
-		if (token) {
-			window.open(`${token.explorer}/tx/${transactionHash}`, '_blank')
-		}
-	}
+	const viewInExplore = () => openExplore(selectedToken!.chainId, transactionHash, 'tx')
 
 	return {
 		metamaskAccount,
@@ -104,6 +98,6 @@ export const useMetaMask = () => {
 		closeRechargeDialog,
 		transactionAmount,
 		selectedToken,
-		openExplore
+		viewInExplore
 	}
 }

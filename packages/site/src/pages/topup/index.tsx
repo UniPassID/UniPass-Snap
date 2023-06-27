@@ -28,7 +28,7 @@ const TopUp = () => {
 		closeRechargeDialog,
 		transactionAmount,
 		selectedToken,
-		openExplore
+		viewInExplore
 	} = useMetaMask()
 	const [qrCodeVisible, { setTrue: openQrCodeDialog, setFalse: closeQrCodeDialog }] = useBoolean(false)
 
@@ -69,7 +69,7 @@ const TopUp = () => {
 				className={styles.success_dialog}
 				onConfirm={() => setCurrentSideBar('Payment')}
 				extra={
-					<div className={styles.explorer} onClick={openExplore}>
+					<div className={styles.explorer} onClick={viewInExplore}>
 						View in explorer
 					</div>
 				}

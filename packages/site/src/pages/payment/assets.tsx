@@ -3,13 +3,12 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import ChainSwitcher from '@/components/chain-switcher'
 import { currentChainIdState, currentSideBarState, smartAccountState, smartAccountTokenListState } from '@/store'
 import styles from './payment.module.scss'
-import { formatAddress, formatUSDAmount, weiToEther } from '@/utils'
+import { formatAddress, formatUSDAmount, openExplore, weiToEther } from '@/utils'
 import { Button, Icon } from '@/components'
 import USDT from '@/assets/svg/USDT.svg'
 import USDC from '@/assets/svg/USDC.svg'
 import TopUpButton from '@/assets/svg/TopUpButton.svg'
 import ExploreButton from '@/assets/svg/ExploreButton.svg'
-import { CHAIN_CONFIGS } from '@/constants'
 
 const Assets = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
@@ -41,13 +40,7 @@ const Assets = () => {
 		return token ? parseFloat(weiToEther(token.balance || 0, token.decimals)) : 0
 	}, [tokens, currentChainId])
 
-	const openExplore = () => {
-		const token = CHAIN_CONFIGS.find((chain) => currentChainId === chain.chainId)
-
-		if (token) {
-			window.open(`${token.explorer}/address/${smartAccount}`, '_blank')
-		}
-	}
+	const viewInExplore = () => openExplore(currentChainId, smartAccount, 'address')
 
 	return (
 		<>
@@ -97,7 +90,7 @@ const Assets = () => {
 					<span className={styles.circle}></span>
 					{formatAddress(smartAccount)}
 				</div>
-				<div className={styles.explore} onClick={openExplore}>
+				<div className={styles.explore} onClick={viewInExplore}>
 					<Icon src={ExploreButton} width={16} height={16} />
 				</div>
 			</div>

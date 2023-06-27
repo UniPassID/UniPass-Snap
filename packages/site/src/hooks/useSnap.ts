@@ -60,27 +60,25 @@ export const useSnap = () => {
 	}
 
 	const getSmartAccount = async () => {
-		if (installedSnap) {
-			const masterKeyAddress = await getMasterKeyAddress()
-			const signer = new SnapSigner(masterKeyAddress)
-			const smartAccount = new SmartAccount({
-				chainOptions: CHAIN_CONFIGS,
-				masterKeySigner: signer,
-				appId: CUSTOM_AUTH_APPID
-			})
-			await smartAccount.init({ chainId: CHAIN_CONFIGS[0].chainId })
-			const address = await smartAccount.getAddress()
-			const smartAccountAddress = utils.getAddress(address)
-			window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)
-			setSmartAccountState(smartAccountAddress)
-			setSmartAccountInsState(smartAccount)
-			const res = await fetchAccessToken({
-				accountAddress: smartAccountAddress,
-				providerIdentifier: masterKeyAddress
-			})
+		const masterKeyAddress = await getMasterKeyAddress()
+		const signer = new SnapSigner(masterKeyAddress)
+		const smartAccount = new SmartAccount({
+			chainOptions: CHAIN_CONFIGS,
+			masterKeySigner: signer,
+			appId: CUSTOM_AUTH_APPID
+		})
+		await smartAccount.init({ chainId: CHAIN_CONFIGS[0].chainId })
+		const address = await smartAccount.getAddress()
+		const smartAccountAddress = utils.getAddress(address)
+		window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)
+		setSmartAccountState(smartAccountAddress)
+		setSmartAccountInsState(smartAccount)
+		const res = await fetchAccessToken({
+			accountAddress: smartAccountAddress,
+			providerIdentifier: masterKeyAddress
+		})
 
-			return { smartAccount, isNewAccount: res.isNewAccount }
-		}
+		return { smartAccount, isNewAccount: res.isNewAccount }
 	}
 
 	return { isFlask, installedSnap, handleConnectSnap, connectSnapLoading }

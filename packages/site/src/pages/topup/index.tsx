@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { Balance } from './balance'
 import { ReCharge } from './recharge'
 import styles from './topup.module.scss'
@@ -7,7 +8,6 @@ import { Dialog, Icon, TokenIcon, upNotify } from '@/components'
 import Success from '@/assets/svg/Success.svg'
 import NoQRCode from '@/assets/svg/NoQRCode.svg'
 import Copy from '@/assets/svg/Copy.svg'
-import { useRecoilState, useRecoilValue } from 'recoil'
 import { currentSideBarState, smartAccountState } from '@/store'
 import { useBoolean } from 'ahooks'
 import Select from 'rc-select'
@@ -18,7 +18,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 const TopUp = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [checkedAssets, setCheckAssets] = useState<string | undefined>(undefined)
-	const [, setCurrentSideBar] = useRecoilState(currentSideBarState)
+	const setCurrentSideBar = useSetRecoilState(currentSideBarState)
 	const {
 		metamaskAccount,
 		connect,

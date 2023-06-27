@@ -1,5 +1,5 @@
 import { useBoolean } from 'ahooks'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
 import { Icon, Popover, Switch } from '@/components'
@@ -32,10 +32,10 @@ const menus: Array<{ name: MenuType }> = [
 
 const SideBar = () => {
 	const [showActions, { toggle }] = useBoolean(false)
-	const [currentChainId, setCurrentChainIdState] = useRecoilState(currentChainIdState)
+	const setCurrentChainIdState = useSetRecoilState(currentChainIdState)
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
-	const [, setSmartAccountState] = useRecoilState(smartAccountState)
+	const setSmartAccountState = useSetRecoilState(smartAccountState)
 
 	const getMenuClassName = (name: MenuType) => {
 		return clsx(styles.menu, {

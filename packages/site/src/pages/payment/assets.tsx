@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import ChainSwitcher from '@/components/chain-switcher'
 import { currentChainIdState, currentSideBarState, smartAccountState, smartAccountTokenListState } from '@/store'
 import styles from './payment.module.scss'
@@ -15,7 +15,7 @@ const Assets = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const currentChainId = useRecoilValue(currentChainIdState)
 	const tokens = useRecoilValue(smartAccountTokenListState)
-	const [, setCurrentSideBar] = useRecoilState(currentSideBarState)
+	const setCurrentSideBar = useSetRecoilState(currentSideBarState)
 
 	const totalBalanceOnChain = useMemo(() => {
 		let erc20Balance = 0

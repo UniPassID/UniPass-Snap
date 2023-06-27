@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useAsyncEffect, useBoolean } from 'ahooks'
 import { smartAccountState, metamaskAccountTokenListState } from '@/store'
 import { upNotify } from '@/components'
@@ -13,7 +13,7 @@ const { useAccount, useProvider } = hooks
 
 export const useMetaMask = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
-	const [, setSmartAccountTokenList] = useRecoilState(metamaskAccountTokenListState)
+	const setSmartAccountTokenList = useSetRecoilState(metamaskAccountTokenListState)
 	const [rechargeLoading, { setTrue: startReChargeLoading, setFalse: endReChargeLoading }] = useBoolean(false)
 	const [isRechargeDialogOpen, { setTrue: openRechargeDialog, setFalse: closeRechargeDialog }] = useBoolean(false)
 	const [selectedToken, setToken] = useState<TokenInfo | undefined>(undefined)

@@ -1,6 +1,7 @@
 import { GetSnapsResponse, Snap } from '@/types'
 import { Bytes } from 'ethers'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
+import { originTransaction } from '@/types/transaction'
 
 const defaultSnapOrigin = process.env.REACT_APP_SNAP_ORIGIN as string
 
@@ -74,11 +75,11 @@ export const getMasterKeyAddress = async () => {
 	})) as string
 }
 
-export const signMessageWithSnap = async (message: string | Bytes) => {
+export const signMessageWithSnap = async (message: string | Bytes, originTransaction?: originTransaction) => {
 	// @ts-ignore
 	return (await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
-		params: { snapId: defaultSnapOrigin, request: { method: 'signMessage', params: { message } } }
+		params: { snapId: defaultSnapOrigin, request: { method: 'signMessage', params: { message, originTransaction: JSON.stringify(originTransaction) } } }
 	})) as string
 }
 

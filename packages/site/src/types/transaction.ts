@@ -28,6 +28,16 @@ export interface TransactionRecord {
 	txs: Transaction[]
 	status: TransactionStatus
 	timestamp: number
+	discount?: number
 	fee?: Fee
   error?: string
+}
+
+export interface originTransaction {
+	transactions: Transaction[]
+	chain: string
+	fee?: {
+		symbol: string
+		amount: string
+	}
 }

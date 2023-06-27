@@ -163,7 +163,7 @@ const Transfer = forwardRef<
 						<div className={styles['amount-wrapper']}>
 							<Input
 								type="number"
-								placeholder="Input amount"
+								placeholder="Enter amount"
 								formField={formField}
 								extraMessage={`AVAILABLE: ${formatUSDAmount(availableBalance)}`}
 								label="AMOUNT"
@@ -173,7 +173,7 @@ const Transfer = forwardRef<
 					</div>
 					<Input
 						type="text"
-						placeholder="Input recipient address"
+						placeholder="Enter address to continue..."
 						formField={formField}
 						label="ADDRESS"
 						name={`txs.${index}.to`}

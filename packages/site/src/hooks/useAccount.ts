@@ -1,15 +1,17 @@
-import { useRecoilValue, useRecoilState } from 'recoil'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
-import { isTestnetEnvState, smartAccountState, smartAccountTokenListState } from '@/store'
+import { smartAccountState, smartAccountTokenListState, isTestnetEnvState, availableFreeQuotaState } from '@/store'
 import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from '@/constants'
 import { getBalancesByMulticall } from '@/utils'
 import { useEffect } from 'react'
 import { getDefaultTokenList } from '@/constants/tokens'
+import { getFreeQuota } from '@/request'
 
 export const useAccount = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const [tokens, setSmartAccountTokenList] = useRecoilState(smartAccountTokenListState)
+	const setAvailableFreeQuota = useSetRecoilState(availableFreeQuotaState)
 
 	const queryERC20Balances = async () => {
 		console.log(`begin query smart account(${smartAccount}) tokens balance`)
@@ -33,6 +35,23 @@ export const useAccount = () => {
 		pollingInterval: 10000,
 		debounceWait: 800
 	})
+
+	// polling to query freeQuota
+	useRequest(
+		async () => {
+			try {
+				const res = await getFreeQuota()
+				setAvailableFreeQuota(res.availableFreeQuota)
+			} catch (e) {
+				console.error('[handleGetFreeQuota failed]', e)
+			}
+		},
+		{
+			ready: !!localStorage.getItem('up__accessToken'),
+			refreshDeps: [smartAccount],
+			pollingInterval: 3000
+		}
+	)
 
 	// reset balance after switch env
 	useEffect(() => {

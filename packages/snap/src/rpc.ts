@@ -1,5 +1,8 @@
 import { Bytes, Wallet } from 'ethers'
 import { TransactionRequest } from '@ethersproject/abstract-provider'
+import { SignTxMessageInput, originTransaction } from '../types'
+import { NodeType, panel, text } from '@metamask/snaps-ui'
+import { arrayify } from 'ethers/lib/utils'
 
 function getEntropy() {
 	return snap.request({
@@ -33,4 +36,49 @@ export async function getSignSig(address: string): Promise<{ loginMessage: strin
 		loginMessage,
 		loginSignature
 	}
+}
+
+export async function signTransactionMessage(signTxMessage: SignTxMessageInput) {
+	if (signTxMessage.originTransaction) {
+		const originTransaction = JSON.parse(signTxMessage.originTransaction) as originTransaction
+
+		let panelContent: { value: string; type: NodeType.Text }[]
+		if (originTransaction.transactions.length > 1) {
+			let payContent = originTransaction.transactions.map((tx, index) => {
+				return [text(`**Payment${index + 1}**`), text(`Pay ${tx.amount} ${tx.token}`), text(`To: ${tx.to}`)]
+			})
+			panelContent = [
+				...payContent.flat(),
+				text(
+					`**Gasfee**: ${
+						originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
+					}`
+				),
+				text(`**Chain:${originTransaction.chain}**`)
+			]
+		} else {
+			panelContent = [
+				text(
+					`**Pay ${originTransaction.transactions[0].amount} ${originTransaction.transactions[0].token} on ${originTransaction.chain}**`
+				),
+				text(`To: ${originTransaction.transactions[0].to}`),
+				text(
+					`**Gasfee**: ${
+						originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
+					}`
+				)
+			]
+		}
+	}
+
+	let result = await snap.request({
+		method: 'snap_dialog',
+		params: {
+			type: 'confirmation',
+			content: panel([text('hello')])
+		}
+	})
+
+	if (result) return signMessage(arrayify(signTxMessage.message))
+	throw new Error('User reject to sign transaction')
 }

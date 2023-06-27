@@ -24,9 +24,15 @@ const smartAccountInsState = atom<SmartAccount>({
 	dangerouslyAllowMutability: true
 })
 
+const availableFreeQuotaState = atom<number>({
+	key: 'availableFreeQuota',
+	default: 0
+})
+
 export {
 	smartAccountState,
 	smartAccountTokenListState,
 	smartAccountTotalBalanceState,
-	smartAccountInsState
+	smartAccountInsState,
+	availableFreeQuotaState
 }

@@ -1,3 +1,5 @@
+import type { providers } from "ethers"
+
 export interface ApiResponse<T> {
 	statusCode: number
 	message?: string
@@ -15,4 +17,36 @@ export interface SignInput {
 	accountAddress: string
 	providerIdentifier: string
 	providerType?: string
+}
+
+export interface GetFreeQuotaOutput {
+  availableFreeQuota: number
+  totalFreeQuota: number
+}
+
+export interface SingleTransactionFee {
+  token: string
+  chainId: number
+  singleFee: number
+  feeReceiver: string
+}
+
+export interface SingleTransactionFeesOutput {
+  fees: SingleTransactionFee[]
+}
+
+export interface AuthorizeTxFeesInput {
+  nonce: number,
+  chainId: number,
+  usedFreeQuota: number,
+  tokenSingleFees?: {
+    token: string
+    singleFee: number
+  }[],
+  transactions: providers.TransactionRequest[]
+}
+
+export interface AuthorizeTxFeesOutput {
+  freeSig: string
+  expires: number
 }

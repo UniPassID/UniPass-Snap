@@ -1,8 +1,7 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types'
 import { panel, text } from '@metamask/snaps-ui'
-import { getMasterKeyAddress, getSignSig, signMessage } from './rpc'
-import { arrayify, hexlify } from 'ethers/lib/utils'
-import { SignInput } from '../types'
+import { getMasterKeyAddress, getSignSig, signTransactionMessage } from './rpc'
+import { SignInput, SignTxMessageInput } from '../types'
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -31,16 +30,9 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
 		case 'getMasterKeyAddress':
 			return getMasterKeyAddress()
 		case 'signMessage':
-			await snap.request({
-				method: 'snap_dialog',
-				params: {
-					type: 'confirmation',
-					content: panel([text(`Hello, **${origin}**!`), text((request.params as any).message)])
-				}
-			})
-			return signMessage(arrayify((request.params as any).message))
+			return signTransactionMessage(request.params as SignTxMessageInput)
 		case 'getSignSig':
-			return getSignSig((request.params! as SignInput).address)
+			return getSignSig((request.params as SignInput).address)
 		default:
 			throw new Error('Method not found.')
 	}

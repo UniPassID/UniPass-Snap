@@ -6,7 +6,7 @@ import { smartAccountState } from '@/store'
 import { TransactionRecord } from '@/types/transaction'
 import dayjs from 'dayjs'
 import { AlignType } from 'rc-table/lib/interface'
-import { formatAddress } from '@/utils'
+import { formatAddress, formatUSDAmount } from '@/utils'
 import { ARBITRUM_MAINNET } from '@/constants'
 import Arbitrum from '@/assets/svg/Arbitrum.svg'
 import Polygon from '@/assets/svg/Polygon.svg'
@@ -45,14 +45,10 @@ const columns = [
 		width: 200,
 		align: 'right' as AlignType,
 		render: (txs: any) => {
-			return txs.length > 1 ? (
-				'Multiple recipients'
-			) : (
-				<>
-					<span style={{ color: 'var(--up-text-third)' }}>To: </span>
-					<span style={{ color: 'var(--up-text-secondary)' }}>{formatAddress(txs[0].to)}</span>
-				</>
-			)
+			return (<>
+				<span style={{ color: 'var(--up-text-third)' }}>To: </span>
+				<span style={{ color: 'var(--up-text-secondary)' }}>{txs.length > 1 ? 'Multiple recipients' : formatAddress(txs[0].to)}</span>
+			</>)
 		}
 	},
 	{
@@ -78,12 +74,15 @@ const History: React.FC = () => {
 
 	const formatHistoryData = (records: TransactionRecord[]) => {
 		return records.map((record) => {
+			const totalAmount = record.txs.reduce((pre, current) => {
+				return pre + parseFloat(current.amount)
+			}, 0)
 			return {
 				raw: record,
 				time: dayjs(record.timestamp).format('MM-DD HH:mm'),
 				address: record.txs,
 				type: record.chainId,
-				amount: record.txs.length > 1 ? '...' : `-${record.txs[0].amount} USD`
+				amount: `-$ ${formatUSDAmount(totalAmount)}`
 			}
 		})
 	}

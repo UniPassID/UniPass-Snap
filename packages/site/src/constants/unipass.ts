@@ -1,1 +1,1 @@
-export const CUSTOM_AUTH_APPID = 'f4a86f94041b570ebdd5dc2ff15855d0'
+export const CUSTOM_AUTH_APPID = '9e145ea3e5525ee793f39027646c4511'

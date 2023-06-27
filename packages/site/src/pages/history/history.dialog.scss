@@ -1,6 +1,13 @@
 .up-history-dialog {
   width: 440px !important;
-  height: 540px !important;
+  
+  .up_dialog_children {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    max-height: 584px;
+    overflow: auto;
+  }
 
   .status-tag {
     color: #E85050;
@@ -18,14 +25,27 @@
       font-size: 14px;
       padding: 20px 0;
       .label {
+        font-weight: 500;
         color: var(--up-text-primary)
       }
       .content {
+        display: flex;
+        align-items: center;
         width: 260px;
+        justify-content: flex-end;
         text-align: right;
         word-break: break-all;
         word-wrap: break-word;
         color: var(--up-text-secondary)
+      }
+    }
+    .divider-line {
+      padding: 0;
+      align-items: center;
+      .divider {
+        border-top: 1px solid #F0F0F5;
+        flex: 1;
+        margin-left: 12px;
       }
     }
   }

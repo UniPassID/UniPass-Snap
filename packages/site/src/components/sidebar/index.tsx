@@ -1,5 +1,5 @@
 import { useBoolean } from 'ahooks'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
 import { Icon, Popover, Switch } from '@/components'
@@ -32,9 +32,9 @@ const menus: Array<{ name: MenuType }> = [
 
 const SideBar = () => {
 	const [showActions, { toggle }] = useBoolean(false)
-	const [, setCurrentChainIdState] = useRecoilState(currentChainIdState)
+	const [currentChainId, setCurrentChainIdState] = useRecoilState(currentChainIdState)
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
-	const [isTestnetEnv, setIsTestnetEnv] = useRecoilState(isTestnetEnvState)
+	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const [, setSmartAccountState] = useRecoilState(smartAccountState)
 
 	const getMenuClassName = (name: MenuType) => {
@@ -62,8 +62,9 @@ const SideBar = () => {
 	}
 
 	const handleSwitchEnv = (checked: boolean) => {
-		setCurrentChainIdState(checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET)
-		setIsTestnetEnv(checked)
+		const chainId = checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET
+		window.localStorage.setItem('up__currentChainId', chainId.toString())
+		setCurrentChainIdState(chainId)
 	}
 
 	const disconnect = () => {

@@ -1,14 +1,13 @@
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState } from 'recoil'
 import clsx from 'clsx'
 import styles from './chain-switcher.module.scss'
-import { currentChainIdState, isTestnetEnvState } from '@/store'
-import { ARBITRUM_MAINNET, POLYGON_MAINNET } from '@/constants'
+import { currentChainIdState } from '@/store'
+import { ARBITRUM_MAINNET, POLYGON_MAINNET, TESTNET_CHAIN_IDS } from '@/constants'
 import { Icon } from '@/components'
 import Arbitrum from '@/assets/svg/Arbitrum.svg'
 import Polygon from '@/assets/svg/Polygon.svg'
 
 const ChainSwitcher = () => {
-	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const [currentChainId, setCurrentChainId] = useRecoilState(currentChainIdState)
 
 	const getItemClsx = (chainId: number) => {
@@ -16,7 +15,7 @@ const ChainSwitcher = () => {
 			[styles.selected]: currentChainId === chainId
 		})
 	}
-	if (isTestnetEnv) {
+	if (TESTNET_CHAIN_IDS.includes(currentChainId)) {
 		return (
 			<div className={styles.testnet}>
 				<div className={styles.circle}></div>

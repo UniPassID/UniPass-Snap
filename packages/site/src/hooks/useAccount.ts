@@ -1,12 +1,10 @@
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
-import { smartAccountState, smartAccountTokenListState, isTestnetEnvState } from '@/store'
+import { isTestnetEnvState, smartAccountState, smartAccountTokenListState } from '@/store'
 import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from '@/constants'
 import { getBalancesByMulticall } from '@/utils'
 import { useEffect } from 'react'
 import { getDefaultTokenList } from '@/constants/tokens'
-import axios from 'axios'
-import { sign } from '@/request'
 
 export const useAccount = () => {
 	const smartAccount = useRecoilValue(smartAccountState)

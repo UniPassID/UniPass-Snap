@@ -65,7 +65,8 @@ export const useSnap = () => {
 		const smartAccount = new SmartAccount({
 			chainOptions: CHAIN_CONFIGS,
 			masterKeySigner: signer,
-			appId: CUSTOM_AUTH_APPID
+			appId: CUSTOM_AUTH_APPID,
+			unipassServerUrl: 'https://d.wallet.unipass.vip/wallet-custom-auth'
 		})
 		await smartAccount.init({ chainId: CHAIN_CONFIGS[0].chainId })
 		const address = await smartAccount.getAddress()

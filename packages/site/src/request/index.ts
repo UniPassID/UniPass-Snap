@@ -1,4 +1,4 @@
-import { ApiResponse, AuthorizeTxFeesInput, AuthorizeTxFeesOutput, GetFreeQuotaOutput, SignInput, SignOutPut, SingleTransactionFeesOutput } from '@/types/requst'
+import { ApiResponse, AuthorizeTxFeesInput, AuthorizeTxFeesOutput, GetFreeQuotaOutput, SignInput, SignOutPut, SingleTransactionFeesOutput, VerifyTxFeesOutput } from '@/types/requst'
 import { getSignSig } from '@/utils/snap'
 import axios, { AxiosRequestConfig } from 'axios'
 
@@ -50,6 +50,19 @@ export async function authorizeTransactionFees(data: AuthorizeTxFeesInput) {
   return request<AuthorizeTxFeesOutput>({
     method: 'POST',
     url: '/api/v1/transaction/authorize-transaction-fees',
+    baseURL: process.env.REACT_APP_API_PREFIX,
+    data: data,
+    headers: {
+      'Authorization': `Bearer ${accessToken}`
+    }
+  })
+}
+
+export async function verifyTransactionFees(data: AuthorizeTxFeesInput) {
+  const accessToken = localStorage.getItem('up__accessToken')
+  return request<VerifyTxFeesOutput>({
+    method: 'POST',
+    url: '/api/v1/transaction/verify-transaction-fees',
     baseURL: process.env.REACT_APP_API_PREFIX,
     data: data,
     headers: {

@@ -39,43 +39,41 @@ export async function getSignSig(address: string): Promise<{ loginMessage: strin
 }
 
 export async function signTransactionMessage(signTxMessage: SignTxMessageInput) {
-	if (signTxMessage.originTransaction) {
-		const originTransaction = JSON.parse(signTxMessage.originTransaction) as originTransaction
+	let panelContent: { value: string; type: NodeType.Text }[]
+	const originTransaction = JSON.parse(signTxMessage.originTransaction) as originTransaction
 
-		let panelContent: { value: string; type: NodeType.Text }[]
-		if (originTransaction.transactions.length > 1) {
-			let payContent = originTransaction.transactions.map((tx, index) => {
-				return [text(`**Payment${index + 1}**`), text(`Pay ${tx.amount} ${tx.token}`), text(`To: ${tx.to}`)]
-			})
-			panelContent = [
-				...payContent.flat(),
-				text(
-					`**Gasfee**: ${
-						originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
-					}`
-				),
-				text(`**Chain:${originTransaction.chain}**`)
-			]
-		} else {
-			panelContent = [
-				text(
-					`**Pay ${originTransaction.transactions[0].amount} ${originTransaction.transactions[0].token} on ${originTransaction.chain}**`
-				),
-				text(`To: ${originTransaction.transactions[0].to}`),
-				text(
-					`**Gasfee**: ${
-						originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
-					}`
-				)
-			]
-		}
+	if (originTransaction.transactions.length > 1) {
+		let payContent = originTransaction.transactions.map((tx, index) => {
+			return [text(`**Payment${index + 1}**`), text(`Pay ${tx.amount} ${tx.token}`), text(`To: ${tx.to}`)]
+		})
+		panelContent = [
+			...payContent.flat(),
+			text(
+				`**Gasfee**: ${
+					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
+				}`
+			),
+			text(`**Chain:${originTransaction.chain}**`)
+		]
+	} else {
+		panelContent = [
+			text(
+				`**Pay ${originTransaction.transactions[0].amount} ${originTransaction.transactions[0].token} on ${originTransaction.chain}**`
+			),
+			text(`To: ${originTransaction.transactions[0].to}`),
+			text(
+				`**Gasfee**: ${
+					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
+				}`
+			)
+		]
 	}
 
 	let result = await snap.request({
 		method: 'snap_dialog',
 		params: {
 			type: 'confirmation',
-			content: panel([text('hello')])
+			content: panel(panelContent)
 		}
 	})
 

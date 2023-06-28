@@ -16,7 +16,7 @@ import QSvg from '@/assets/svg/Question.svg'
 import { Transactions, Transaction, TransactionStatus } from '@/types/transaction'
 import { addHistory } from '@/utils/history'
 import { getTokenBySymbol, waitResponse } from '@/utils/transaction'
-import { authorizeTransactionFees } from '@/request'
+import { authorizeTransactionFees, verifyTransactionFees } from '@/request'
 import numbro from 'numbro'
 import ToolTip from '@/components/ui/tooltip'
 import { SnapSigner } from '@/snap-signer'
@@ -192,8 +192,6 @@ const Pay: React.FC = () => {
 		return formattedTxs
 	}
 
-	// const enablePay = !validator()
-
 	const onSubmit = async () => {
 		if (!validator()) return
 		setIsPaying(true)
@@ -221,17 +219,29 @@ const Pay: React.FC = () => {
 				}
 				// verify txs first
 				if (gas.usedFreeQuota) {
-					// const valid = await authorizeTransactionFees(txOption)
+					const result = await verifyTransactionFees(txOption)
+					if (!result.succ) throw new Error(result.errorReason)
 				}
-				// const signer = smartAccount.getSigner() as SnapSigner
-				// signer.setOriginTransaction({
-				// 	transactions: txs,
-				// 	chain: getChainNameByChainId(chainId),
-				// 	fee: {
-				// 		symbol: currentSymbol,
-				// 		amount: gas.totalGas.toString()
-				// 	},
-				// })
+				const signer = smartAccount.getSigner() as SnapSigner
+				// export interface originTransaction {
+				// 	transactions: Transaction[]
+				// 	chain: string
+				// 	fee?: {
+				// 		symbol: string
+				// 		amount: string
+				// 	}
+				// }
+				signer.setOriginTransaction({
+					transactions: txs,
+					chain: getChainNameByChainId(chainId),
+					fee: {
+						symbol: currentSymbol,
+						amount: gas.totalGas.toString()
+					}
+				})
+				const signedTxs = await smartAccount.signTransactions(formatTxs(txs), {
+					fee
+				})
 				if (gas.usedFreeQuota) {
 					const { freeSig, expires } = await authorizeTransactionFees(txOption)
 					freeFeeOption = {
@@ -239,19 +249,8 @@ const Pay: React.FC = () => {
 						expires
 					}
 				}
-				// smartAccount
-				// const signedTxs = await smartAccount.signTransactions(formattedTxs, {
-				// 	fee,
-				// 	freeFeeOption
-				// })
-				// if (gas.usedFreeQuota) {
-				// 	const { freeSig, expires } = await authorizeTransactionFees(txOption)
-				// 	freeFeeOption = {
-				// 		signature: freeSig,
-				// 		expires
-				// 	}
-				// }
-				const res = await smartAccount.sendTransactionBatch(formattedTxs, {
+				const res = await smartAccount.sendSignedTransactions({
+					...signedTxs,
 					freeFeeOption
 				})
 				addHistory(address, {
@@ -268,7 +267,7 @@ const Pay: React.FC = () => {
 				setIsPaying(false)
 				reset()
 			} catch (e: any) {
-				upNotify.error(e?.rawMessage || 'Something wrong, please retry')
+				upNotify.error(e?.rawMessage || e?.message || 'Something wrong, please retry')
 			}
 		} else {
 			upNotify.info('Calculating gas, please wait.')

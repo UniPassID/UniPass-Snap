@@ -50,3 +50,8 @@ export interface AuthorizeTxFeesOutput {
   freeSig: string
   expires: number
 }
+
+export interface VerifyTxFeesOutput {
+  succ: boolean,
+  errorReason: string
+}

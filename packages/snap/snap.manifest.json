@@ -1,29 +1,29 @@
 {
-	"version": "0.1.0-alpha.0",
-	"description": "An example Snap written in TypeScript.",
-	"proposedName": "TypeScript Example Snap",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/MetaMask/template-snap-monorepo.git"
-	},
-	"source": {
-		"shasum": "MWEPSBAtOc6KaW1q0PFpKGFW2yUQGn3V/Mo3W9x5CfI=",
-		"location": {
-			"npm": {
-				"filePath": "dist/bundle.js",
-				"iconPath": "images/icon.svg",
-				"packageName": "@unipasswallet/unipass-snap",
-				"registry": "https://registry.npmjs.org/"
-			}
-		}
-	},
-	"initialPermissions": {
-		"snap_dialog": {},
-		"snap_getEntropy": {},
-		"endowment:rpc": {
-			"dapps": true,
-			"snaps": false
-		}
-	},
-	"manifestVersion": "0.1"
+  "version": "0.1.0-alpha.0",
+  "description": "An example Snap written in TypeScript.",
+  "proposedName": "TypeScript Example Snap",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+  },
+  "source": {
+    "shasum": "dMMgsP0FFL/ilSgOQcHAyxMvIBM/dB316KJeZCGWeJs=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@unipasswallet/unipass-snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_dialog": {},
+    "snap_getEntropy": {},
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": false
+    }
+  },
+  "manifestVersion": "0.1"
 }

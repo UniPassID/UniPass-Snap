@@ -28,6 +28,7 @@
             height: 28px;
             width: 100%;
             margin-bottom: 18px;
+            position: relative;
             font-weight: 500;
             font-size: 14px;
             line-height: 28px;
@@ -55,6 +56,19 @@
                     display: inline-block;
                     margin-right: 15px;
                 }
+            }
+            .pop {
+                background-color: #E85050;
+                display: flex;
+                align-items: center;
+                font-size: 12px;
+                color: #fff;
+                justify-content: center;
+                width: 16px;
+                height: 16px;
+                border-radius: 100%;
+                position: absolute;
+                right: 40px;
             }
         }
 

@@ -4,8 +4,14 @@ import Transfer from './transfer'
 import { Button, Dialog, Icon, upNotify } from '@/components'
 import { etherToWei } from '@/utils'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useRecoilValue } from 'recoil'
-import { availableFreeQuotaState, currentChainIdState, smartAccountInsState, smartAccountState } from '@/store'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import {
+	availableFreeQuotaState,
+	currentChainIdState,
+	pendingTransactionState,
+	smartAccountInsState,
+	smartAccountState
+} from '@/store'
 import { makeERC20Contract } from '@/utils/make_contract'
 import { getAddress, isAddress } from 'ethers/lib/utils'
 import styles from './pay.module.scss'
@@ -34,6 +40,7 @@ const Pay: React.FC = () => {
 	const [isPaying, setIsPaying] = useState<boolean>(false)
 	const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
 	const [deletingIndex, setDeletingIndex] = useState<number>()
+	const [pendingTransaction, setPendingTransaction] = useRecoilState(pendingTransactionState)
 
 	const DEFAULT_FORM_ITEM = useMemo(() => {
 		return {
@@ -254,6 +261,7 @@ const Pay: React.FC = () => {
 					txs,
 					fee
 				})
+				setPendingTransaction(pendingTransaction + 1)
 				upNotify.success('Submitted Success')
 				waitResponse(res, address, chainId)
 				setIsPaying(false)
@@ -274,7 +282,12 @@ const Pay: React.FC = () => {
 	return (
 		<div className={styles.pay}>
 			<div className={styles.content}>
-				<div className={styles.title}>PAY</div>
+				<div className={styles['title-wrapper']}>
+					<div className={styles.title}>PAY</div>
+					<div className={styles['sub-title']}>
+						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} availabel gas-free</span> payments today
+					</div>
+				</div>
 				<div className={styles.form}>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						{fields.map((item, index) => {
@@ -305,12 +318,25 @@ const Pay: React.FC = () => {
 						<div className={styles['network-fee-title']}>NETWORK FEE</div>
 						{gas.totalGas === 0 ? (
 							<ToolTip title="UniPass Snap provides three gas-free crypto payments daily" placement="topRight">
-								<div className={styles['free-tips']}>
-									• Gas Free! • <Icon src={QSvg} style={{ marginLeft: '12px' }} />
+								<div className={styles['free-tips-wrap']}>
+									<div className={styles['free-tips']}>Gas Free!</div>
+									<Icon src={QSvg} style={{ marginLeft: '12px' }} />
 								</div>
 							</ToolTip>
 						) : (
-							<div></div>
+							gas.originGas > gas.totalGas && (
+								<ToolTip
+									title="UniPass Snap utilizes the batch transaction feature to save you gas fee"
+									placement="topRight"
+								>
+									<div className={styles['free-tips-wrap']}>
+										<div className={styles['free-tips']} style={{ color: '#E85050' }}>
+											{gas.discount * 100}%<span style={{ color: 'var(--up-text-primary)' }}>OFF</span>
+										</div>
+										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+									</div>
+								</ToolTip>
+							)
 						)}
 					</div>
 					<div className={styles['switcher-wrapper']}>

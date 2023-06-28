@@ -1,6 +1,6 @@
-import { SmartAccountResponse } from '@unipasswallet/smart-account'
+import { SmartAccount, SmartAccountResponse } from '@unipasswallet/smart-account'
 import { updateHistory } from './history'
-import { TransactionStatus } from '@/types/transaction'
+import { TransactionRecord, TransactionStatus } from '@/types/transaction'
 import { CHAIN_CONFIGS } from '@/constants'
 
 export async function waitResponse(res: SmartAccountResponse, address: string, chainId: number) {
@@ -16,6 +16,29 @@ export async function waitResponse(res: SmartAccountResponse, address: string, c
 			error: JSON.stringify(e)
 		})
 	}
+}
+
+export async function waitPendingTransactions(smartAccount: SmartAccount, address: string, pendingTransactions: TransactionRecord[]) {
+	pendingTransactions.forEach(async (tx) => {
+		try {
+			const txResult = await smartAccount.waitTransactionByReceipt(tx.relayerHash, 1)
+			updateHistory({
+				address,
+				chainId: tx.chainId,
+				relayerHash: tx.relayerHash,
+				status: txResult.status ? TransactionStatus.Success : TransactionStatus.Failed,
+				hash: txResult.transactionHash
+			})
+		} catch (e) {
+			updateHistory({
+				address,
+				chainId: tx.chainId,
+				relayerHash: tx.relayerHash,
+				status: TransactionStatus.Failed,
+				error: e?.toString()
+			})
+		}
+	})
 }
 
 export function getTokenByContractAddress(contractAddress: string) {

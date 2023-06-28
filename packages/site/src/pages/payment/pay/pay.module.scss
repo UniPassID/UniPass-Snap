@@ -13,9 +13,35 @@
 		.row {
 			display: flex;
 		}
-		.title {
-			color: var(--up-text-primary);
-			font-size: 28px;
+		.title-wrapper {
+			display: flex;
+			align-items: center;
+			.title {
+				color: var(--up-text-primary);
+				font-size: 28px;
+				margin-right: 8px;
+			}
+			.sub-title {
+				font-size: 14px;
+				&::before {
+					content: '';
+					margin: 0 8px;
+					width: 0;
+					height: 0;
+					display: inline-block;
+					border: 4px solid transparent;
+					border-left-color: var(--up-primary);
+				}
+				&::after {
+					content: '';
+					margin: 0 8px;
+					display: inline-block;
+					width: 0;
+					height: 0;
+					border: 4px solid transparent;
+					border-right-color: var(--up-primary);
+				}
+			}
 		}
 		::-webkit-scrollbar {
 			display: none;
@@ -119,12 +145,24 @@
 				.network-fee-title {
 					color: var(--up-text-secondary);
 				}
-				.free-tips {
+				.free-tips-wrap {
 					display: flex;
-    			align-items: center;
-					font-weight: 500;
-					color: #4AAC4C
+					.free-tips {
+						display: flex;
+						align-items: center;
+						font-weight: 500;
+						color: #4AAC4C;
+						&::before {
+							content: '•';
+							margin-right: 4px;
+						}
+						&::after {
+							content: '•';
+							margin-left: 4px;
+						}
+					}
 				}
+				
 			}
 			
 			.switcher-wrapper {

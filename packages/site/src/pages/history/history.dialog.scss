@@ -19,6 +19,12 @@
   }
 
   .record {
+    .error {
+      background: #FDEEEE;
+      color: #E85050;
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
     .row {
       display: flex;
       justify-content: space-between;

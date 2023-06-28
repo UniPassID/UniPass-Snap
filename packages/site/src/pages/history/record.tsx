@@ -34,7 +34,7 @@ const RecordDetail: React.FC<{
 									style={{ marginRight: '8px' }}
 									src={getTokenByContractAddress(tx.token)?.symbol === 'USDC' ? USDC : USDT}
 								/>
-								- {`${record.txs[0].amount} ${getTokenByContractAddress(tx.token)?.symbol}`}
+								- {`${tx.amount} ${getTokenByContractAddress(tx.token)?.symbol}`}
 							</div>
 						</div>
 						<div className="row">

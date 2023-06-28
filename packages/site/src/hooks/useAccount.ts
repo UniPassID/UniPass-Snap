@@ -1,17 +1,20 @@
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
-import { smartAccountState, smartAccountTokenListState, isTestnetEnvState, availableFreeQuotaState } from '@/store'
+import { smartAccountState, smartAccountTokenListState, isTestnetEnvState, availableFreeQuotaState, smartAccountInsState, pendingTransactionState } from '@/store'
 import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from '@/constants'
-import { getBalancesByMulticall } from '@/utils'
+import { getBalancesByMulticall, getHistoryByStatus, waitPendingTransactions } from '@/utils'
 import { useEffect } from 'react'
 import { getDefaultTokenList } from '@/constants/tokens'
 import { getFreeQuota } from '@/request'
+import { TransactionStatus } from '@/types/transaction'
 
 export const useAccount = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
+	const smartAccountIns = useRecoilValue(smartAccountInsState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const [tokens, setSmartAccountTokenList] = useRecoilState(smartAccountTokenListState)
 	const setAvailableFreeQuota = useSetRecoilState(availableFreeQuotaState)
+	const setPendingTransaction = useSetRecoilState(pendingTransactionState)
 
 	const queryERC20Balances = async () => {
 		console.log(`begin query smart account(${smartAccount}) tokens balance`)
@@ -52,6 +55,23 @@ export const useAccount = () => {
 			pollingInterval: 3000
 		}
 	)
+
+	// polling pending transaction
+	useRequest(
+		async () => {
+			const pendingTransactions = getHistoryByStatus(smartAccount, TransactionStatus.Pending)
+			setPendingTransaction(pendingTransactions.length)
+			waitPendingTransactions(smartAccountIns, smartAccount, pendingTransactions)
+		}, {
+			ready: !!(smartAccount && smartAccountIns),
+			refreshDeps: [smartAccount, smartAccountIns],
+			pollingInterval: 3000,
+		}
+	)
+
+	useEffect(() => {
+
+	}, [smartAccount])
 
 	// reset balance after switch env
 	useEffect(() => {

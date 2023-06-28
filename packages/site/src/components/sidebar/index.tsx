@@ -3,7 +3,13 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
 import { Icon, Popover, Switch } from '@/components'
-import { currentSideBarState, isTestnetEnvState, currentChainIdState, smartAccountState } from '@/store'
+import {
+	currentSideBarState,
+	isTestnetEnvState,
+	currentChainIdState,
+	smartAccountState,
+	pendingTransactionState
+} from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
 import PaymentSelected from '@/assets/svg/PaymentSelected.svg'
@@ -37,6 +43,7 @@ const SideBar = () => {
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
+	const pendingTransaction = useRecoilValue(pendingTransactionState)
 
 	const getMenuClassName = (name: MenuType) => {
 		return clsx(styles.menu, {
@@ -97,6 +104,9 @@ const SideBar = () => {
 								<div className={styles.menu_inner}>
 									{getMenuIcon(menu.name)}
 									{menu.name}
+									{menu.name === 'History' && pendingTransaction > 0 && (
+										<div className={styles.pop}>{pendingTransaction}</div>
+									)}
 								</div>
 							</div>
 						)

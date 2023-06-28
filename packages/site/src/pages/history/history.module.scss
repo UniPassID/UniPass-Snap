@@ -5,6 +5,14 @@
   display: flex;
   flex-direction: column;
 
+  .empty {
+    width: 100%;
+    padding-top: 200px;
+    text-align: center;
+    color: #B9BABE;
+    font-weight: 500;
+  }
+
   .title {
     color: var(--up-text-primary);
     font-size: 28px;
@@ -13,6 +21,14 @@
   .send {
     display: flex;
     align-items: center;
+    .status-tag {
+      color: #E85050;
+      background-color: #FDEEEE;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 20px !important;
+      margin-left: 8px;
+    }
     .send-icon {
       width: 40px;
       height: 40px;

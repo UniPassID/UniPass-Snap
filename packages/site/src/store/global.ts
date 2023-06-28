@@ -21,9 +21,9 @@ const isTestnetEnvState = selector({
 	}
 })
 
-const paddingTransactionState = atom<number>({
+const pendingTransactionState = atom<number>({
 	key: 'pendingTransaction',
 	default: 0
 })
 
-export { currentSideBarState, currentChainIdState, isTestnetEnvState, paddingTransactionState }
+export { currentSideBarState, currentChainIdState, isTestnetEnvState, pendingTransactionState }

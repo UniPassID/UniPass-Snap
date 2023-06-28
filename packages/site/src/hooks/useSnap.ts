@@ -1,14 +1,13 @@
 import { utils } from 'ethers'
 import { useAsyncEffect, useBoolean } from 'ahooks'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { flaskState, installedSnapState, smartAccountState, smartAccountInsState, paddingTransactionState } from '@/store'
-import { connectSnap, getHistoryByStatus, getMasterKeyAddress, getSnap, isFlaskVersion, upGA } from '@/utils'
+import { flaskState, installedSnapState, smartAccountState, smartAccountInsState } from '@/store'
+import { connectSnap, getMasterKeyAddress, getSnap, isFlaskVersion, upGA } from '@/utils'
 import { CHAIN_CONFIGS, CUSTOM_AUTH_APPID } from '@/constants'
 import { SmartAccount } from '@unipasswallet/smart-account'
 import { upNotify } from '@/components'
 import { SnapSigner } from '@/snap-signer'
 import { fetchAccessToken } from '@/utils/account'
-import { TransactionStatus } from '@/types/transaction'
 
 export const useSnap = () => {
 	const [isFlask, setHasFlaskDetected] = useRecoilState(flaskState)
@@ -16,7 +15,6 @@ export const useSnap = () => {
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
 	const setSmartAccountInsState = useSetRecoilState(smartAccountInsState)
 	const [connectSnapLoading, { setTrue: startConnectSnap, setFalse: endConnectSnap }] = useBoolean(false)
-	const setPendingTransaction = useSetRecoilState(paddingTransactionState)
 
 	useAsyncEffect(async () => {
 		let Status = ''
@@ -75,9 +73,7 @@ export const useSnap = () => {
 		const smartAccountAddress = utils.getAddress(address)
 		window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)
 		setSmartAccountState(smartAccountAddress)
-		const pendingTransactions = getHistoryByStatus(smartAccountAddress, TransactionStatus.Pending)
 		setSmartAccountInsState(smartAccount)
-		setPendingTransaction(pendingTransactions.length)
 		const res = await fetchAccessToken({
 			accountAddress: smartAccountAddress,
 			providerIdentifier: masterKeyAddress

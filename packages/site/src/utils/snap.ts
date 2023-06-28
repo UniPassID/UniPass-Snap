@@ -4,6 +4,7 @@ import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { originTransaction } from '@/types/transaction'
 
 const defaultSnapOrigin = process.env.REACT_APP_SNAP_ORIGIN as string
+const version = process.env.REACT_APP_SNAP_VERSION
 
 /**
  * Get the installed snaps in MetaMask.
@@ -23,15 +24,12 @@ export const getSnaps = async (): Promise<GetSnapsResponse> => {
  * @param snapId - The ID of the snap.
  * @param params - The params to pass with the snap to connect.
  */
-export const connectSnap = async (
-	snapId: string = defaultSnapOrigin,
-	params: Record<'version' | string, unknown> = {}
-) => {
+export const connectSnap = async () => {
 	// @ts-ignore
 	await window.ethereum.request({
 		method: 'wallet_requestSnaps',
 		params: {
-			[snapId]: params
+			[defaultSnapOrigin]: { version }
 		}
 	})
 }
@@ -44,7 +42,6 @@ export const connectSnap = async (
  */
 export const getSnap = async (): Promise<Snap | undefined> => {
 	try {
-		const version = process.env.REACT_APP_SNAP_VERSION
 		const snaps = await getSnaps()
 		return Object.values(snaps).find((snap) => {
 			return snap.id === defaultSnapOrigin && (!version || snap.version === version)
@@ -79,7 +76,10 @@ export const signMessageWithSnap = async (message: string | Bytes, originTransac
 	// @ts-ignore
 	return (await window.ethereum.request<string>({
 		method: 'wallet_invokeSnap',
-		params: { snapId: defaultSnapOrigin, request: { method: 'signMessage', params: { message, originTransaction: JSON.stringify(originTransaction) } } }
+		params: {
+			snapId: defaultSnapOrigin,
+			request: { method: 'signMessage', params: { message, originTransaction: JSON.stringify(originTransaction) } }
+		}
 	})) as string
 }
 

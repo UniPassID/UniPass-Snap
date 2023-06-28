@@ -24,10 +24,9 @@
             display: flex;
             align-items: center;
             flex-flow: row nowrap;
-            justify-content: flex-start;
+            justify-content: center;
             height: 28px;
             width: 100%;
-            padding-left: 40px;
             margin-bottom: 18px;
             font-weight: 500;
             font-size: 14px;
@@ -36,12 +35,26 @@
             color: #5E5F6E;
             cursor: pointer;
             border-right: 2px solid transparent;
-            box-sizing: border-box;
             transition: all .15s ease-in-out;
 
-            img {
-                display: inline-block;
-                margin-right: 15px;
+            .menu_inner {
+                width: 120px;
+                height: 45px;
+                border-radius: 12px;
+                padding: 12px 10px;
+                display: flex;
+                align-items: center;
+                flex-flow: row nowrap;
+                justify-content: flex-start;
+
+                &:hover {
+                    background-color: #F7F7FA;
+                }
+
+                img {
+                    display: inline-block;
+                    margin-right: 15px;
+                }
             }
         }
 

@@ -94,8 +94,10 @@ const SideBar = () => {
 								className={getMenuClassName(menu.name)}
 								onClick={() => switchSideBarState(menu.name)}
 							>
-								{getMenuIcon(menu.name)}
-								{menu.name}
+								<div className={styles.menu_inner}>
+									{getMenuIcon(menu.name)}
+									{menu.name}
+								</div>
 							</div>
 						)
 					})}

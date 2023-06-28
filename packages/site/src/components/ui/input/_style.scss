@@ -28,20 +28,19 @@
 		flex-flow: row nowrap;
 		align-items: center;
 		height: 48px;
-		background-color: var(--up-content-background);
-		border: 1px solid var(--up-border-line);
+		background-color: #fff;
+		border: 1px solid #E1E6F0;
 		border-radius: 12px;
 		box-sizing: border-box;
 		transition: all 0.2s;
 		overflow: hidden;
 
 		&:hover {
-			background-color: var(--up-content-background-hover);
+			background-color: #F7F7FA;
 		}
 
 		&:focus-within {
-			background-color: var(--up-content-background);
-			border-color: var(--up-primary);
+			background-color: #F7F7FA;
 		}
 
 		.up-input-inner {

@@ -56,7 +56,7 @@ const Assets = () => {
 				<ChainSwitcher />
 				<div className={styles.title}>STABLE COIN BALANCE</div>
 				<div className={styles.value}>
-					<span>$</span>
+					<span>$ </span>
 					<span>{formatUSDAmount(totalBalanceOnChain)}</span>
 				</div>
 				<Button size="md" btnType="gray" icon={<Icon src={TopUpButton} size="lg" />} onClick={toTopUp}>

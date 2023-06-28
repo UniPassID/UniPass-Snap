@@ -57,7 +57,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 				{(icon || loading) && <div className="up_button_divider"></div>}
 				<span>{children}</span>
 			</div>
-			<div className="up_button_mask" />
+			{btnType !== 'gray' && <div className="up_button_mask" />}
 		</button>
 	)
 }

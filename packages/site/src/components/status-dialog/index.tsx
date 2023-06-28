@@ -51,6 +51,7 @@ const StatusDialog = () => {
 				showClose={false}
 				center={true}
 				className={styles.flask_dialog}
+				style={{ content: { backgroundColor: '#F0F3FA' } }}
 			>
 				<div className={styles.bg}>
 					<Icon src={BobbleBg} width={300} height={140} />
@@ -101,6 +102,7 @@ const StatusDialog = () => {
 				showClose={false}
 				center={true}
 				className={styles.snap_dialog}
+				style={{ content: { backgroundColor: '#F0F3FA' } }}
 			>
 				<div className={styles.title}>Connect to UniPass Snap</div>
 				<div className={styles.tips}>UniPass Snap is a product that empowers MetaMask with smart contract wallet.</div>

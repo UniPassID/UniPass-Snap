@@ -31,22 +31,24 @@
 
             .value {
                 margin-top: 4px;
+                margin-bottom: 20px;
+                height: 64px;
+                line-height: 64px;
 
                 span {
                     color: #1F202A;
                     font-weight: 400;
-                    font-size: 36px;
-                    line-height: 64px;
+                    font-size: 48px;
                 }
 
                 span:first-child {
-                    font-size: 20px;
+                    font-size: 36px;
                 }
 
             }
 
             .coins {
-                margin-top: 20px;
+                margin-top: 4px;
 
                 .USD {
                     height: 72px;
@@ -134,6 +136,10 @@
                 border-radius: 12px;
                 box-sizing: border-box;
                 cursor: pointer;
+
+                &:hover {
+                    background-color: #F7F7FA;
+                }
             }
         }
     }

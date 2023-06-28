@@ -3,7 +3,7 @@ FROM nginx:1.23-alpine
 WORKDIR /opt/app
 
 COPY nginx.conf /etc/nginx/nginx.conf
-COPY dist/ /opt/app
+COPY packages/site/build/ /opt/app
 
 EXPOSE 80
 

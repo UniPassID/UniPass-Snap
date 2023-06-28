@@ -13,26 +13,34 @@ export function addHistory(address: string, txRecord: TransactionRecord) {
 }
 
 export function getHistoryByStatus(address: string, status: TransactionStatus): TransactionRecord[] {
-  try {
-		const historyKey = `${address}_his`
-		const allTxs = localStorage.getItem(historyKey) || '[]'
-		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
-		return parsedTxs.filter(tx => tx.status === status)
-	} catch (e) {
-		console.error('[history getHistoryByStatus]', e)
-	}
-  return []
-}
-
-export function updateHistory(address: string, chainId: number, hash: string, status: TransactionStatus, error?: string) {
 	try {
 		const historyKey = `${address}_his`
 		const allTxs = localStorage.getItem(historyKey) || '[]'
 		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
+		return parsedTxs.filter((tx) => tx.status === status)
+	} catch (e) {
+		console.error('[history getHistoryByStatus]', e)
+	}
+	return []
+}
+
+export function updateHistory(record: {
+	address: string
+	chainId: number
+	relayerHash: string
+	status: TransactionStatus
+	error?: string
+	hash?: string
+}) {
+	try {
+		const historyKey = `${record.address}_his`
+		const allTxs = localStorage.getItem(historyKey) || '[]'
+		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
 		parsedTxs.forEach((tx) => {
-			if (tx.chainId === chainId && tx.hash === hash) {
-				tx.status = status
-        tx.error = error
+			if (tx.chainId === record.chainId && tx.relayerHash === record.relayerHash) {
+				tx.status = record.status
+				tx.error = record.error
+				tx.hash = record.hash
 			}
 		})
 		localStorage.setItem(historyKey, JSON.stringify(parsedTxs))
@@ -42,7 +50,7 @@ export function updateHistory(address: string, chainId: number, hash: string, st
 }
 
 export function getHistory(address: string): TransactionRecord[] {
-  try {
+	try {
 		const historyKey = `${address}_his`
 		const allTxs = localStorage.getItem(historyKey) || '[]'
 		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
@@ -50,5 +58,5 @@ export function getHistory(address: string): TransactionRecord[] {
 	} catch (e) {
 		console.error('[history getHistory]', e)
 	}
-  return []
+	return []
 }

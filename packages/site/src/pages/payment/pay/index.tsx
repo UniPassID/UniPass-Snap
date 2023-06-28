@@ -220,17 +220,9 @@ const Pay: React.FC = () => {
 				// verify txs first
 				if (gas.usedFreeQuota) {
 					const result = await verifyTransactionFees(txOption)
-					if (!result.succ) throw new Error(result.errorReason)
+					if (!result.success) throw new Error(result.errorReason)
 				}
 				const signer = smartAccount.getSigner() as SnapSigner
-				// export interface originTransaction {
-				// 	transactions: Transaction[]
-				// 	chain: string
-				// 	fee?: {
-				// 		symbol: string
-				// 		amount: string
-				// 	}
-				// }
 				signer.setOriginTransaction({
 					transactions: txs,
 					chain: getChainNameByChainId(chainId),
@@ -254,7 +246,7 @@ const Pay: React.FC = () => {
 					freeFeeOption
 				})
 				addHistory(address, {
-					hash: res.hash,
+					relayerHash: res.hash,
 					chainId,
 					status: TransactionStatus.Pending,
 					timestamp: Date.now(),

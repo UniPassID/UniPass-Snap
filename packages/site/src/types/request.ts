@@ -36,13 +36,13 @@ export interface SingleTransactionFeesOutput {
 }
 
 export interface AuthorizeTxFeesInput {
-  nonce: number,
-  chainId: number,
-  usedFreeQuota: number,
+  nonce: number
+  chainId: number
+  usedFreeQuota: number
   tokenSingleFees?: {
     token: string
     singleFee: number
-  }[],
+  }[]
   transactions: providers.TransactionRequest[]
 }
 
@@ -52,6 +52,6 @@ export interface AuthorizeTxFeesOutput {
 }
 
 export interface VerifyTxFeesOutput {
-  succ: boolean,
+  success: boolean
   errorReason: string
 }

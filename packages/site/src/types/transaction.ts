@@ -23,7 +23,8 @@ export interface Transactions {
 }
 
 export interface TransactionRecord {
-	hash: string
+	relayerHash: string
+	hash?: string
   chainId: number
 	txs: Transaction[]
 	status: TransactionStatus

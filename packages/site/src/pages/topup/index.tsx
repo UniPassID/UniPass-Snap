@@ -42,9 +42,9 @@ const TopUp = () => {
 
 	useEffect(() => {
 		if (showQRCode) {
-			console.log('showQRCode true')
 			upGA('topup-qrcode-display-qrcode', 'topup', { ChainID: netWork, Token: token })
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showQRCode])
 
 	const _setNetwork = (value: number) => {

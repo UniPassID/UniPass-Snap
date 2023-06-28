@@ -63,6 +63,71 @@
 
 }
 
+.flask_dialog {
+    width: 400px !important;
+    display: flex;
+    align-items: center;
+    flex-flow: column nowrap;
+    justify-content: center;
+
+    .bg {
+        position: relative;
+
+        .metamask {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            left: 50%;
+            top: 50%;
+            margin-left: -30px;
+        }
+    }
+
+    .title {
+        color: #1F202A;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 28px;
+        margin-bottom: 15px;
+    }
+
+    .tips {
+        color: #5E5F6E;
+        text-align: center;
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 60px;
+    }
+
+    .button {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        justify-content: center;
+        padding: 14px 32px;
+        border-radius: 100px;
+        background: #8864FF;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+
+        img {
+            display: inline-block;
+            margin-right: 8px;
+        }
+    }
+
+    .alert {
+        color: #8864FF;
+        text-align: center;
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 12px;
+    }
+
+}
+
 .snap_dialog {
     width: 400px !important;
     display: flex;

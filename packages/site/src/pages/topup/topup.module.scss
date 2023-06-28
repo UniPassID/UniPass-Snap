@@ -202,6 +202,11 @@
                     border-color: $secondary-red-3;
                 }
 
+                &.topup_input_disable {
+                    cursor: not-allowed;
+                    opacity: 0.6;
+                }
+
                 .topup_input_title {
                     color: #5E5F6E;
                     font-size: 14px;
@@ -223,6 +228,10 @@
                         color: #1F202A;
                         font-size: 48px;
                         line-height: 64px;
+
+                        &.up_input_inner_disable {
+                            cursor: not-allowed;
+                        }
 
                         &::placeholder {
                             font-weight: 400;

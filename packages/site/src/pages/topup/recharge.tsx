@@ -52,6 +52,7 @@ export const ReCharge: React.FC<{
 						name="Amount"
 						formField={methods}
 						onFocus={onInputFocus}
+						disabled={!selectedToken}
 						validateShame={{
 							max: {
 								value: selectedToken ? parseFloat(weiToEther(selectedToken.balance || 0, selectedToken.decimals)) : 0,
@@ -89,7 +90,7 @@ export const ReCharge: React.FC<{
 						<div className={styles.title}>FROM METAMASK ADDRESS</div>
 						<div className={styles.address}>
 							<Icon src={MetaMask} width={20} height={20} />
-							{metamaskAccount}
+							{metamaskAccount || 'Waiting to get address'}
 						</div>
 					</div>
 					<div className={styles.item}>

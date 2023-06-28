@@ -5,6 +5,7 @@ import { smartAccountState } from '@/store'
 import { Button, Dialog, Icon } from '@/components'
 import BobbleBg from '@/assets/svg/Bobble_bg.svg'
 import MetaMask from '@/assets/svg/MetaMask.svg'
+import MetaMaskFlask from '@/assets/img/metamask_flask.png'
 import UniPass_Icon from '@/assets/svg/UniPass_Icon.svg'
 import MetaMask_Linear from '@/assets/svg/MetaMask_Linear_White.svg'
 import Connect from '@/assets/svg/Connect.svg'
@@ -49,6 +50,31 @@ const StatusDialog = () => {
 				showCancelButton={false}
 				showClose={false}
 				center={true}
+				className={styles.flask_dialog}
+			>
+				<div className={styles.bg}>
+					<Icon src={BobbleBg} width={300} height={140} />
+					<div className={styles.metamask}>
+						<Icon src={MetaMaskFlask} width={60} height={60} />
+					</div>
+				</div>
+				<div className={styles.title}>Install Flask</div>
+				<div className={styles.tips}>Before using UniPass Snap, you need to install Flask first.</div>
+				<div className={styles.button} onClick={installFlask}>
+					<Icon src={MetaMask_Linear} width={20} height={20} />
+					Install Flask
+				</div>
+				<div className={styles.alert}>Please refresh this page after the installation.</div>
+			</Dialog>
+			{/* <Dialog
+				title=""
+				isOpen={showMetaMaskInstallDialog}
+				shouldCloseOnEsc={false}
+				shouldCloseOnOverlayClick={false}
+				showConfirmButton={false}
+				showCancelButton={false}
+				showClose={false}
+				center={true}
 				className={styles.metamask_dialog}
 			>
 				<div className={styles.bg}>
@@ -64,7 +90,7 @@ const StatusDialog = () => {
 					Install MetaMask
 				</div>
 				<div className={styles.alert}>Please refresh this page after the installation.</div>
-			</Dialog>
+			</Dialog> */}
 			<Dialog
 				isOpen={showSnapConnectDialog}
 				title=""

@@ -35,11 +35,16 @@ const Input: React.FC<InputProps> = (props) => {
 	}, [errors, props.name])()
 
 	const wrapperClassNames = clsx(styles.topup_input, {
-		[styles.topup_input_error]: hasError
+		[styles.topup_input_error]: hasError,
+		[styles.topup_input_disable]: props.disabled
 	})
 
 	const contentClassNames = clsx(styles.topup_input_content, {
 		[styles.topup_input_error]: hasError
+	})
+
+	const inputClassNames = clsx(styles.up_input_inner, {
+		[styles.up_input_inner_disable]: props.disabled
 	})
 
 	const handleResetField = () => {
@@ -51,7 +56,7 @@ const Input: React.FC<InputProps> = (props) => {
 			<span className={styles.topup_input_title}>{props.name}</span>
 			<div className={contentClassNames}>
 				<input
-					className={styles.up_input_inner}
+					className={inputClassNames}
 					{...restProps}
 					{...restRegister}
 					placeholder="0"

@@ -3,6 +3,7 @@ import { TransactionRequest } from '@ethersproject/abstract-provider'
 import { SignTxMessageInput, originTransaction } from '../types'
 import { NodeType, panel, text } from '@metamask/snaps-ui'
 import { arrayify } from 'ethers/lib/utils'
+import { getTokenSymbolByAddress } from './utils'
 
 function getEntropy() {
 	return snap.request({
@@ -44,7 +45,11 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 
 	if (originTransaction.transactions.length > 1) {
 		let payContent = originTransaction.transactions.map((tx, index) => {
-			return [text(`**Payment${index + 1}**`), text(`Pay ${tx.amount} ${tx.token}`), text(`To: ${tx.to}`)]
+			return [
+				text(`**Payment ${index + 1}**`),
+				text(`Pay ${tx.amount} ${getTokenSymbolByAddress(tx.token)}`),
+				text(`To: ${tx.to}`)
+			]
 		})
 		panelContent = [
 			...payContent.flat(),
@@ -53,14 +58,16 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
 				}`
 			),
-			text(`**Chain:${originTransaction.chain}**`)
+			text(`**Chain: ${originTransaction.chain}**`)
 		]
 	} else {
 		panelContent = [
 			text(
-				`**Pay ${originTransaction.transactions[0].amount} ${originTransaction.transactions[0].token} on ${originTransaction.chain}**`
+				`**Pay ${originTransaction.transactions[0].amount} ${getTokenSymbolByAddress(
+					originTransaction.transactions[0].token
+				)} on ${originTransaction.chain}**`
 			),
-			text(`To: ${originTransaction.transactions[0].to}`),
+			text(`**To**: ${originTransaction.transactions[0].to}`),
 			text(
 				`**Gasfee**: ${
 					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'

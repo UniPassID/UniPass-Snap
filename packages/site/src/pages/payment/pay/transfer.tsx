@@ -88,7 +88,7 @@ const Transfer = forwardRef<
 			return weiToEther(totalBalance.sub(totalUsed), currentToken.decimals)
 		}
 		return '0'
-	}, [txs, availableTokens, index, tx.token, getTokenContractAddress])
+	}, [txs, availableTokens, index, tx?.token, getTokenContractAddress])
 
 	useImperativeHandle(
 		ref,
@@ -110,7 +110,7 @@ const Transfer = forwardRef<
 				}
 			}
 		}),
-		[availableBalance, tx.token, tx.amount, getTokenContractAddress]
+		[availableBalance, tx?.token, tx.amount, getTokenContractAddress]
 	)
 
 	return (

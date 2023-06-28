@@ -113,7 +113,7 @@ const SideBar = () => {
 					})}
 				</div>
 			</div>
-			<div className={styles.menus}>
+			<div className={styles.more}>
 				<Popover
 					placement="top"
 					trigger="click"
@@ -138,12 +138,12 @@ const SideBar = () => {
 					}
 				>
 					{showActions ? (
-						<div className={styles.menu}>
+						<div className={styles.more_item}>
 							<Icon src={Close} width={20} height={20} />
 							Close
 						</div>
 					) : (
-						<div className={styles.menu}>
+						<div className={styles.more_item}>
 							<Icon src={More} width={20} height={20} />
 							More
 						</div>

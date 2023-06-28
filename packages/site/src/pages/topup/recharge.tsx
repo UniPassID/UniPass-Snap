@@ -39,6 +39,10 @@ export const ReCharge: React.FC<{
 		if (selectedToken) recharge(data.Amount, selectedToken)
 	}
 
+	const onInputFocus = () => {
+		upGA('topup-mm-input-amount', 'topup', { ChainID: selectedToken?.chainId, Token: selectedToken?.symbol })
+	}
+
 	return (
 		<>
 			<div className={styles.amount}>
@@ -47,6 +51,7 @@ export const ReCharge: React.FC<{
 					<Input
 						name="Amount"
 						formField={methods}
+						onFocus={onInputFocus}
 						validateShame={{
 							max: {
 								value: selectedToken ? parseFloat(weiToEther(selectedToken.balance || 0, selectedToken.decimals)) : 0,

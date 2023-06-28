@@ -1,4 +1,4 @@
-import { SignInput } from '@/types/requst'
+import { SignInput } from '@/types/request'
 import { sign } from '@/request'
 
 export async function fetchAccessToken(data: SignInput) {

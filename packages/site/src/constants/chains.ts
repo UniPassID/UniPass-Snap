@@ -55,7 +55,8 @@ export const CHAIN_CONFIGS = [
 				decimals: 6
 			}
 		],
-		explorer: 'https://mumbai.polygonscan.com'
+		explorer: 'https://mumbai.polygonscan.com',
+		relayerUrl: process.env.REACT_APP_POLYGON_MUMBAI_RELAYER
 	},
 	{
 		name: 'polygon-mainnet',
@@ -79,7 +80,8 @@ export const CHAIN_CONFIGS = [
 				decimals: 6
 			}
 		],
-		explorer: 'https://polygonscan.com'
+		explorer: 'https://polygonscan.com',
+		relayerUrl: process.env.REACT_APP_POLYGON_MAINNET_RELAYER
 	},
 	{
 		name: 'arbitrum-mainnet',
@@ -103,7 +105,8 @@ export const CHAIN_CONFIGS = [
 				decimals: 6
 			}
 		],
-		explorer: 'https://arbiscan.io'
+		explorer: 'https://arbiscan.io',
+		relayerUrl: process.env.REACT_APP_ARBITRUM_MAINNET_RELAYER
 	}
 ]
 

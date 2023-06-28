@@ -3,9 +3,10 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"build:prod": "sh bin/production.sh",
+		"build:prod": "sh bin/prod.sh",
+		"build:staging": "sh bin/staging.sh",
 		"build:test": "sh bin/test.sh",
-		"start": "sh bin/development.sh",
+		"start": "sh bin/dev.sh",
 		"test": "craco test"
 	},
 	"browserslist": {
@@ -27,7 +28,6 @@
 		]
 	},
 	"dependencies": {
-		"@solana/web3.js": "^1.77.3",
 		"@unipasswallet/smart-account": "0.1.0-alpha.18",
 		"@web3-react/core": "8.2.0",
 		"@web3-react/metamask": "^8.2.1",

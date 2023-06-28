@@ -4,7 +4,7 @@ import { currentChainIdState, smartAccountTokenListState } from '@/store'
 import { useRecoilValue } from 'recoil'
 import { useRequest } from 'ahooks'
 import { getSingleTransactionFees } from '@/request'
-import { SingleTransactionFee } from '@/types/requst'
+import { SingleTransactionFee } from '@/types/request'
 
 export const usePay = () => {
 	const tokens = useRecoilValue(smartAccountTokenListState)

@@ -1,3 +1,3 @@
 # $ENV = [development]
-cp bin/development.env .env
+cp bin/dev.env .env
 craco start

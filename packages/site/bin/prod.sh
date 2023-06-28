@@ -1,3 +1,3 @@
 # $ENV = [production]
-cp bin/production.env .env
+cp bin/prod.env .env
 craco build

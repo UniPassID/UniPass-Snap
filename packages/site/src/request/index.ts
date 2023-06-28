@@ -76,7 +76,7 @@ export async function verifyTransactionFees(data: AuthorizeTxFeesInput) {
 	return request<VerifyTxFeesOutput>({
 		method: 'POST',
 		url: '/api/v1/transaction/verify-transaction-fees',
-		baseURL: process.env.REACT_APP_API_PREFIX,
+		baseURL: BASE_URL,
 		data: data,
 		headers: {
 			Authorization: `Bearer ${accessToken}`

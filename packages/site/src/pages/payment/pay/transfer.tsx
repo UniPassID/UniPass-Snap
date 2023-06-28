@@ -72,7 +72,7 @@ const Transfer = forwardRef<
 	)
 
 	const availableBalance = useMemo(() => {
-		const currentToken = getTokenContractAddress(tx.token)
+		const currentToken = getTokenContractAddress(tx?.token)
 		if (currentToken) {
 			const totalUsed = txs.reduce((total: BigNumber, tx, currentIndex) => {
 				if (currentIndex === index) {
@@ -101,16 +101,16 @@ const Transfer = forwardRef<
 			},
 			isValidAmount: () => {
 				try {
-					const currentToken = getTokenContractAddress(tx.token)
+					const currentToken = getTokenContractAddress(tx?.token)
 					return etherToWei(availableBalance, currentToken?.decimals).gte(
-						etherToWei(tx.amount || '0', currentToken?.decimals)
+						etherToWei(tx?.amount || '0', currentToken?.decimals)
 					)
 				} catch (e) {
 					return false
 				}
 			}
 		}),
-		[availableBalance, tx?.token, tx.amount, getTokenContractAddress]
+		[availableBalance, tx?.token, tx?.amount, getTokenContractAddress]
 	)
 
 	return (

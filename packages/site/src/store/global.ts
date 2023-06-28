@@ -1,7 +1,6 @@
 import { atom, selector } from 'recoil'
 import { ARBITRUM_MAINNET, TESTNET_CHAIN_IDS } from '@/constants'
 import { MenuType } from '@/types'
-import { getHistoryByStatus } from '@/utils'
 
 const currentSideBarState = atom<MenuType>({
 	key: 'currentSideBarState',

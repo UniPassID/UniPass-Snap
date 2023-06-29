@@ -1,7 +1,5 @@
 .pay {
 	height: 720px;
-	width: 560px;
-	padding: 40px;
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -10,6 +8,9 @@
 		flex: 1;
 		flex-direction: column;
 		overflow: auto;
+		padding: 40px;
+		padding-bottom: 0;
+		background-color: #fbfcff;
 		.row {
 			display: flex;
 		}
@@ -136,6 +137,8 @@
 		}
 	}
 	.controller {
+		padding: 40px;
+		padding-top: 0;
 		.network-fee {
 			padding-top: 12px;
 			.network-fee-title-wrapper {

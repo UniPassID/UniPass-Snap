@@ -113,7 +113,7 @@ const Transfer = forwardRef<
 			{txs.length > 1 || !editable ? (
 				<div className={styles['sub-title']}>
 					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment {index + 1}</div> : <div></div>}
-					<div className={styles.controller}>
+					<div style={{display: 'flex'}}>
 						{txs.length > 1 && (
 							<div className={styles.icon} onClick={() => handleRemove(index)}>
 								<Icon src={DeleteSvg} />

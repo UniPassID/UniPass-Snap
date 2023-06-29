@@ -23,8 +23,8 @@ export const ReCharge: React.FC<{
 	const methods = useForm({
 		mode: 'onChange'
 	})
-	const { handleSubmit } = methods
-
+	const { handleSubmit, watch } = methods
+	const value = watch('Amount')
 	const selectedToken = useMemo(() => {
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
 		methods.resetField('Amount')
@@ -100,7 +100,14 @@ export const ReCharge: React.FC<{
 				</div>
 			</div>
 			<div className={styles.topup_btn}>
-				<Button size="md" btnType="filled" type="submit" loading={rechargeLoading} onClick={handleSubmit(onSubmit)}>
+				<Button
+					size="md"
+					btnType="filled"
+					type="submit"
+					loading={rechargeLoading}
+					onClick={handleSubmit(onSubmit)}
+					disabled={!value}
+				>
 					Top Up
 				</Button>
 			</div>

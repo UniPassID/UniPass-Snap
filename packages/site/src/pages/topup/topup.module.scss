@@ -240,6 +240,8 @@
                         color: #1F202A;
                         font-size: 48px;
                         line-height: 64px;
+                        padding: 0;
+                        margin-top: 8px;
 
                         &.up_input_inner_disable {
                             cursor: not-allowed;
@@ -255,8 +257,12 @@
                     }
 
                     .up_input_close {
-                        width: 20px;
-                        height: 20px;
+                        display: flex;
+                        flex-flow: row nowrap;
+                        align-items: center;
+                        justify-content: center;
+                        width: 40px;
+                        height: 40px;
                         margin-right: 16px;
                         cursor: pointer;
                     }
@@ -290,6 +296,7 @@
                     font-size: 14px;
                     line-height: 20px;
                     color: #5E5F6E;
+                    margin-bottom: 16px;
                 }
 
                 .token_info {
@@ -308,7 +315,7 @@
 
                         img {
                             display: inline-block;
-                            margin-right: 16px;
+                            margin-right: 8px;
                         }
                     }
                 }

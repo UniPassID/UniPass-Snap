@@ -106,8 +106,12 @@
 	}
 
 	.up-input-close {
-		width: 20px;
-		height: 20px;
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
 		margin-right: 16px;
 		cursor: pointer;
 	}

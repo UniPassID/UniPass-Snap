@@ -39,11 +39,15 @@ type EventName =
 type Category = 'homepage' | 'login' | 'signup' | 'topup' | 'payment' | 'setting'
 
 export const upGA = (eventName: EventName, category: Category, data: Record<string, any> = {}) => {
-	const fieldObject = {
-		hitType: 'event',
-		eventCategory: category,
-		eventAction: eventName
-	}
+	try {
+		const fieldObject = {
+			hitType: 'event',
+			eventCategory: category,
+			eventAction: eventName
+		}
 
-	ReactGA.send({ ...fieldObject, ...data })
+		ReactGA.send({ ...fieldObject, ...data })
+	} catch (e) {
+		console.log('[upGA failed]', e)
+	}
 }

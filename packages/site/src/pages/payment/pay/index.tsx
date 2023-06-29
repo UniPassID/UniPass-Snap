@@ -2,7 +2,6 @@ import { usePay } from '@/hooks/usePay'
 import { useFieldArray, useForm } from 'react-hook-form'
 import Transfer from './transfer'
 import { Button, Dialog, Icon, upNotify } from '@/components'
-import { etherToWei } from '@/utils'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
@@ -12,25 +11,25 @@ import {
 	smartAccountInsState,
 	smartAccountState
 } from '@/store'
-import { makeERC20Contract } from '@/utils/make_contract'
-import { getAddress, isAddress } from 'ethers/lib/utils'
+import { isAddress } from 'ethers/lib/utils'
 import styles from './pay.module.scss'
 import { TransferRef } from './transfer'
 import FeeSwitcher from '@/components/fee-switcher'
 import Send from '@/assets/svg/Send.svg'
 import QSvg from '@/assets/svg/Question.svg'
-import { Transactions, Transaction, TransactionStatus } from '@/types/transaction'
+import { Transactions, TransactionStatus } from '@/types/transaction'
 import { addHistory } from '@/utils/history'
-import { getTokenBySymbol, waitResponse } from '@/utils/transaction'
+import { formatTx, formatTxs, getTokenByContractAddress, getTokenBySymbol } from '@/utils/transaction'
 import { authorizeTransactionFees, verifyTransactionFees } from '@/request'
 import numbro from 'numbro'
 import ToolTip from '@/components/ui/tooltip'
 import { SnapSigner } from '@/snap-signer'
 import { getChainNameByChainId } from '@/constants'
-import { BigNumber } from 'ethers'
+import { etherToWei, upGA } from '@/utils'
+
+const MAX_TRANSACTION_LENGTH = 10
 
 const Pay: React.FC = () => {
-	const { SINGLE_GAS } = usePay()
 	const transferRefs = useRef<TransferRef[]>([])
 	const chainId = useRecoilValue(currentChainIdState)
 	const availableFreeQuota = useRecoilValue(availableFreeQuotaState)
@@ -60,14 +59,9 @@ const Pay: React.FC = () => {
 
 	const { handleSubmit, watch, setError, reset, ...rest } = useFormReturn
 
-	// clear txs when chainId changed
-	useEffect(() => {
-		reset({
-			txs: [DEFAULT_FORM_ITEM]
-		})
-	}, [DEFAULT_FORM_ITEM, reset])
-
 	const txs = useFormReturn.watch('txs')
+
+	const { SINGLE_GAS, gas, transferAmount, showTips } = usePay(txs, currentSymbol)
 
 	const saveTransferRef = (transferRef: TransferRef | null, index: number) => {
 		if (transferRef !== null) {
@@ -75,76 +69,66 @@ const Pay: React.FC = () => {
 		}
 	}
 
-	const gas = useMemo(() => {
-		const needGas = txs.length > availableFreeQuota
-		let totalGas = 0
-		let originGas = 0
-		let discount = txs.length > 1 ? 0.5 : 1.2
-		if (needGas) {
-			originGas = numbro(SINGLE_GAS?.singleFee).multiply(txs.length).value() || 0
-			totalGas =
-				numbro(SINGLE_GAS?.singleFee)
-					.multiply(txs.length - availableFreeQuota)
-					.multiply(discount)
-					.value() || 0
-		}
-		let selectedGas = getTokenBySymbol(currentSymbol, chainId)
-		const usedFreeQuota = availableFreeQuota > txs.length ? txs.length : availableFreeQuota
-		return { needGas, originGas, totalGas, selectedGas, usedFreeQuota, discount }
-	}, [txs.length, availableFreeQuota, SINGLE_GAS, chainId, currentSymbol])
-
-	const showTips = useMemo(() => {
-		return txs.length === 1 && availableFreeQuota === 0
-	}, [txs.length, availableFreeQuota])
-
-	const { fields, append, remove } = useFieldArray({
+	const { append, remove } = useFieldArray({
 		control: rest.control,
 		name: 'txs'
 	})
 
 	const validator = useCallback(() => {
+		let isValid = true
 		return txs.every((tx, index) => {
 			if (!tx.amount) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Amount is required`
 				})
-				return false
+				isValid = false
 			} else if (!transferRefs.current[index].isValidAmount()) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Insufficient balance`
 				})
-				return false
+				isValid = false
 			} else if (!(parseFloat(tx.amount) > 0)) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Invalid amount`
 				})
-				return false
+				isValid = false
 			}
 			if (!tx.to) {
 				setError(`txs.${index}.to`, {
 					type: 'custom',
 					message: `Address is required`
 				})
-				return false
+				isValid = false
 			} else if (!isAddress(tx.to)) {
 				setError(`txs.${index}.to`, {
 					type: 'custom',
 					message: `Invalid address`
 				})
-				return false
+				isValid = false
 			}
-			return true
+			return isValid
 		})
 	}, [txs, setError])
 
 	const addMore = () => {
-		if (validator()) {
+		const isValid = validator() && txs.length < MAX_TRANSACTION_LENGTH
+		if (isValid) {
 			transferRefs.current.forEach((transferRef) => transferRef.freeze())
 			append(DEFAULT_FORM_ITEM)
 		}
+		if (txs.length === MAX_TRANSACTION_LENGTH) {
+			upNotify.error('A maximum of 10 payments can be sent in one batch transaction')
+		}
+		upGA('payment-click-add_another_payment', 'payment', {
+			ClickResult: isValid,
+			BatchAmount: txs.length,
+			GasToken: currentSymbol,
+			GasAmount: gas.totalGas,
+			DiscountStatus: gas.discountStatus
+		})
 	}
 
 	const scrollToActiveTransfer = () => {
@@ -159,14 +143,6 @@ const Pay: React.FC = () => {
 		}
 		return false
 	}
-
-	useEffect(() => {
-		if (!scrollToActiveTransfer()) {
-			formBottomRef.current?.scrollIntoView({
-				behavior: 'smooth'
-			})
-		}
-	}, [fields.length])
 
 	const handleRemove = (index: number) => {
 		setDeletingIndex(index)
@@ -187,41 +163,31 @@ const Pay: React.FC = () => {
 		return false
 	}
 
-	const formatTxs = (txs: Transaction[]) => {
-		const contract = makeERC20Contract(getAddress(gas.selectedGas!.contractAddress))
-		const formattedTxs = txs.map((tx) => {
-			const data = contract.interface.encodeFunctionData('transfer', [getAddress(tx.to), etherToWei(tx.amount, 6)])
-			return {
-				value: '0x00',
-				to: getAddress(tx.token),
-				data
-			}
-		})
-		return formattedTxs
-	}
-
-	const formatFeeTx = (feeTx: { to: string; amount: BigNumber; token: string }) => {
-		const contract = makeERC20Contract(getAddress(feeTx.token))
-		const data = contract.interface.encodeFunctionData('transfer', [getAddress(feeTx.to), feeTx.amount])
-		const formattedFee = { value: '0x00', to: getAddress(feeTx.token), data }
-		return formattedFee
-	}
-
 	const onSubmit = async () => {
-		if (!validator()) return
+		const isValid = validator()
+		upGA('payment-click-pay', 'payment', {
+			ClickResult: isValid,
+			BatchAmount: txs.length,
+			PaymentAmount: transferAmount.totalAmount,
+			GasToken: currentSymbol,
+			DiscountStatus: gas.discountStatus,
+			SnapAddress: address
+		})
+		if (!isValid) return
 		setIsPaying(true)
-		const formattedTxs = formatTxs(txs)
 		if (SINGLE_GAS) {
+			const formattedTxs = formatTxs(txs)
 			try {
 				let freeFeeOption
+				const originFee = gas.totalGas
+					? {
+							amount: gas.totalGas.toString(),
+							token: gas.selectedGas!.contractAddress,
+							to: SINGLE_GAS.feeReceiver
+					  }
+					: undefined
+				const formattedFee = originFee && formatTx(originFee)
 				let nonce = (await smartAccount.getNonce()).toNumber() + 1
-				const fee = {
-					amount: etherToWei(gas.totalGas.toString(), gas.selectedGas!.decimals),
-					token: gas.selectedGas!.contractAddress,
-					to: SINGLE_GAS.feeReceiver
-				}
-
-				const formattedFee = formatFeeTx(fee)
 				const txOption = {
 					transactions: formattedTxs,
 					feeTransaction: formattedFee,
@@ -250,9 +216,16 @@ const Pay: React.FC = () => {
 						amount: gas.totalGas.toString()
 					}
 				})
+
 				const signedTxs = await smartAccount.signTransactions(formatTxs(txs), {
-					fee
+					fee: originFee
+						? {
+								...originFee,
+								amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
+						  }
+						: undefined
 				})
+
 				if (gas.usedFreeQuota) {
 					const { freeSig, expires } = await authorizeTransactionFees(txOption)
 					freeFeeOption = {
@@ -271,11 +244,18 @@ const Pay: React.FC = () => {
 					timestamp: Date.now(),
 					discount: gas.discount,
 					txs,
-					fee
+					fee: originFee
 				})
 				setPendingTransaction(pendingTransaction + 1)
+				upGA('payment-submitted-success', 'payment', {
+					ChainId: chainId,
+					PaymentAmount: transferAmount.totalAmount,
+					GasToken: currentSymbol,
+					BatchAmount: txs.length,
+					DiscountStatus: gas.discountStatus,
+					SnapAddress: address
+				})
 				upNotify.success('Submitted Success')
-				waitResponse(res, address, chainId)
 				setIsPaying(false)
 				reset()
 			} catch (e: any) {
@@ -288,8 +268,27 @@ const Pay: React.FC = () => {
 	}
 
 	const handleSwitchToken = (symbol: string) => {
+		upGA('payment-change-gas_token', 'payment', {
+			BatchAmount: txs.length,
+			Token: symbol
+		})
 		setCurrentSymbol(symbol)
 	}
+
+	useEffect(() => {
+		if (!scrollToActiveTransfer()) {
+			formBottomRef.current?.scrollIntoView({
+				behavior: 'smooth'
+			})
+		}
+	}, [txs.length])
+
+	// clear txs when chainId changed
+	useEffect(() => {
+		reset({
+			txs: [DEFAULT_FORM_ITEM]
+		})
+	}, [DEFAULT_FORM_ITEM, reset])
 
 	return (
 		<div className={styles.pay}>
@@ -302,12 +301,12 @@ const Pay: React.FC = () => {
 				</div>
 				<div className={styles.form}>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						{fields.map((item, index) => {
+						{txs.map((item, index) => {
 							return (
 								<Transfer
 									ref={(ref) => saveTransferRef(ref, index)}
-									key={item.id}
 									index={index}
+									key={`tx-${index}`}
 									remove={handleRemove}
 									formField={useFormReturn}
 									onEdit={handleEdit}
@@ -343,7 +342,12 @@ const Pay: React.FC = () => {
 								>
 									<div className={styles['free-tips-wrap']}>
 										<div className={styles['free-tips']} style={{ color: '#E85050' }}>
-											{gas.discount * 100}%<span style={{ color: 'var(--up-text-primary)' }}>OFF</span>
+											{numbro(gas.originGas)
+												.subtract(gas.totalGas)
+												.divide(gas.originGas)
+												.multiply(100)
+												.format({ mantissa: 0 })}
+											%<span style={{ color: 'var(--up-text-primary)' }}>OFF</span>
 										</div>
 										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
 									</div>

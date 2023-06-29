@@ -1,13 +1,13 @@
 import { Icon, Input } from '@/components'
 import { useTransfer } from '@/hooks/useTransfer'
-import { UseFormReturn, useFieldArray, Controller } from 'react-hook-form'
+import { UseFormReturn, Controller } from 'react-hook-form'
 import styles from './pay.module.scss'
 import { useState, forwardRef, useImperativeHandle, useRef, useMemo, useCallback, useEffect } from 'react'
 import EditSvg from '@/assets/svg/Edit.svg'
 import DeleteSvg from '@/assets/svg/Delete.svg'
 import USDCSvg from '@/assets/svg/USDC.svg'
 import USDTSvg from '@/assets/svg/USDT.svg'
-import { etherToWei, formatAddress, formatUSDAmount, weiToEther } from '@/utils'
+import { etherToWei, formatAddress, formatUSDAmount, getTokenByContractAddress, upGA, weiToEther } from '@/utils'
 import { BigNumber } from 'ethers'
 import { Transaction } from '@/types/transaction'
 import Select, { Option } from 'rc-select'
@@ -37,11 +37,6 @@ const Transfer = forwardRef<
 	const { availableTokens } = useTransfer()
 	const [editable, setEditable] = useState<boolean>(true)
 	const posRef = useRef<HTMLDivElement>(null)
-
-	const { fields } = useFieldArray({
-		control: formField.control,
-		name: 'txs'
-	})
 
 	const txs = formField.watch('txs') as Transaction[]
 
@@ -114,10 +109,10 @@ const Transfer = forwardRef<
 	)
 
 	return (
-		<div className={getItemClsx(index)} key={fields[index].id}>
+		<div className={getItemClsx(index)}>
 			{txs.length > 1 || !editable ? (
 				<div className={styles['sub-title']}>
-					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment{index + 1}</div> : <div></div>}
+					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment {index + 1}</div> : <div></div>}
 					<div className={styles.controller}>
 						{txs.length > 1 && (
 							<div className={styles.icon} onClick={() => handleRemove(index)}>
@@ -144,7 +139,16 @@ const Transfer = forwardRef<
 								control={formField.control}
 								name={`txs.${index}.token`}
 								render={({ field: { onChange, value } }) => (
-									<Select onChange={onChange} value={value}>
+									<Select
+										onChange={(e) => {
+											upGA('payment-change-payment_token', 'payment', {
+												BatchAmount: txs.length,
+												Token: getTokenByContractAddress(value)?.symbol
+											})
+											onChange(e)
+										}}
+										value={value}
+									>
 										{availableTokens.map((token) => (
 											<Option key={token.contractAddress} value={token.contractAddress}>
 												<Icon
@@ -187,13 +191,13 @@ const Transfer = forwardRef<
 							style={{ marginRight: '8px' }}
 							width={16}
 							height={16}
-							src={getTokenContractAddress(tx.token)?.symbol === 'USDC' ? USDCSvg : USDTSvg}
+							src={getTokenContractAddress(tx?.token)?.symbol === 'USDC' ? USDCSvg : USDTSvg}
 						/>
-						{tx.amount} {getTokenContractAddress(tx.token)?.symbol}
+						{tx?.amount} {getTokenContractAddress(tx?.token)?.symbol}
 					</div>
 					<div>
 						<span className={styles.desc}>To: </span>
-						{formatAddress(tx.to)}
+						{formatAddress(tx?.to)}
 					</div>
 				</div>
 			)}

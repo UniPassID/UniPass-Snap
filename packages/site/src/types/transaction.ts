@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers'
-
 export enum TransactionStatus {
 	Pending = 'PENDING',
 	Failed = 'FAILED',
@@ -13,7 +11,7 @@ export interface Transaction {
 }
 
 export interface Fee {
-	amount: BigNumber
+	amount: string
 	token: string
 	to: string
 }

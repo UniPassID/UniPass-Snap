@@ -20,7 +20,7 @@ const RecordDetail: React.FC<{
 			{record.error && <div className="error">{record.error}</div>}
 			{record.txs.length > 1 &&
 				record.txs.map((tx, index) => (
-					<>
+					<div key={`tx-record-${index}`}>
 						<div className="row divider-line">
 							<div>Payment {index + 1}</div>
 							<div className="divider"></div>
@@ -41,7 +41,7 @@ const RecordDetail: React.FC<{
 							<div className="label">To</div>
 							<div className="content">{tx.to}</div>
 						</div>
-					</>
+					</div>
 				))}
 			<div className="row">
 				<div className="label">Network</div>
@@ -88,7 +88,7 @@ const RecordDetail: React.FC<{
 				<div className="label">Fee</div>
 				<div className="content">
 					{record.fee
-						? `${weiToEther(record.fee.amount, getTokenByContractAddress(record.fee.token)?.decimals)} ${
+						? `${record.fee.amount} ${
 								getTokenByContractAddress(record.fee.token)?.symbol
 						  }`
 						: 'Free'}

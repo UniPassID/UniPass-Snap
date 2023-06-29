@@ -44,7 +44,7 @@ export interface AuthorizeTxFeesInput {
 		singleFee: number
 	}[]
 	transactions: providers.TransactionRequest[]
-	feeTransaction: providers.TransactionRequest
+	feeTransaction?: providers.TransactionRequest
 }
 
 export interface AuthorizeTxFeesOutput {

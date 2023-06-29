@@ -44,7 +44,7 @@ export async function waitPendingTransactions(
 
 export function getTokenByContractAddress(contractAddress: string) {
 	for (let chain of CHAIN_CONFIGS) {
-		return chain.tokens.find((token) => token.contractAddress === contractAddress)
+		return chain.tokens.find((token) => getAddress(token.contractAddress) === getAddress(contractAddress))
 	}
 }
 

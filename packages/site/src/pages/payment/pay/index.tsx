@@ -27,6 +27,7 @@ import numbro from 'numbro'
 import ToolTip from '@/components/ui/tooltip'
 import { SnapSigner } from '@/snap-signer'
 import { getChainNameByChainId } from '@/constants'
+import { BigNumber } from 'ethers'
 
 const Pay: React.FC = () => {
 	const { SINGLE_GAS } = usePay()
@@ -199,6 +200,13 @@ const Pay: React.FC = () => {
 		return formattedTxs
 	}
 
+	const formatFeeTx = (feeTx: { to: string; amount: BigNumber; token: string }) => {
+		const contract = makeERC20Contract(getAddress(feeTx.token))
+		const data = contract.interface.encodeFunctionData('transfer', [getAddress(feeTx.to), feeTx.amount])
+		const formattedFee = { value: '0x00', to: getAddress(feeTx.token), data }
+		return formattedFee
+	}
+
 	const onSubmit = async () => {
 		if (!validator()) return
 		setIsPaying(true)
@@ -207,8 +215,16 @@ const Pay: React.FC = () => {
 			try {
 				let freeFeeOption
 				let nonce = (await smartAccount.getNonce()).toNumber() + 1
+				const fee = {
+					amount: etherToWei(gas.totalGas.toString(), gas.selectedGas!.decimals),
+					token: gas.selectedGas!.contractAddress,
+					to: SINGLE_GAS.feeReceiver
+				}
+
+				const formattedFee = formatFeeTx(fee)
 				const txOption = {
 					transactions: formattedTxs,
+					feeTransaction: formattedFee,
 					nonce: nonce,
 					chainId: chainId,
 					usedFreeQuota: gas.usedFreeQuota,
@@ -219,11 +235,7 @@ const Pay: React.FC = () => {
 						}
 					]
 				}
-				const fee = {
-					amount: etherToWei(gas.totalGas.toString(), gas.selectedGas!.decimals),
-					token: gas.selectedGas!.contractAddress,
-					to: SINGLE_GAS.feeReceiver
-				}
+
 				// verify txs first
 				if (gas.usedFreeQuota) {
 					const result = await verifyTransactionFees(txOption)

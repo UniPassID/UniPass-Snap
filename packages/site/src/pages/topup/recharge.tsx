@@ -50,6 +50,7 @@ export const ReCharge: React.FC<{
 				<form>
 					<Input
 						name="Amount"
+						type="number"
 						formField={methods}
 						onFocus={onInputFocus}
 						disabled={!selectedToken}
@@ -57,10 +58,6 @@ export const ReCharge: React.FC<{
 							max: {
 								value: selectedToken ? parseFloat(weiToEther(selectedToken.balance || 0, selectedToken.decimals)) : 0,
 								message: 'Insufficient Funds'
-							},
-							pattern: {
-								value: /^\d{1,5}$|(?=^.{1,5}$)^\d+\.\d{0,2}$/,
-								message: 'Incorrect Amount'
 							},
 							required: true
 						}}
@@ -71,7 +68,7 @@ export const ReCharge: React.FC<{
 					<div className={styles.selected_token}>
 						<div className={styles.title}>TOKEN</div>
 						<div className={styles.token_info}>
-							<div className={styles.info}>
+							<div className={styles.info} style={{ width: '90px' }}>
 								<TokenIcon type={selectedToken.symbol} width={28} height={28} />
 								{selectedToken.symbol}
 							</div>

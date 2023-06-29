@@ -68,7 +68,7 @@ export const Balance: React.FC<{
 				<div className={styles.title}>ASSETS</div>
 				<div className={styles.items}>
 					<div className={styles.Polygon}>
-						<span>On Polygon</span>
+						<span>On Mumbai</span>
 						<div className={styles.divider} />
 					</div>
 					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDT_ADDRESS)}>

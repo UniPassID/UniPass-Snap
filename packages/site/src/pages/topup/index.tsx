@@ -4,11 +4,11 @@ import Select from 'rc-select'
 import { QRCodeSVG } from 'qrcode.react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { useRecoilValue } from 'recoil'
-import { smartAccountState } from '@/store'
+import { isTestnetEnvState, smartAccountState } from '@/store'
 import { useMetaMask } from '@/hooks'
 import { Balance } from './balance'
 import { ReCharge } from './recharge'
-import { CHAIN_CONFIGS, getChainNameByChainId } from '@/constants'
+import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS, getChainNameByChainId } from '@/constants'
 import { Dialog, Icon, TokenIcon, upNotify } from '@/components'
 import Success from '@/assets/svg/Success.svg'
 import NoQRCode from '@/assets/svg/NoQRCode.svg'
@@ -17,6 +17,7 @@ import styles from './topup.module.scss'
 import { upGA } from '@/utils'
 
 const TopUp = () => {
+	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const smartAccount = useRecoilValue(smartAccountState)
 	const [checkedAssets, setCheckAssets] = useState<string | undefined>(undefined)
 	const {
@@ -39,6 +40,12 @@ const TopUp = () => {
 	const showQRCode = useMemo(() => {
 		return !!netWork && !!token
 	}, [netWork, token])
+
+	const qrCodeChains = useMemo(() => {
+		return CHAIN_CONFIGS.filter((chain) =>
+			(isTestnetEnv ? TESTNET_CHAIN_IDS : MAINNET_CHAIN_IDS).includes(chain.chainId)
+		)
+	}, [isTestnetEnv])
 
 	useEffect(() => {
 		if (showQRCode) {
@@ -107,6 +114,10 @@ const TopUp = () => {
 				title="Top up"
 				isOpen={qrCodeVisible}
 				onRequestClose={closeQrCodeDialog}
+				onAfterClose={() => {
+					setNetwork(undefined)
+					setToken(undefined)
+				}}
 				showConfirmButton={false}
 				showCancelButton={false}
 				className={styles.qrcode_dialog}
@@ -144,7 +155,7 @@ const TopUp = () => {
 					<div className={styles.items}>
 						<div className={styles.title}>NETWORK</div>
 						<Select placeholder="Choose Network" style={{ width: '190px' }} value={netWork} onChange={_setNetwork}>
-							{CHAIN_CONFIGS.map((token) => (
+							{qrCodeChains.map((token) => (
 								<Select.Option key={token.chainId} value={token.chainId}>
 									<TokenIcon
 										type={getChainNameByChainId(token.chainId)}

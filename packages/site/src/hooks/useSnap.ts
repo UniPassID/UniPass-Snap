@@ -46,7 +46,6 @@ export const useSnap = () => {
 			await connectSnap()
 			setInstalledSnap(await getSnap())
 			const res = await getSmartAccount()
-			upNotify.success('connect success')
 			if (res?.isNewAccount) {
 				upGA('pre_signup-success', 'signup', { SnapAddress: `_${res?.smartAccount}` })
 			} else {

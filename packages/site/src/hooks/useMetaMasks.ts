@@ -1,14 +1,20 @@
 import { useState } from 'react'
+import { BigNumber, providers } from 'ethers'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useAsyncEffect, useBoolean } from 'ahooks'
-import { smartAccountState, metamaskAccountTokenListState, currentSideBarState, isTestnetEnvState } from '@/store'
+import {
+	smartAccountState,
+	metamaskAccountTokenListState,
+	currentSideBarState,
+	isTestnetEnvState,
+	currentChainIdState
+} from '@/store'
 import { upNotify } from '@/components'
 import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
 import { etherToWei, getBalancesByMulticall, openExplore, upGA } from '@/utils'
 import { hooks, metaMask } from '@/utils'
 import { makeERC20Contract } from '@/utils/make_contract'
 import { TokenInfo } from '@/types'
-import { BigNumber } from 'ethers'
 
 const { useAccount, useProvider } = hooks
 
@@ -16,6 +22,7 @@ export const useMetaMask = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const setCurrentSideBar = useSetRecoilState(currentSideBarState)
+	const setCurrentChainId = useSetRecoilState(currentChainIdState)
 	const setMetaMaskAccountTokenList = useSetRecoilState(metamaskAccountTokenListState)
 	const [rechargeLoading, { setTrue: startReChargeLoading, setFalse: endReChargeLoading }] = useBoolean(false)
 	const [isRechargeDialogOpen, { setTrue: openRechargeDialog, setFalse: closeRechargeDialog }] = useBoolean(false)
@@ -90,7 +97,9 @@ export const useMetaMask = () => {
 			startReChargeLoading()
 			upGA('topup-mm-click-topup', 'topup', { ChainID: token.chainId, Token: token.symbol })
 			await switchCurrentChain(token.chainId)
-			const contract = makeERC20Contract(token.contractAddress, provider, metamaskAccount)
+			// @ts-ignore
+			const _provider = new providers.Web3Provider(window.ethereum, 'any')
+			const contract = makeERC20Contract(token.contractAddress, _provider, metamaskAccount)
 			const tx = await contract.transfer(smartAccount, etherToWei(amount, token.decimals).toHexString())
 			const result = await tx.wait()
 
@@ -138,6 +147,7 @@ export const useMetaMask = () => {
 	const goToPayment = () => {
 		setCurrentSideBar('Payment')
 		if (selectedToken) {
+			setCurrentChainId(selectedToken.chainId)
 			upGA('topup-mm-success-click-go_to_payment', 'topup', {
 				ChainID: selectedToken.chainId,
 				Token: selectedToken.symbol,

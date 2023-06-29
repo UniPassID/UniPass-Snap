@@ -49,21 +49,21 @@ const TopUp = () => {
 
 	useEffect(() => {
 		if (showQRCode) {
-			upGA('topup-qrcode-display-qrcode', 'topup', { ChainID: netWork, Token: token })
+			upGA('topup-qrcode-display-qrcode', 'topup', { ChainID: netWork, TopupToken: token })
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [showQRCode])
 
 	const _setNetwork = (value: number) => {
 		if (!netWork) {
-			upGA('topup-qrcode-choose-network', 'topup', { ChainID: value, Token: token })
+			upGA('topup-qrcode-choose-network', 'topup', { ChainID: value, TopupToken: token })
 		}
 		setNetwork(value)
 	}
 
 	const _setToken = (value: string) => {
 		if (!token) {
-			upGA('topup-qrcode-choose-token', 'topup', { ChainID: netWork, Token: value })
+			upGA('topup-qrcode-choose-token', 'topup', { ChainID: netWork, TopupToken: value })
 		}
 		setToken(value)
 	}

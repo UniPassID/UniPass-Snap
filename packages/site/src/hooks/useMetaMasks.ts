@@ -110,8 +110,8 @@ export const useMetaMask = () => {
 				openRechargeDialog()
 				upGA('topup-mm-success', 'topup', {
 					ChainID: token.chainId,
-					Token: token.symbol,
-					Amount: amount,
+					TopupToken: token.symbol,
+					TopupAmount: amount,
 					MMAddress: `_${metamaskAccount}`,
 					SnapAddress: `_${smartAccount}`,
 					TxHash: `_${result.transactionHash}`
@@ -135,8 +135,8 @@ export const useMetaMask = () => {
 			openExplore(selectedToken!.chainId, transactionHash, 'tx')
 			upGA('topup-mm-success-click-view_in_explorer', 'topup', {
 				ChainID: selectedToken.chainId,
-				Token: selectedToken.symbol,
-				Amount: transactionAmount,
+				TopupToken: selectedToken.symbol,
+				TopupAmount: transactionAmount,
 				MMAddress: `_${metamaskAccount}`,
 				SnapAddress: `_${smartAccount}`,
 				TxHash: `_${transactionHash}`
@@ -150,8 +150,8 @@ export const useMetaMask = () => {
 			setCurrentChainId(selectedToken.chainId)
 			upGA('topup-mm-success-click-go_to_payment', 'topup', {
 				ChainID: selectedToken.chainId,
-				Token: selectedToken.symbol,
-				Amount: transactionAmount,
+				TopupToken: selectedToken.symbol,
+				TopupAmount: transactionAmount,
 				MMAddress: `_${metamaskAccount}`,
 				SnapAddress: `_${smartAccount}`,
 				TxHash: `_${transactionHash}`

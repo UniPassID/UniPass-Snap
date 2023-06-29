@@ -29,7 +29,7 @@ export const ReCharge: React.FC<{
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
 		methods.resetField('Amount')
 		if (token) {
-			upGA('topup-mm-choose-token', 'topup', { ChainID: token.chainId, Token: token.symbol })
+			upGA('topup-mm-choose-token', 'topup', { ChainID: token.chainId, TopupToken: token.symbol })
 		}
 		return token
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,7 +40,7 @@ export const ReCharge: React.FC<{
 	}
 
 	const onInputFocus = () => {
-		upGA('topup-mm-input-amount', 'topup', { ChainID: selectedToken?.chainId, Token: selectedToken?.symbol })
+		upGA('topup-mm-input-amount', 'topup', { ChainID: selectedToken?.chainId, TopupToken: selectedToken?.symbol })
 	}
 
 	return (

@@ -389,6 +389,7 @@ const Pay: React.FC = () => {
 				onCancel={() => {
 					setDeleteConfirm(false)
 				}}
+				center
 				onConfirm={doRemove}
 				onRequestClose={() => {
 					setDeleteConfirm(false)

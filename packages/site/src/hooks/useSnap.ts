@@ -15,8 +15,10 @@ export const useSnap = () => {
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
 	const setSmartAccountInsState = useSetRecoilState(smartAccountInsState)
 	const [connectSnapLoading, { setTrue: startConnectSnap, setFalse: endConnectSnap }] = useBoolean(false)
+	const [loadSnapLoading, { setTrue: startLoadSnap, setFalse: endLoadSnap }] = useBoolean(false)
 
 	useAsyncEffect(async () => {
+		startLoadSnap()
 		let Status = ''
 		const _isFlask = await isFlaskVersion()
 		console.log(`_isFlask: ${_isFlask}`)
@@ -25,7 +27,6 @@ export const useSnap = () => {
 		if (_isFlask) {
 			Status = 'MM_installed_no_Snap'
 			const localSmartAccountAddress = window.localStorage.getItem('up__smartAccountAddress')
-
 			if (localSmartAccountAddress && utils.isAddress(localSmartAccountAddress)) {
 				setSmartAccountState(localSmartAccountAddress)
 				const snap = await getSnap()
@@ -36,7 +37,7 @@ export const useSnap = () => {
 		} else {
 			Status = 'no_MM_no_Snap'
 		}
-
+		endLoadSnap()
 		upGA('open-snap', 'homepage', { MetamaskStatus: Status })
 	}, [])
 
@@ -81,5 +82,5 @@ export const useSnap = () => {
 		return { smartAccountAddress, isNewAccount: res.isNewAccount }
 	}
 
-	return { isFlask, installedSnap, handleConnectSnap, connectSnapLoading }
+	return { isFlask, installedSnap, handleConnectSnap, connectSnapLoading, loadSnapLoading }
 }

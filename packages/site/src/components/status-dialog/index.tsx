@@ -16,7 +16,7 @@ import styles from './status-dialog.module.scss'
 import { upGA } from '@/utils'
 
 const StatusDialog = () => {
-	const { isFlask, installedSnap, handleConnectSnap, connectSnapLoading } = useSnap()
+	const { isFlask, installedSnap, handleConnectSnap, connectSnapLoading, loadSnapLoading } = useSnap()
 	const smartAccount = useRecoilValue(smartAccountState)
 
 	const installFlask = () => {
@@ -35,8 +35,9 @@ const StatusDialog = () => {
 
 	const showSnapConnectDialog = useMemo(() => {
 		if (showMetaMaskInstallDialog) return false
+		if (loadSnapLoading) return false
 		return !smartAccount || !installedSnap
-	}, [showMetaMaskInstallDialog, smartAccount, installedSnap])
+	}, [showMetaMaskInstallDialog, smartAccount, installedSnap, loadSnapLoading])
 
 	return (
 		<>

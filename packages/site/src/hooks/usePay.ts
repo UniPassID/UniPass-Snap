@@ -1,5 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import { availableFreeQuotaState, currentChainIdState, editingPaymentState, smartAccountState, smartAccountTokenListState } from '@/store'
+import {
+	availableFreeQuotaState,
+	currentChainIdState,
+	editingPaymentState,
+	smartAccountState,
+	smartAccountTokenListState
+} from '@/store'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
 import { getSingleTransactionFees } from '@/request'
@@ -15,7 +21,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	const availableFreeQuota = useRecoilValue(availableFreeQuotaState)
 	const [singleFeeResult, setSingleFeeResult] = useState<SingleTransactionFee[]>()
 	const setEditingPayment = useSetRecoilState(editingPaymentState)
-	const [hasPendingTransaction ,setHasPendingTransaction] = useState<boolean>(false)
+	const [hasPendingTransaction, setHasPendingTransaction] = useState<boolean>(false)
 
 	const availableTokens = useMemo(() => {
 		return tokens.filter((token) => token.chainId === chainId)
@@ -37,10 +43,11 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		async () => {
 			const pendingTransactions = getHistoryByStatusAndChain(smartAccount, TransactionStatus.Pending, chainId)
 			setHasPendingTransaction(!!pendingTransactions.length)
-		}, {
-			ready: !!(smartAccount),
+		},
+		{
+			ready: !!smartAccount,
 			refreshDeps: [smartAccount, chainId],
-			pollingInterval: 3000,
+			pollingInterval: 3000
 		}
 	)
 
@@ -70,16 +77,16 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	const transferAmount = useMemo(() => {
 		let usdcAmount = 0
 		let usdtAmount = 0
-		txs.forEach(tx => {
+		txs.forEach((tx) => {
 			const symbol = getTokenByContractAddress(tx.token)?.symbol
 			if (symbol === 'usdc') {
-				usdcAmount += (parseFloat(tx.amount) || 0)
+				usdcAmount += parseFloat(tx.amount) || 0
 			} else {
 				usdtAmount += parseFloat(tx.amount) || 0
 			}
 		})
 		const totalAmount = usdcAmount + usdtAmount
-		return { usdcAmount, usdtAmount, totalAmount } 
+		return { usdcAmount, usdtAmount, totalAmount }
 	}, [txs])
 
 	const showTips = useMemo(() => {
@@ -91,7 +98,9 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 			setEditingPayment(true)
 			return
 		}
-		if (txs[0]?.amount || txs[0]?.to) setEditingPayment(true)
+		if (txs[0]?.amount || txs[0]?.to) {
+			setEditingPayment(true)
+		}
 	}, [txs, setEditingPayment])
 
 	return { availableTokens, SINGLE_GAS, gas, transferAmount, showTips, hasPendingTransaction }

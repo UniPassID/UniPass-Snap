@@ -13,7 +13,7 @@ const ChainSwitcher = () => {
 	const smartAccountIns = useRecoilValue(smartAccountInsState)
 
 	useEffect(() => {
-		smartAccountIns.switchChain(currentChainId)
+		smartAccountIns?.switchChain?.(currentChainId)
 	}, [currentChainId, smartAccountIns])
 
 	const getItemClsx = (chainId: number) => {

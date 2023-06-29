@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 import { useAsyncEffect, useBoolean } from 'ahooks'
-import { useRecoilState, useSetRecoilState } from 'recoil'
-import { flaskState, installedSnapState, smartAccountState, smartAccountInsState } from '@/store'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { flaskState, installedSnapState, smartAccountState, smartAccountInsState, currentChainIdState } from '@/store'
 import { connectSnap, getMasterKeyAddress, getSnap, isFlaskVersion, upGA } from '@/utils'
 import { CHAIN_CONFIGS, CUSTOM_AUTH_APPID } from '@/constants'
 import { SmartAccount } from '@unipasswallet/smart-account'
@@ -12,6 +12,7 @@ import { fetchAccessToken } from '@/utils/account'
 export const useSnap = () => {
 	const [isFlask, setHasFlaskDetected] = useRecoilState(flaskState)
 	const [installedSnap, setInstalledSnap] = useRecoilState(installedSnapState)
+	const currentChainId = useRecoilValue(currentChainIdState)
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
 	const setSmartAccountInsState = useSetRecoilState(smartAccountInsState)
 	const [connectSnapLoading, { setTrue: startConnectSnap, setFalse: endConnectSnap }] = useBoolean(false)
@@ -68,12 +69,12 @@ export const useSnap = () => {
 			appId: CUSTOM_AUTH_APPID,
 			unipassServerUrl: process.env.REACT_APP_SDK_URL_PREFIX
 		})
-		await smartAccount.init({ chainId: CHAIN_CONFIGS[0].chainId })
+		setSmartAccountInsState(smartAccount)
+		await smartAccount.init({ chainId: currentChainId })
 		const address = await smartAccount.getAddress()
 		const smartAccountAddress = utils.getAddress(address)
 		window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)
 		setSmartAccountState(smartAccountAddress)
-		setSmartAccountInsState(smartAccount)
 		const res = await fetchAccessToken({
 			accountAddress: smartAccountAddress,
 			providerIdentifier: masterKeyAddress

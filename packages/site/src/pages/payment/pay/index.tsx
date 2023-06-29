@@ -248,7 +248,7 @@ const Pay: React.FC = () => {
 				})
 				setPendingTransaction(pendingTransaction + 1)
 				upGA('payment-submitted-success', 'payment', {
-					ChainId: chainId,
+					ChainID: chainId,
 					PaymentAmount: transferAmount.totalAmount,
 					GasToken: currentSymbol,
 					BatchAmount: txs.length,

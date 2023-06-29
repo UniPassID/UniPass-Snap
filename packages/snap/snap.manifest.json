@@ -1,29 +1,29 @@
 {
-	"version": "0.1.0-alpha.2",
-	"description": "A Snap for stable coin payment.",
-	"proposedName": "UniPass Snap",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/UniPassID/UniPass-Snap.git"
-	},
-	"source": {
-		"shasum": "bD10Ixmp/iiwXHq/5Dppa35q1hURxt31pFKRRywpSUM=",
-		"location": {
-			"npm": {
-				"filePath": "dist/bundle.js",
-				"iconPath": "images/icon.svg",
-				"packageName": "@unipasswallet/unipass-snap",
-				"registry": "https://registry.npmjs.org/"
-			}
-		}
-	},
-	"initialPermissions": {
-		"snap_dialog": {},
-		"snap_getEntropy": {},
-		"endowment:rpc": {
-			"dapps": true,
-			"snaps": false
-		}
-	},
-	"manifestVersion": "0.1"
+  "version": "0.1.0-alpha.2",
+  "description": "A Snap for stable coin payment.",
+  "proposedName": "UniPass Snap",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/UniPassID/UniPass-Snap.git"
+  },
+  "source": {
+    "shasum": "NkZDheJhQ7uF04+PgNONm+suy6ZhQNcNuE8ZVx7mSb8=",
+    "location": {
+      "npm": {
+        "filePath": "dist/bundle.js",
+        "iconPath": "images/icon.svg",
+        "packageName": "@unipasswallet/unipass-snap",
+        "registry": "https://registry.npmjs.org/"
+      }
+    }
+  },
+  "initialPermissions": {
+    "snap_dialog": {},
+    "snap_getEntropy": {},
+    "endowment:rpc": {
+      "dapps": true,
+      "snaps": false
+    }
+  },
+  "manifestVersion": "0.1"
 }

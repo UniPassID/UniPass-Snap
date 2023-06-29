@@ -42,18 +42,18 @@ export const CHAIN_CONFIGS = [
 		tokens: [
 			{
 				chainId: POLYGON_MUMBAI,
+				contractAddress: POLYGON_MUMBAI_USDT_ADDRESS,
+				name: 'USDT',
+				symbol: 'USDT',
+				decimals: 6
+			},
+			{
+				chainId: POLYGON_MUMBAI,
 				contractAddress: POLYGON_MUMBAI_USDC_ADDRESS,
 				name: 'USDC',
 				symbol: 'USDC',
 				decimals: 6
 			},
-			{
-				chainId: POLYGON_MUMBAI,
-				contractAddress: POLYGON_MUMBAI_USDT_ADDRESS,
-				name: 'USDT',
-				symbol: 'USDT',
-				decimals: 6
-			}
 		],
 		explorer: 'https://mumbai.polygonscan.com',
 		relayerUrl: process.env.REACT_APP_POLYGON_MUMBAI_RELAYER
@@ -67,18 +67,18 @@ export const CHAIN_CONFIGS = [
 		tokens: [
 			{
 				chainId: POLYGON_MAINNET,
-				contractAddress: POLYGON_MAINNET_USDC_ADDRESS,
-				name: 'USDC',
-				symbol: 'USDC',
-				decimals: 6
-			},
-			{
-				chainId: POLYGON_MAINNET,
 				contractAddress: POLYGON_MAINNET_USDT_ADDRESS,
 				name: 'Tether',
 				symbol: 'USDT',
 				decimals: 6
-			}
+			},
+			{
+				chainId: POLYGON_MAINNET,
+				contractAddress: POLYGON_MAINNET_USDC_ADDRESS,
+				name: 'USDC',
+				symbol: 'USDC',
+				decimals: 6
+			}			
 		],
 		explorer: 'https://polygonscan.com',
 		relayerUrl: process.env.REACT_APP_POLYGON_MAINNET_RELAYER
@@ -92,18 +92,18 @@ export const CHAIN_CONFIGS = [
 		tokens: [
 			{
 				chainId: ARBITRUM_MAINNET,
+				contractAddress: ARBITRUM_MAINNET_USDT_ADDRESS,
+				name: 'USDT',
+				symbol: 'USDT',
+				decimals: 6
+			},
+			{
+				chainId: ARBITRUM_MAINNET,
 				contractAddress: ARBITRUM_MAINNET_USDC_ADDRESS,
 				name: 'USDC',
 				symbol: 'USDC',
 				decimals: 6
 			},
-			{
-				chainId: ARBITRUM_MAINNET,
-				contractAddress: ARBITRUM_MAINNET_USDT_ADDRESS,
-				name: 'USDT',
-				symbol: 'USDT',
-				decimals: 6
-			}
 		],
 		explorer: 'https://arbiscan.io',
 		relayerUrl: process.env.REACT_APP_ARBITRUM_MAINNET_RELAYER

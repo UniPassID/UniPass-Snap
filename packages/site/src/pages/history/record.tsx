@@ -1,6 +1,5 @@
 import { smartAccountState } from '@/store'
 import { TransactionRecord } from '@/types/transaction'
-import { weiToEther } from '@/utils'
 import { useRecoilValue } from 'recoil'
 import dayjs from 'dayjs'
 import { getTokenByContractAddress } from '@/utils/transaction'

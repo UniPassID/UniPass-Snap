@@ -107,7 +107,7 @@ const TopUp = () => {
 				<div className={styles.title}>Top Up Success</div>
 				<div className={styles.tips}>
 					You have successfully topped up {transactionAmount} {selectedToken?.symbol}. Go experience gas-free
-					transactions now
+					transactions now !
 				</div>
 			</Dialog>
 			<Dialog
@@ -154,7 +154,7 @@ const TopUp = () => {
 				<div className={styles.select}>
 					<div className={styles.items}>
 						<div className={styles.title}>NETWORK</div>
-						<Select placeholder="Choose Network" style={{ width: '190px' }} value={netWork} onChange={_setNetwork}>
+						<Select placeholder="Choose Network" style={{ width: '192px' }} value={netWork} onChange={_setNetwork}>
 							{qrCodeChains.map((token) => (
 								<Select.Option key={token.chainId} value={token.chainId}>
 									<TokenIcon
@@ -170,7 +170,7 @@ const TopUp = () => {
 					</div>
 					<div className={styles.items}>
 						<div className={styles.title}>TOKEN</div>
-						<Select placeholder="Choose Token" style={{ width: '190px' }} value={token} onChange={_setToken}>
+						<Select placeholder="Choose Token" style={{ width: '192px' }} value={token} onChange={_setToken}>
 							<Select.Option key="USDT" value="USDT">
 								<TokenIcon type="USDT" style={{ marginRight: '12px' }} width={20} height={20} />
 								USDT

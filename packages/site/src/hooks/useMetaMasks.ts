@@ -60,7 +60,7 @@ export const useMetaMask = () => {
 
 		upGA('topup-mm-get_balance-success', 'topup', {
 			Environment: isTestnetEnv ? 'Testnet' : 'Mainnet',
-			Metamask_status: balance.isZero() ? 'no_usdtc_balance' : 'with_usdtc_balance'
+			MetamaskStatus: balance.isZero() ? 'no_usdtc_balance' : 'with_usdtc_balance'
 		})
 	}
 
@@ -75,10 +75,10 @@ export const useMetaMask = () => {
 
 	const connect = async () => {
 		try {
-			upGA('topup-mm-click-get_address', 'topup')
+			upGA('topup-mm-click-get_address', 'topup', { Environment: isTestnetEnv ? 'Testnet' : 'Mainnet' })
 			setConnectByHandle()
 			await metaMask.activate()
-			upGA('topup-mm-get_address-success', 'topup')
+			upGA('topup-mm-get_address-success', 'topup', { Environment: isTestnetEnv ? 'Testnet' : 'Mainnet' })
 		} catch (e: any) {
 			upNotify.error(e.message)
 		} finally {
@@ -95,7 +95,7 @@ export const useMetaMask = () => {
 
 		try {
 			startReChargeLoading()
-			upGA('topup-mm-click-topup', 'topup', { ChainID: token.chainId, Token: token.symbol })
+			upGA('topup-mm-click-topup', 'topup', { ChainID: token.chainId, TopupToken: token.symbol, TopupAmount: amount })
 			await switchCurrentChain(token.chainId)
 			// @ts-ignore
 			const _provider = new providers.Web3Provider(window.ethereum, 'any')

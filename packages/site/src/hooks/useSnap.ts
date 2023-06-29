@@ -37,7 +37,7 @@ export const useSnap = () => {
 			Status = 'no_MM_no_Snap'
 		}
 
-		upGA('open-snap', 'homepage', { Status })
+		upGA('open-snap', 'homepage', { MetamaskStatus: Status })
 	}, [])
 
 	const handleConnectSnap = async () => {
@@ -47,9 +47,9 @@ export const useSnap = () => {
 			setInstalledSnap(await getSnap())
 			const res = await getSmartAccount()
 			if (res?.isNewAccount) {
-				upGA('pre_signup-success', 'signup', { SnapAddress: `_${res?.smartAccount}` })
+				upGA('pre_signup-success', 'signup', { SnapAddress: `_${res?.smartAccountAddress}` })
 			} else {
-				upGA('login-success', 'login', { SnapAddress: `_${res?.smartAccount}` })
+				upGA('login-success', 'login', { SnapAddress: `_${res?.smartAccountAddress}` })
 			}
 		} catch (e: any) {
 			upNotify.error(e.message)
@@ -78,7 +78,7 @@ export const useSnap = () => {
 			providerIdentifier: masterKeyAddress
 		})
 
-		return { smartAccount, isNewAccount: res.isNewAccount }
+		return { smartAccountAddress, isNewAccount: res.isNewAccount }
 	}
 
 	return { isFlask, installedSnap, handleConnectSnap, connectSnapLoading }

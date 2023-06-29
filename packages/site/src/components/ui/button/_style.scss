@@ -56,16 +56,22 @@
 	&.up_button_sm {
 		padding: $btn-padding-sm;
 		border-radius: 100px;
+		height: 36px;
+		font-size: 12px;
 	}
 
 	&.up_button_md {
 		padding: $btn-padding-md;
 		border-radius: 128px;
+		height: 44px;
+		font-size: 14px;
 	}
 
 	&.up_button_lg {
 		padding: $btn-padding-lg;
 		border-radius: 148px;
+		height: 48px;
+		font-size: 14px;
 	}
 
 	&.up_button_filled {

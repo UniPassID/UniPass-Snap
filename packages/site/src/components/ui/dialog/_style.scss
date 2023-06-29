@@ -15,7 +15,7 @@
 .up_dialog_content {
 	width: 324px;
 	height: auto;
-	padding: 40px;
+	padding: 28px;
 	border-radius: 20px;
 	background-color: #fff;
 	border: 0;
@@ -27,16 +27,23 @@
 		flex-flow: row nowrap;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 12px;
+		margin-bottom: 24px;
 
 		.up_dialog_title {
 			flex: 1;
 			font-weight: 600;
-			font-size: 16px;
+			font-size: 20px;
+			line-height: 28px;
 			color: var(--up-text-primary);
 		}
 
 		.up_dialog_close {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+			width: 40px;
+			height: 40px;
 			cursor: pointer;
 		}
 	}

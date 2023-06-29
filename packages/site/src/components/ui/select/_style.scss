@@ -15,7 +15,7 @@ $select-prefix: 'rc-select';
     display: inline-block;
     position: relative;
     width: 140px;
-    height: 48px;
+    height: 50px;
     background: #FFFFFF;
     border: 1px solid #E1E6F0;
     border-radius: 12px;
@@ -74,7 +74,7 @@ $select-prefix: 'rc-select';
         .rc-select-arrow {
             pointer-events: none;
             position: absolute;
-            right: 10px;
+            right: 16px;
             top: 10px;
 
             &-icon::after {

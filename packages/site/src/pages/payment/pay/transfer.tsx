@@ -178,6 +178,7 @@ const Transfer = forwardRef<
 					<Input
 						type="text"
 						placeholder="Enter address to continue..."
+						className={styles['address-input']}
 						formField={formField}
 						label="ADDRESS"
 						name={`txs.${index}.to`}

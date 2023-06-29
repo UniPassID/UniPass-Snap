@@ -17,7 +17,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLElement> {
 }
 
 const Input: React.FC<InputProps> = (props) => {
-	const { disabled, allowClose = true, suffix, style, formField, validateShame, extraMessage, inputRef, ...restProps } = props
+	const { disabled, allowClose = true, suffix, style, formField, validateShame, extraMessage, inputRef, className, ...restProps } = props
 	const {
 		resetField,
 		register,
@@ -45,6 +45,8 @@ const Input: React.FC<InputProps> = (props) => {
 		'up-input-error': hasError
 	})
 
+	const innerClassNames = clsx('up-input-inner', className)
+
 	const reset = () => {
 		resetField?.(props.name)
 	}
@@ -57,7 +59,7 @@ const Input: React.FC<InputProps> = (props) => {
 			</div>
 			<div className={contentClassNames}>
 				<input
-					className="up-input-inner"
+					className={innerClassNames}
 					disabled={disabled}
 					{...restProps}
 					{...restRegister}

@@ -24,6 +24,18 @@ export function getHistoryByStatus(address: string, status: TransactionStatus): 
 	return []
 }
 
+export function getHistoryByStatusAndChain(address: string, status: TransactionStatus, chainId: number) {
+	try {
+		const historyKey = `${address}_his`
+		const allTxs = localStorage.getItem(historyKey) || '[]'
+		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
+		return parsedTxs.filter((tx) => tx.status === status && tx.chainId === chainId)
+	} catch (e) {
+		console.error('[history getHistoryByStatus]', e)
+	}
+	return []
+}
+
 export function updateHistory(record: {
 	address: string
 	chainId: number

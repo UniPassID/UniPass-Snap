@@ -61,7 +61,7 @@ const Pay: React.FC = () => {
 
 	const txs = useFormReturn.watch('txs')
 
-	const { SINGLE_GAS, gas, transferAmount, showTips } = usePay(txs, currentSymbol)
+	const { SINGLE_GAS, gas, transferAmount, showTips, hasPendingTransaction } = usePay(txs, currentSymbol)
 
 	const saveTransferRef = (transferRef: TransferRef | null, index: number) => {
 		if (transferRef !== null) {
@@ -166,18 +166,22 @@ const Pay: React.FC = () => {
 	const onSubmit = async () => {
 		const isValid = validator()
 		upGA('payment-click-pay', 'payment', {
-			ClickResult: isValid,
+			ClickResult: isValid && !hasPendingTransaction,
 			BatchAmount: txs.length,
 			PaymentAmount: transferAmount.totalAmount,
 			GasToken: currentSymbol,
 			DiscountStatus: gas.discountStatus,
 			SnapAddress: address
 		})
+		if (hasPendingTransaction) {
+			upNotify.error('The current chain has ongoing transactions. Please wait.')
+			return
+		}
 		if (!isValid) return
-		setIsPaying(true)
 		if (SINGLE_GAS) {
-			const formattedTxs = formatTxs(txs)
 			try {
+				setIsPaying(true)
+				const formattedTxs = formatTxs(txs)
 				let freeFeeOption
 				const originFee = gas.totalGas
 					? {
@@ -219,11 +223,11 @@ const Pay: React.FC = () => {
 
 				const signedTxs = await smartAccount.signTransactions(formatTxs(txs), {
 					fee: originFee
-					? {
-							...originFee,
-							amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
-						}
-					: undefined
+						? {
+								...originFee,
+								amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
+						  }
+						: undefined
 				})
 
 				if (gas.usedFreeQuota) {
@@ -296,7 +300,8 @@ const Pay: React.FC = () => {
 				<div className={styles['title-wrapper']}>
 					<div className={styles.title}>PAY</div>
 					<div className={styles['sub-title']}>
-						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} available gas-free</span> payment{availableFreeQuota > 1 && 's'} today
+						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} available gas-free</span> payment
+						{availableFreeQuota > 1 && 's'} today
 					</div>
 				</div>
 				<div className={styles.form}>

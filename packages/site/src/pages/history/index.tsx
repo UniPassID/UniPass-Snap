@@ -34,7 +34,7 @@ const columns = [
 							<Icon width={16} height={16} src={record.chainId === ARBITRUM_MAINNET ? Arbitrum : Polygon} />
 						</div>
 					</div>
-					<span style={{ marginLeft: '24px' }}>{record.txs.length ? 'Batch payment' : 'Sent'}</span>
+					<span style={{ marginLeft: '24px' }}>{record.txs.length > 1 ? 'Batch payment' : 'Sent'}</span>
 					{record?.status !== TransactionStatus.Success && <div className={styles['status-tag']}>{record?.status}</div>}
 				</div>
 			)

@@ -1,19 +1,21 @@
 import { useEffect, useMemo, useState } from 'react'
-import { availableFreeQuotaState, currentChainIdState, editingPaymentState, smartAccountTokenListState } from '@/store'
+import { availableFreeQuotaState, currentChainIdState, editingPaymentState, smartAccountState, smartAccountTokenListState } from '@/store'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
 import { getSingleTransactionFees } from '@/request'
 import { SingleTransactionFee } from '@/types/request'
-import { Transaction } from '@/types/transaction'
+import { Transaction, TransactionStatus } from '@/types/transaction'
 import numbro from 'numbro'
-import { getTokenByContractAddress, getTokenBySymbol } from '@/utils'
+import { getHistoryByStatusAndChain, getTokenByContractAddress, getTokenBySymbol } from '@/utils'
 
 export const usePay = (txs: Transaction[], currentSymbol: string) => {
+	const smartAccount = useRecoilValue(smartAccountState)
 	const tokens = useRecoilValue(smartAccountTokenListState)
 	const chainId = useRecoilValue(currentChainIdState)
 	const availableFreeQuota = useRecoilValue(availableFreeQuotaState)
 	const [singleFeeResult, setSingleFeeResult] = useState<SingleTransactionFee[]>()
 	const setEditingPayment = useSetRecoilState(editingPaymentState)
+	const [hasPendingTransaction ,setHasPendingTransaction] = useState<boolean>(false)
 
 	const availableTokens = useMemo(() => {
 		return tokens.filter((token) => token.chainId === chainId)
@@ -27,6 +29,18 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		{
 			ready: !!localStorage.getItem('up__accessToken'),
 			pollingInterval: 10000
+		}
+	)
+
+	// polling pending transaction
+	useRequest(
+		async () => {
+			const pendingTransactions = getHistoryByStatusAndChain(smartAccount, TransactionStatus.Pending, chainId)
+			setHasPendingTransaction(!!pendingTransactions.length)
+		}, {
+			ready: !!(smartAccount),
+			refreshDeps: [smartAccount, chainId],
+			pollingInterval: 3000,
 		}
 	)
 
@@ -80,5 +94,5 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		if (txs[0]?.amount || txs[0]?.to) setEditingPayment(true)
 	}, [txs, setEditingPayment])
 
-	return { availableTokens, SINGLE_GAS, gas, transferAmount, showTips }
+	return { availableTokens, SINGLE_GAS, gas, transferAmount, showTips, hasPendingTransaction }
 }

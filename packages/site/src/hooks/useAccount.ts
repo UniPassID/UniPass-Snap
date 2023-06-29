@@ -69,10 +69,6 @@ export const useAccount = () => {
 		}
 	)
 
-	useEffect(() => {
-
-	}, [smartAccount])
-
 	// reset balance after switch env
 	useEffect(() => {
 		const chainIds = isTestnetEnv ? TESTNET_CHAIN_IDS : MAINNET_CHAIN_IDS

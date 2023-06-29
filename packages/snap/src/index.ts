@@ -15,18 +15,6 @@ import { SignInput, SignTxMessageInput } from '../types'
  */
 export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
 	switch (request.method) {
-		case 'hello':
-			return snap.request({
-				method: 'snap_dialog',
-				params: {
-					type: 'confirmation',
-					content: panel([
-						text(`Hello, **${origin}**!`),
-						text('This custom confirmation is just for display purposes.'),
-						text('But you can edit the snap source code to make it do something, if you want to!')
-					])
-				}
-			})
 		case 'getMasterKeyAddress':
 			return getMasterKeyAddress()
 		case 'signMessage':

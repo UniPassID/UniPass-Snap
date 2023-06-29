@@ -270,7 +270,7 @@ const Pay: React.FC = () => {
 	const handleSwitchToken = (symbol: string) => {
 		upGA('payment-change-gas_token', 'payment', {
 			BatchAmount: txs.length,
-			Token: symbol
+			GasToken: symbol
 		})
 		setCurrentSymbol(symbol)
 	}
@@ -296,7 +296,7 @@ const Pay: React.FC = () => {
 				<div className={styles['title-wrapper']}>
 					<div className={styles.title}>PAY</div>
 					<div className={styles['sub-title']}>
-						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} availabel gas-free</span> payments today
+						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} availabel gas-free</span> payment{availableFreeQuota > 1 && 's'} today
 					</div>
 				</div>
 				<div className={styles.form}>

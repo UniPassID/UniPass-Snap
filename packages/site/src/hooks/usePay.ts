@@ -1,6 +1,6 @@
-import { useMemo, useState } from 'react'
-import { availableFreeQuotaState, currentChainIdState, smartAccountTokenListState } from '@/store'
-import { useRecoilValue } from 'recoil'
+import { useEffect, useMemo, useState } from 'react'
+import { availableFreeQuotaState, currentChainIdState, editingPaymentState, smartAccountTokenListState } from '@/store'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
 import { getSingleTransactionFees } from '@/request'
 import { SingleTransactionFee } from '@/types/request'
@@ -13,6 +13,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	const chainId = useRecoilValue(currentChainIdState)
 	const availableFreeQuota = useRecoilValue(availableFreeQuotaState)
 	const [singleFeeResult, setSingleFeeResult] = useState<SingleTransactionFee[]>()
+	const setEditingPayment = useSetRecoilState(editingPaymentState)
 
 	const availableTokens = useMemo(() => {
 		return tokens.filter((token) => token.chainId === chainId)
@@ -70,6 +71,14 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	const showTips = useMemo(() => {
 		return txs.length === 1 && availableFreeQuota === 0
 	}, [txs.length, availableFreeQuota])
+
+	useEffect(() => {
+		if (txs.length > 1) {
+			setEditingPayment(true)
+			return
+		}
+		if (txs[0]?.amount || txs[0]?.to) setEditingPayment(true)
+	}, [txs, setEditingPayment])
 
 	return { availableTokens, SINGLE_GAS, gas, transferAmount, showTips }
 }

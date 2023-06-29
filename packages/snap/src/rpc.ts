@@ -54,9 +54,9 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 		panelContent = [
 			...payContent.flat(),
 			text(
-				`**Gasfee**: ${
+				`**Gasfee: ${
 					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
-				}`
+				}**`
 			),
 			text(`**Chain: ${originTransaction.chain}**`)
 		]
@@ -69,9 +69,9 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 			),
 			text(`**To**: ${originTransaction.transactions[0].to}`),
 			text(
-				`**Gasfee**: ${
+				`**Gasfee: ${
 					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
-				}`
+				}**`
 			)
 		]
 	}

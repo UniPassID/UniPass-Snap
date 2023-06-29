@@ -25,4 +25,9 @@ const pendingTransactionState = atom<number>({
 	default: 0
 })
 
-export { currentSideBarState, currentChainIdState, isTestnetEnvState, pendingTransactionState }
+const editingPaymentState = atom<boolean>({
+	key: 'editingPayment',
+	default: false
+})
+
+export { currentSideBarState, currentChainIdState, isTestnetEnvState, pendingTransactionState, editingPaymentState }

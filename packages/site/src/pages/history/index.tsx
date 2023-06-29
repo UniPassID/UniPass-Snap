@@ -6,7 +6,7 @@ import { smartAccountState } from '@/store'
 import { TransactionRecord, TransactionStatus } from '@/types/transaction'
 import dayjs from 'dayjs'
 import { AlignType } from 'rc-table/lib/interface'
-import { formatAddress, formatUSDAmount } from '@/utils'
+import { formatAddress, formatUSDAmount, openExplore } from '@/utils'
 import { ARBITRUM_MAINNET } from '@/constants'
 import Arbitrum from '@/assets/svg/Arbitrum.svg'
 import Polygon from '@/assets/svg/Polygon.svg'
@@ -107,7 +107,7 @@ const History: React.FC = () => {
 					className={styles['up-table']}
 					rowClassName={styles['up-table-row']}
 					data={formatHistoryData(historyData)}
-					emptyText=''
+					emptyText=""
 					scroll={{ y: 570 }}
 					rowKey={(record) => {
 						return `${record.raw.relayerHash}-${record.raw.chainId}`
@@ -121,24 +121,24 @@ const History: React.FC = () => {
 					}}
 					sticky={true}
 				/>
-				{
-					historyData.length === 0 && (
-						<div className={styles.empty}>
-							<Icon src={EmptyAssets} width={120} height={120} />
-							<div>No activities</div>
-						</div>
-					)
-				}
-				
+				{historyData.length === 0 && (
+					<div className={styles.empty}>
+						<Icon src={EmptyAssets} width={120} height={120} />
+						<div>No activities</div>
+					</div>
+				)}
 			</div>
 			<Dialog
 				title={
 					<div>
-						Payment Details<span className="status-tag">{currentRecord?.status}</span>
+						Payment Details
+						{currentRecord?.status !== TransactionStatus.Success && (
+							<span className="status-tag">{currentRecord?.status}</span>
+						)}
 					</div>
 				}
 				className="up-history-dialog"
-				extraController={<Icon src={ExploreButton} style={{ marginRight: '20px' }} width={24} height={24}></Icon>}
+				extraController={<div onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={ExploreButton} style={{ marginRight: '20px' }} width={24} height={24}/></div>}
 				showConfirmButton={false}
 				showCancelButton={false}
 				isOpen={showDetail}

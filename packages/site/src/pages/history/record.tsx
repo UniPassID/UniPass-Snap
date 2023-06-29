@@ -81,7 +81,7 @@ const RecordDetail: React.FC<{
 			)}
 			<div className="row">
 				<div className="label">Tx Hash</div>
-				<div className="content">{record.hash}</div>
+				<div className="content">{record.hash || '-'}</div>
 			</div>
 			<div className="row">
 				<div className="label">Fee</div>

@@ -19,7 +19,7 @@ const ChainSwitcher = () => {
 	const beforeSwitchChain = (chainId: number) => {
 		console.log(editingPayment)
 		setSelectChainId(chainId)
-		if (!editingPayment) {
+		if (editingPayment) {
 			setTrue()
 			return
 		} else {

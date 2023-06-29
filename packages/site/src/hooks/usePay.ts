@@ -7,7 +7,7 @@ import {
 	smartAccountTokenListState
 } from '@/store'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { useRequest } from 'ahooks'
+import { useDeepCompareEffect, useRequest } from 'ahooks'
 import { getSingleTransactionFees } from '@/request'
 import { SingleTransactionFee } from '@/types/request'
 import { Transaction, TransactionStatus } from '@/types/transaction'
@@ -94,14 +94,9 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	}, [txs.length, availableFreeQuota])
 
 	useEffect(() => {
-		if (txs.length > 1) {
-			setEditingPayment(true)
-			return
-		}
-		if (txs[0]?.amount || txs[0]?.to) {
-			setEditingPayment(true)
-		}
-	}, [txs, setEditingPayment])
+		const isEditing = txs.length > 1 || !!(txs[0]?.amount || txs[0]?.to)
+		setEditingPayment(isEditing)
+	})
 
 	return { availableTokens, SINGLE_GAS, gas, transferAmount, showTips, hasPendingTransaction }
 }

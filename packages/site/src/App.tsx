@@ -5,14 +5,14 @@ import styles from './App.module.scss'
 
 const App: React.FC = () => {
 	return (
-		<>
-			<div className={styles.app}>
+		<div className={styles.app}>
+			<div className={styles.content}>
 				<SideBar />
 				<div className={styles.pages}>
 					<RouterProvider router={router} />
 				</div>
 			</div>
-		</>
+		</div>
 	)
 }
 

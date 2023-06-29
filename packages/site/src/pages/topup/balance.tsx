@@ -179,7 +179,11 @@ export const Balance: React.FC<{
 						</div>
 					)}
 				</div>
-				<p className={styles.tips}>Please connect your MetaMask address first</p>
+				<p className={styles.tips}>
+					{metamaskAccount
+						? 'Choose an asset within your wallet to continue the top-up'
+						: 'Please connect your MetaMask address first'}
+				</p>
 				{renderAssets()}
 			</div>
 			<div className={styles.qrcode_btn}>

@@ -51,10 +51,8 @@ const StatusDialog = () => {
 				showClose={false}
 				center={true}
 				className={styles.flask_dialog}
-				style={{ content: { backgroundColor: '#F0F3FA' } }}
 			>
 				<div className={styles.bg}>
-					<Icon src={BobbleBg} width={300} height={140} />
 					<div className={styles.metamask}>
 						<Icon src={MetaMaskFlask} width={60} height={60} />
 					</div>
@@ -102,49 +100,52 @@ const StatusDialog = () => {
 				showClose={false}
 				center={true}
 				className={styles.snap_dialog}
-				style={{ content: { backgroundColor: '#F0F3FA' } }}
 			>
-				<div className={styles.title}>Connect to UniPass Snap</div>
-				<div className={styles.tips}>UniPass Snap is a product that empowers MetaMask with smart contract wallet.</div>
-				<div className={styles.pair}>
-					<div className={styles.item}>
-						<Icon src={UniPass_Icon} width={40} height={40} />
+				<div>
+					<div className={styles.title}>Connect to UniPass Snap</div>
+					<div className={styles.tips}>
+						UniPass Snap is a product that empowers MetaMask with smart contract wallet.
 					</div>
-					<div className={styles.divider}>
-						<i></i>
-						<i></i>
-						<i></i>
+					<div className={styles.pair}>
+						<div className={styles.item}>
+							<Icon src={UniPass_Icon} width={40} height={40} />
+						</div>
+						<div className={styles.divider}>
+							<i></i>
+							<i></i>
+							<i></i>
+						</div>
+						<div className={styles.item}>
+							<Icon src={MetaMask} width={40} height={40} />
+						</div>
 					</div>
-					<div className={styles.item}>
-						<Icon src={MetaMask} width={40} height={40} />
+					<div className={styles.feature}>Available features</div>
+					<div className={styles.feature_item}>
+						<Icon src={Gift} width={20} height={20} />
+						Gas-free payment
 					</div>
+					<div className={styles.feature}>Upcoming features</div>
+					<div className={styles.feature_item}>
+						<Icon src={BankCard} width={20} height={20} />
+						Subscription payments
+					</div>
+					<div className={styles.feature_item}>
+						<Icon src={DimensionalCode} width={20} height={20} />
+						Gas-free receipt codes
+					</div>
+					<div className={styles.feature_item}>
+						<Icon src={SocialRecovery} width={20} height={20} />
+						Social recovery
+					</div>
+					<Button
+						style={{ width: '100%' }}
+						icon={<Icon src={Connect} width={20} height={20} />}
+						loading={connectSnapLoading}
+						onClick={connect}
+					>
+						Connect Snap
+					</Button>
 				</div>
-				<div className={styles.feature}>Available features</div>
-				<div className={styles.feature_item}>
-					<Icon src={Gift} width={20} height={20} />
-					Gas-free payment
-				</div>
-				<div className={styles.feature}>Upcoming features</div>
-				<div className={styles.feature_item}>
-					<Icon src={BankCard} width={20} height={20} />
-					Subscription payments
-				</div>
-				<div className={styles.feature_item}>
-					<Icon src={DimensionalCode} width={20} height={20} />
-					Gas-free receipt codes
-				</div>
-				<div className={styles.feature_item}>
-					<Icon src={SocialRecovery} width={20} height={20} />
-					Social recovery
-				</div>
-				<Button
-					style={{ width: '100%' }}
-					icon={<Icon src={Connect} width={20} height={20} />}
-					loading={connectSnapLoading}
-					onClick={connect}
-				>
-					Connect Snap
-				</Button>
 			</Dialog>
 		</>
 	)

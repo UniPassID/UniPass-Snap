@@ -72,13 +72,19 @@
 
     .bg {
         position: relative;
+        margin: -52px auto 0 auto;
+        // margin-left: -50px;
+        // margin-right: -50px;
+        background-image: url('../../assets/svg/Bobble_bg.svg');
+        width: 320px;
+        height: 140px;
 
         .metamask {
             position: absolute;
             width: 60px;
             height: 60px;
             left: 50%;
-            top: 50%;
+            top: 60px;
             margin-left: -30px;
         }
     }

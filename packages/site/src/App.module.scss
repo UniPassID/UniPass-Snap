@@ -1,18 +1,25 @@
 .app {
 	position: relative;
-	display: flex;
-	align-items: center;
-	flex-flow: row nowrap;
-	justify-content: center;
 	width: 1180px;
-	margin: 0 auto;
-	padding: 90px 30px 30px 30px;
+	height: 720px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 
-	.pages {
-		width: 960px;
-		height: 720px;
-		background: linear-gradient(222.5deg, #FFFFFF 47.82%, #FBFCFF 85.32%);
-		box-shadow: 16px 8px 20px rgba(0, 0, 0, 0.04);
-		border-radius: 20px;
+	.content {
+		display: flex;
+		align-items: center;
+		flex-flow: row nowrap;
+		justify-content: center;
+		margin: 0 30px;
+
+		.pages {
+			width: 960px;
+			height: 720px;
+			background: linear-gradient(222.5deg, #FFFFFF 47.82%, #FBFCFF 85.32%);
+			box-shadow: 16px 8px 20px rgba(0, 0, 0, 0.04);
+			border-radius: 20px;
+		}
 	}
 }

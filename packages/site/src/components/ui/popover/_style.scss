@@ -19,8 +19,9 @@ $popover-arrow-width: 6px;
         text-align: left;
         text-decoration: none;
         background-color: #fff;
-        box-shadow: var(--up-tooltip-box-shadow);
-        border-radius: 8px;
+        border-radius: 16px;
+        border: 1px solid #E1E6F0;
+        box-shadow: 8.164311821172194e-16px 8px 20px 0px rgba(0, 0, 0, 0.04);
     }
 }
 

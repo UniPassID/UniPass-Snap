@@ -167,7 +167,6 @@ $btn-transition: color 0.15s ease-in-out, opacity 0.15s ease-in-out !default;
 }
 
 html,
-#root,
 body {
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
@@ -176,9 +175,14 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	font-family: 'Outfit', sans-serif;
 	background-color: #F0F3FA;
+	min-width: 1240px;
+}
+
+#root {
 	position: relative;
-
-
+	overflow: auto;
+	width: 100%;
+	height: 100vh;
 }
 
 // disable default scroll bar

@@ -19,7 +19,8 @@ const ChainSwitcher = () => {
 		return (
 			<div className={styles.testnet}>
 				<div className={styles.circle}></div>
-				<span>Mumbai</span> <span>&nbsp;(Testnet)</span>
+				<span>Mumbai</span>
+				<span>&nbsp;(Testnet)</span>
 			</div>
 		)
 	} else

@@ -16,11 +16,12 @@
         box-sizing: border-box;
         border-image: linear-gradient(to bottom, rgb(240, 243, 250), rgba(240, 243, 250, 0.1)) 1;
 
-        .tips {
+        .notice {
             font-weight: 500;
             font-size: 20px;
             line-height: 28px;
             color: #1F202A;
+            margin-top: 28px;
         }
 
         .metamask {
@@ -39,6 +40,9 @@
                 height: 36px;
                 border: 1px solid #E1E6F0;
                 border-radius: 12px;
+                font-size: 14px;
+                line-height: 20px;
+                color: #5E5F6E;
 
                 img {
                     display: inline-block;
@@ -48,12 +52,12 @@
         }
 
         .assets {
-            margin-top: 48px;
+            margin-top: 40px;
 
             .title {
                 font-weight: 500;
                 font-size: 16px;
-                line-height: 20px;
+                line-height: 24px;
                 color: #5E5F6E;
             }
 
@@ -100,6 +104,14 @@
                     justify-content: space-between;
                     height: 52px;
                     cursor: pointer;
+                    border-radius: 12px;
+                    margin: 0 -16px;
+                    padding: 0 16px;
+
+                    &:hover {
+                        background: #F7F7FA;
+                    }
+
 
                     .coin {
                         display: flex;

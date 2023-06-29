@@ -46,7 +46,7 @@ export const ReCharge: React.FC<{
 	return (
 		<>
 			<div className={styles.amount}>
-				<div className={styles.title}>Top Up</div>
+				<div className={styles.title}>TOP UP</div>
 				<form>
 					<Input
 						name="Amount"

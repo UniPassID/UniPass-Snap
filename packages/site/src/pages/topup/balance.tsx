@@ -73,7 +73,7 @@ export const Balance: React.FC<{
 					</div>
 					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDT_ADDRESS)}>
 						<div className={styles.coin}>
-							<Icon src={USDT} width={40} height={40} />
+							<Icon src={USDT} width={28} height={28} />
 							<span className={styles.symbol}>USDT</span>
 						</div>
 						<div className={styles.value}>
@@ -86,7 +86,7 @@ export const Balance: React.FC<{
 					<div className={styles.divider}></div>
 					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDC_ADDRESS)}>
 						<div className={styles.coin}>
-							<Icon src={USDC} width={40} height={40} />
+							<Icon src={USDC} width={28} height={28} />
 							<span className={styles.symbol}>USDC</span>
 						</div>
 						<div className={styles.value}>
@@ -108,7 +108,7 @@ export const Balance: React.FC<{
 					</div>
 					<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDT_ADDRESS)}>
 						<div className={styles.coin}>
-							<Icon src={USDT} width={40} height={40} />
+							<Icon src={USDT} width={28} height={28} />
 							<span className={styles.symbol}>USDT</span>
 						</div>
 						<div className={styles.value}>
@@ -121,7 +121,7 @@ export const Balance: React.FC<{
 					<div className={styles.divider}></div>
 					<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDC_ADDRESS)}>
 						<div className={styles.coin}>
-							<Icon src={USDC} width={40} height={40} />
+							<Icon src={USDC} width={28} height={28} />
 							<span className={styles.symbol}>USDC</span>
 						</div>
 						<div className={styles.value}>
@@ -139,7 +139,7 @@ export const Balance: React.FC<{
 					</div>
 					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDT_ADDRESS)}>
 						<div className={styles.coin}>
-							<Icon src={USDT} width={40} height={40} />
+							<Icon src={USDT} width={28} height={28} />
 							<span className={styles.symbol}>USDT</span>
 						</div>
 						<div className={styles.value}>
@@ -152,7 +152,7 @@ export const Balance: React.FC<{
 					<div className={styles.divider}></div>
 					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDC_ADDRESS)}>
 						<div className={styles.coin}>
-							<Icon src={USDC} width={40} height={40} />
+							<Icon src={USDC} width={28} height={28} />
 							<span className={styles.symbol}>USDC</span>
 						</div>
 						<div className={styles.value}>
@@ -179,15 +179,15 @@ export const Balance: React.FC<{
 						</div>
 					)}
 				</div>
-				<p className={styles.tips}>
+				<div className={styles.notice}>
 					{metamaskAccount
 						? 'Choose an asset within your wallet to continue the top-up'
 						: 'Please connect your MetaMask address first'}
-				</p>
+				</div>
 				{renderAssets()}
 			</div>
 			<div className={styles.qrcode_btn}>
-				<Button size="md" btnType="gray" icon={<Icon src={QRCode} size="lg" />} onClick={topupViaQRCode}>
+				<Button size="md" btnType="gray" icon={<Icon src={QRCode} width={20} height={20} />} onClick={topupViaQRCode}>
 					Top up via QRcode
 				</Button>
 			</div>

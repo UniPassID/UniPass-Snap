@@ -7,7 +7,7 @@ import {
 	smartAccountTokenListState
 } from '@/store'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
-import { useDeepCompareEffect, useRequest } from 'ahooks'
+import { useRequest } from 'ahooks'
 import { getSingleTransactionFees } from '@/request'
 import { SingleTransactionFee } from '@/types/request'
 import { Transaction, TransactionStatus } from '@/types/transaction'

@@ -219,11 +219,11 @@ const Pay: React.FC = () => {
 
 				const signedTxs = await smartAccount.signTransactions(formatTxs(txs), {
 					fee: originFee
-						? {
-								...originFee,
-								amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
-						  }
-						: undefined
+					? {
+							...originFee,
+							amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
+						}
+					: undefined
 				})
 
 				if (gas.usedFreeQuota) {
@@ -296,12 +296,12 @@ const Pay: React.FC = () => {
 				<div className={styles['title-wrapper']}>
 					<div className={styles.title}>PAY</div>
 					<div className={styles['sub-title']}>
-						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} availabel gas-free</span> payment{availableFreeQuota > 1 && 's'} today
+						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} available gas-free</span> payment{availableFreeQuota > 1 && 's'} today
 					</div>
 				</div>
 				<div className={styles.form}>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						{txs.map((item, index) => {
+						{txs.map((_, index) => {
 							return (
 								<Transfer
 									ref={(ref) => saveTransferRef(ref, index)}
@@ -314,7 +314,7 @@ const Pay: React.FC = () => {
 							)
 						})}
 						<div className={styles['add-btn-wrapper']}>
-							<Button type="button" onClick={addMore}>
+							<Button type="button" btnType="tinted" onClick={addMore}>
 								+ Add Another Payment
 							</Button>
 							{showTips && <div className={styles['discount-tip']}>Add more for 50% gas off</div>}

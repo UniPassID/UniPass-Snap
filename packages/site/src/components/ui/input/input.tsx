@@ -17,7 +17,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLElement> {
 }
 
 const Input: React.FC<InputProps> = (props) => {
-	const { disabled, allowClose = false, suffix, style, formField, validateShame, extraMessage, inputRef, ...restProps } = props
+	const { disabled, allowClose = true, suffix, style, formField, validateShame, extraMessage, inputRef, ...restProps } = props
 	const {
 		resetField,
 		register,

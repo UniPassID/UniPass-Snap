@@ -201,6 +201,9 @@ const Pay: React.FC = () => {
 	}
 
 	const formatFeeTx = (feeTx: { to: string; amount: BigNumber; token: string }) => {
+		if (feeTx.amount.eq(0)) {
+			return undefined
+		}
 		const contract = makeERC20Contract(getAddress(feeTx.token))
 		const data = contract.interface.encodeFunctionData('transfer', [getAddress(feeTx.to), feeTx.amount])
 		const formattedFee = { value: '0x00', to: getAddress(feeTx.token), data }

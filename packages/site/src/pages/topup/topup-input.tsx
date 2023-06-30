@@ -53,7 +53,7 @@ const Input: React.FC<InputProps> = (props) => {
 
 	return (
 		<div className={wrapperClassNames}>
-			<span className={styles.topup_input_title}>{props.name}</span>
+			<span className={styles.topup_input_title}>{props.name?.toUpperCase()}</span>
 			<div className={contentClassNames}>
 				<input
 					className={inputClassNames}

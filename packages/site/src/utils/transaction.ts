@@ -14,7 +14,7 @@ export async function waitPendingTransactions(
 ) {
 	pendingTransactions.forEach(async (tx) => {
 		try {
-			const txResult = await smartAccount.waitTransactionByReceipt(tx.relayerHash, 1)
+			const txResult = await smartAccount.waitTransactionByReceipt(tx.relayerHash, 1, tx.chainId)
 			updateHistory({
 				address,
 				chainId: tx.chainId,
@@ -58,7 +58,7 @@ export function getTokenBySymbol(symbol: string, chainId: number) {
 }
 
 export function formatTxs(txs: Transaction[]) {
-	return  txs.map((tx) => {
+	return txs.map((tx) => {
 		return formatTx(tx)
 	})
 }

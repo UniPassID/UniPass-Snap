@@ -4664,7 +4664,7 @@ __metadata:
     "@types/react-copy-to-clipboard": ^5.0.4
     "@types/react-dom": ^18.2.5
     "@types/react-modal": ^3.16.0
-    "@unipasswallet/smart-account": 0.1.0-alpha.20
+    "@unipasswallet/smart-account": 0.1.0-alpha.21
     "@web3-react/core": 8.2.0
     "@web3-react/metamask": ^8.2.1
     "@web3-react/types": 8.2.0
@@ -4714,7 +4714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unipasswallet/smart-account-utils@npm:^0.1.0-alpha.20":
+"@unipasswallet/smart-account-utils@npm:^0.1.0-alpha.21":
   version: 0.1.0
   resolution: "@unipasswallet/smart-account-utils@npm:0.1.0"
   dependencies:
@@ -4724,9 +4724,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@unipasswallet/smart-account@npm:0.1.0-alpha.20":
-  version: 0.1.0-alpha.20
-  resolution: "@unipasswallet/smart-account@npm:0.1.0-alpha.20"
+"@unipasswallet/smart-account@npm:0.1.0-alpha.21":
+  version: 0.1.0-alpha.21
+  resolution: "@unipasswallet/smart-account@npm:0.1.0-alpha.21"
   dependencies:
     "@ethersproject/abstract-provider": ^5.7.0
     "@ethersproject/properties": ^5.7.0
@@ -4734,7 +4734,7 @@ __metadata:
     "@unipasswallet/keys": ^0.3.2
     "@unipasswallet/network": ^0.3.2
     "@unipasswallet/relayer": ^0.3.2
-    "@unipasswallet/smart-account-utils": ^0.1.0-alpha.20
+    "@unipasswallet/smart-account-utils": ^0.1.0-alpha.21
     "@unipasswallet/transaction-builders": ^0.3.2
     "@unipasswallet/transactions": ^0.3.2
     "@unipasswallet/utils": ^0.3.2
@@ -4745,7 +4745,7 @@ __metadata:
     ethers: ^5.7.1
     ts-custom-error: ^3.3.1
     tss-wasm: 0.6.0
-  checksum: 6cae80c2c9062fd9e7c2c8eedebc6e9c1251dcbe3fe821f762ae03a8526ef6181b90306570424e4fec7342a43c5c6facebc3f982a920fd98abf9ca4bea57933c
+  checksum: 7f0c25f6d808651ddc996e1caffeb9e2559d3bb60e41e76504049dfbde4f2aa5b851aae238e5fce69e0c8828526b54d86ed06d77bfda15717f219c1b95ca817f
   languageName: node
   linkType: hard
 

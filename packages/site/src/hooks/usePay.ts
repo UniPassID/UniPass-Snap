@@ -97,6 +97,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 			(token) => getAddress(token.contractAddress) === getAddress(gas.selectedGas?.contractAddress || '')
 		)
 		if (!token) return false
+		if (!gas.totalGas) return false
 		const tokenBalance = parseFloat(weiToEther(token.balance || 0, gas.selectedGas?.decimals))
 		return gas.selectedGas?.symbol === 'USDC'
 			? tokenBalance < transferAmount.usdcAmount + gas.totalGas

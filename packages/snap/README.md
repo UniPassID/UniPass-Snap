@@ -1,8 +1,3 @@
-# TypeScript Example Snap
+# @unipasswallet/unipass-snap
 
-This Snap demonstrates how to develop a Snap with TypeScript.
-
-## Notes
-
-- Babel is used for transpiling TypeScript to JavaScript, so when building with the CLI,
-  `transpilationMode` must be set to `localOnly` (default) or `localAndDeps`.
+A snap for stable coin payment

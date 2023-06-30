@@ -1,8 +1,6 @@
-# @metamask/template-snap-monorepo
+# @UniPassID/UniPass-Snap
 
-This repository demonstrates how to develop a snap with TypeScript. For detailed instructions, see [the MetaMask documentation](https://docs.metamask.io/guide/snaps.html#serving-a-snap-to-your-local-environment).
-
-MetaMask Snaps is a system that allows anyone to safely expand the capabilities of MetaMask. A _snap_ is a program that we run in an isolated environment that can customize the wallet experience.
+Web application for transfer stable coins gas-less
 
 ## Snaps is pre-release software
 
@@ -10,7 +8,7 @@ To interact with (your) Snaps, you will need to install [MetaMask Flask](https:/
 
 ## Getting Started
 
-Clone the template-snap repository [using this template](https://github.com/MetaMask/template-snap-monorepo/generate) and setup the development environment:
+Clone the UniPass-Snap repository [using this template](https://github.com/UniPassID/UniPass-Snap.git) and setup the development environment:
 
 ```shell
 yarn install && yarn start

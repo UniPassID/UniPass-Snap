@@ -1,7 +1,7 @@
 {
 	"name": "@unipasswallet/unipass-snap",
 	"version": "0.1.0-alpha.3",
-	"description": "The 'Hello, world!' of MetaMask Snaps, now written in TypeScript.",
+	"description": "A snap for stable coin payment",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/UniPassID/UniPass-Snap.git"

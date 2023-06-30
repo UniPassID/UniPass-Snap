@@ -113,7 +113,7 @@ const Transfer = forwardRef<
 			{txs.length > 1 || !editable ? (
 				<div className={styles['sub-title']}>
 					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment {index + 1}</div> : <div></div>}
-					<div style={{display: 'flex'}}>
+					<div style={{ display: 'flex' }}>
 						{txs.length > 1 && (
 							<div className={styles.icon} onClick={() => handleRemove(index)}>
 								<Icon src={DeleteSvg} />
@@ -143,7 +143,7 @@ const Transfer = forwardRef<
 										onChange={(e) => {
 											upGA('payment-change-payment_token', 'payment', {
 												BatchAmount: txs.length,
-												Token: getTokenByContractAddress(value)?.symbol
+												PaymentToken: getTokenByContractAddress(value)?.symbol
 											})
 											onChange(e)
 										}}

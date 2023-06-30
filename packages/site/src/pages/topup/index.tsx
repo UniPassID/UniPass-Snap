@@ -56,14 +56,14 @@ const TopUp = () => {
 
 	const _setNetwork = (value: number) => {
 		if (!netWork) {
-			upGA('topup-qrcode-choose-network', 'topup', { ChainID: value, TopupToken: token })
+			upGA('topup-qrcode-choose-network', 'topup', { ChainID: value, TopupToken: token || 'Empty' })
 		}
 		setNetwork(value)
 	}
 
 	const _setToken = (value: string) => {
 		if (!token) {
-			upGA('topup-qrcode-choose-token', 'topup', { ChainID: netWork, TopupToken: value })
+			upGA('topup-qrcode-choose-token', 'topup', { ChainID: netWork || 'Empty', TopupToken: value })
 		}
 		setToken(value)
 	}

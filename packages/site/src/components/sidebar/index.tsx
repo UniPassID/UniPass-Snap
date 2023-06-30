@@ -70,6 +70,9 @@ const SideBar = () => {
 		if (menu === 'TopUp') {
 			upGA('topup-click-topup_menu', 'topup')
 		}
+		if (menu === 'Payment') {
+			upGA('payment-click-payment_menu', 'payment')
+		}
 	}
 
 	const handleSwitchEnv = (checked: boolean) => {

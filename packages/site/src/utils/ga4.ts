@@ -29,6 +29,7 @@ type EventName =
 	| 'payment-input-amount-finish'
 	| 'payment-click-add_another_payment'
 	| 'payment-click-pay'
+	| 'payment-click-payment_menu'
 	| 'payment-submitted-success'
 	| 'payment-congratulations-popup'
 	| 'payment-success'

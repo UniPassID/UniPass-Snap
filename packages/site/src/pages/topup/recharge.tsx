@@ -28,13 +28,13 @@ export const ReCharge: React.FC<{
 
 	const selectedToken = useMemo(() => {
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
-		methods.resetField('Amount')
+		methods.resetField('Amount', { keepError: true })
 		if (token) {
 			upGA('topup-mm-choose-token', 'topup', { ChainID: token.chainId, TopupToken: token.symbol })
 		}
 		return token
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [tokens, checkedAssets])
+	}, [checkedAssets])
 
 	const onSubmit = (data: any) => {
 		if (selectedToken) recharge(data.Amount, selectedToken)

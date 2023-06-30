@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import MetaMask from '@/assets/svg/MetaMask.svg'
 import USDT from '@/assets/svg/USDT.svg'
 import USDC from '@/assets/svg/USDC.svg'
@@ -19,6 +19,7 @@ import {
 import { isTestnetEnvState, metamaskAccountTokenListState } from '@/store'
 import { useRecoilValue } from 'recoil'
 import { formatAddress, formatUSDAmount, upGA, weiToEther } from '@/utils'
+import { useDebounceEffect } from 'ahooks'
 
 export const Balance: React.FC<{
 	checkedAssets?: string
@@ -39,7 +40,17 @@ export const Balance: React.FC<{
 }) => {
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const tokens = useRecoilValue(metamaskAccountTokenListState)
+	const [debounceAccount, setValue] = useState<string | undefined>(metamaskAccount)
 
+	useDebounceEffect(
+		() => {
+			setValue(metamaskAccount)
+		},
+		[metamaskAccount],
+		{
+			wait: 500
+		}
+	)
 	useEffect(() => {
 		setCheckAssets(undefined)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,7 +70,7 @@ export const Balance: React.FC<{
 	}
 
 	const renderAssets = () => {
-		if (!metamaskAccount) {
+		if (!debounceAccount) {
 			return (
 				<div className={styles.assets}>
 					<div className={styles.title}>ASSETS</div>

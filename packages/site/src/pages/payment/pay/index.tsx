@@ -309,7 +309,7 @@ const Pay: React.FC = () => {
 					<div className={styles['sub-title']}>
 						<span style={{ fontSize: '16px', fontWeight: 600 }}>{availableFreeQuota}</span>
 						<span style={{ fontWeight: 500, margin: '0 4px' }}>gas-free</span>
-						<span style={{ color: '#5E5F6E' }}>payment {availableFreeQuota > 1 && 's'} left today</span>
+						<span style={{ color: '#5E5F6E' }}>payment{availableFreeQuota > 1 && 's'} left today</span>
 					</div>
 				</div>
 				<div className={styles.form}>

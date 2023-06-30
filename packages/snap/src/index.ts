@@ -18,7 +18,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
 			return getMasterKeyAddress()
 		case 'signMessage':
 			return signTransactionMessage(request.params as SignTxMessageInput)
-		case 'getAuthorization':
+		case 'getAuthentication':
 			return getAuthentication((request.params as AuthenticationInput).address)
 		default:
 			throw new Error('Method not found.')

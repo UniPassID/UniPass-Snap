@@ -199,6 +199,11 @@
 					text-decoration: line-through;
 					color: var(--up-text-third)
 				}
+				.insufficient-tips {
+					color: #E85050;
+					font-size: 14px;
+					font-weight: 500;
+				}
 				.switcher {
 					display: flex;
 					align-items: center;

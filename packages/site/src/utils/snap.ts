@@ -52,18 +52,6 @@ export const getSnap = async (): Promise<Snap | undefined> => {
 	}
 }
 
-/**
- * Invoke the "hello" method from the example snap.
- */
-
-export const sendHello = async () => {
-	// @ts-ignore
-	await window.ethereum.request({
-		method: 'wallet_invokeSnap',
-		params: { snapId: defaultSnapOrigin, request: { method: 'hello' } }
-	})
-}
-
 export const getMasterKeyAddress = async () => {
 	// @ts-ignore
 	return (await window.ethereum.request<string>({
@@ -83,11 +71,11 @@ export const signMessageWithSnap = async (message: string | Bytes, originTransac
 	})) as string
 }
 
-export const getSignSig = async (address: string) => {
+export const getAuthentication = async (address: string) => {
 	// @ts-ignore
 	return await window.ethereum.request<{ loginMessage: string; loginSignature: string }>({
 		method: 'wallet_invokeSnap',
-		params: { snapId: defaultSnapOrigin, request: { method: 'getSignSig', params: { address } } }
+		params: { snapId: defaultSnapOrigin, request: { method: 'getAuthentication', params: { address } } }
 	})
 }
 

@@ -26,7 +26,7 @@ const smartAccountInsState = atom<SmartAccount>({
 
 const availableFreeQuotaState = atom<number>({
 	key: 'availableFreeQuota',
-	default: 0
+	default: 3
 })
 
 export {

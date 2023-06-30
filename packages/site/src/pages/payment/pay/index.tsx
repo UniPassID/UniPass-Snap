@@ -61,7 +61,10 @@ const Pay: React.FC = () => {
 
 	const txs = useFormReturn.watch('txs')
 
-	const { SINGLE_GAS, gas, transferAmount, showTips, hasPendingTransaction } = usePay(txs, currentSymbol)
+	const { SINGLE_GAS, gas, transferAmount, showTips, hasPendingTransaction, isInsufficientBalance } = usePay(
+		txs,
+		currentSymbol
+	)
 
 	const saveTransferRef = (transferRef: TransferRef | null, index: number) => {
 		if (transferRef !== null) {
@@ -166,7 +169,7 @@ const Pay: React.FC = () => {
 	const onSubmit = async () => {
 		const isValid = validator()
 		upGA('payment-click-pay', 'payment', {
-			ClickResult: isValid && !hasPendingTransaction,
+			ClickResult: isValid && !hasPendingTransaction && !isInsufficientBalance,
 			BatchAmount: txs.length,
 			PaymentAmount: transferAmount.totalAmount,
 			GasToken: currentSymbol,
@@ -175,6 +178,10 @@ const Pay: React.FC = () => {
 		})
 		if (hasPendingTransaction) {
 			upNotify.error('The current chain has ongoing transactions. Please wait.')
+			return
+		}
+		if (isInsufficientBalance) {
+			upNotify.error('Insufficient balance. Please check.')
 			return
 		}
 		if (!isValid) return
@@ -300,8 +307,8 @@ const Pay: React.FC = () => {
 				<div className={styles['title-wrapper']}>
 					<div className={styles.title}>PAY</div>
 					<div className={styles['sub-title']}>
-						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} available gas-free</span> payment
-						{availableFreeQuota > 1 && 's'} today
+						<span style={{ color: 'var(--up-primary)' }}>{availableFreeQuota} gas-free</span> payment
+						{availableFreeQuota > 1 && 's'} left today
 					</div>
 				</div>
 				<div className={styles.form}>
@@ -333,7 +340,7 @@ const Pay: React.FC = () => {
 					<div className={styles['network-fee-title-wrapper']}>
 						<div className={styles['network-fee-title']}>NETWORK FEE</div>
 						{gas.totalGas === 0 ? (
-							<ToolTip title="UniPass Snap provides three gas-free crypto payments daily" placement="topRight">
+							<ToolTip title="UniPass Snap provides three gas-free crypto payments every day" placement="topRight">
 								<div className={styles['free-tips-wrap']}>
 									<div className={styles['free-tips']}>Gas Free!</div>
 									<Icon src={QSvg} style={{ marginLeft: '12px' }} />
@@ -363,7 +370,11 @@ const Pay: React.FC = () => {
 					<div className={styles['switcher-wrapper']}>
 						<div className={styles['network-fee-wrapper']}>
 							<div className={styles['network-fee-total']}>$ {gas.totalGas}</div>
-							{gas.originGas > gas.totalGas && <div className={styles['network-fee-origin']}>$ {gas.originGas}</div>}
+							{isInsufficientBalance ? (
+								<div className={styles['insufficient-tips']}>Insufficient balance</div>
+							) : (
+								gas.originGas > gas.totalGas && <div className={styles['network-fee-origin']}>$ {gas.originGas}</div>
+							)}
 						</div>
 						<div className={styles.switcher}>
 							<div className={styles['switch-label']}>Pay with</div>

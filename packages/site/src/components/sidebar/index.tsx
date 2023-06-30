@@ -8,7 +8,8 @@ import {
 	isTestnetEnvState,
 	currentChainIdState,
 	smartAccountState,
-	pendingTransactionState
+	pendingTransactionState,
+	smartAccountInsState
 } from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
@@ -44,6 +45,7 @@ const SideBar = () => {
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
 	const pendingTransaction = useRecoilValue(pendingTransactionState)
+	const smartAccountIns = useRecoilValue(smartAccountInsState)
 
 	const getMenuClassName = (name: MenuType) => {
 		return clsx(styles.menu, {
@@ -80,6 +82,7 @@ const SideBar = () => {
 		const chainId = checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET
 		window.localStorage.setItem('up__currentChainId', chainId.toString())
 		setCurrentChainIdState(chainId)
+		smartAccountIns.switchChain(chainId)
 		upGA('setting-switch-testnet', 'setting', { Environment: checked ? 'Testnet' : 'Mainnet' })
 	}
 

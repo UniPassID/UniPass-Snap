@@ -34,7 +34,7 @@
       width: 40px;
       height: 40px;
       border-radius: 12px !important;
-      background-color: #F9F3FF;
+      background: linear-gradient(135deg, #F9F3FF 0%, #F9F8FF 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -60,7 +60,9 @@
     color: var(--up-text-third);
     height: 28px;
     font-size: 12px;
-    font-weight: 400;
+    th {
+      font-weight: 400;
+    }
   }
   .up-table-row {
     font-size: 16px;

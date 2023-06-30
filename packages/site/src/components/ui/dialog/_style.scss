@@ -15,7 +15,7 @@
 .up_dialog_content {
 	width: 400px;
 	height: auto;
-	padding: 28px;
+	padding: 40px;
 	border-radius: 20px;
 	background-color: #fff;
 	border: 0;
@@ -82,11 +82,11 @@
 
 	&--after-open {
 		opacity: 1;
-		transform: translateY(30px);
+		transform: translateY(0);
 	}
 
 	&--before-close {
 		opacity: 0;
-		transform: translateY(0);
+		transform: translateY(30px);
 	}
 }

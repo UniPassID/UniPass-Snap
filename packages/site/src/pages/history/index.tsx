@@ -13,7 +13,7 @@ import Polygon from '@/assets/svg/Polygon.svg'
 import PaySvg from '@/assets/svg/PaymentSelected.svg'
 import { Dialog, Icon } from '@/components'
 import { useMemo, useState } from 'react'
-import ExploreButton from '@/assets/svg/ExploreButton.svg'
+import Skip from '@/assets/svg/Skip.svg'
 import RecordDetail from './record'
 import EmptyAssets from '@/assets/svg/EmptyAssets.svg'
 import './history.dialog.scss'
@@ -68,7 +68,7 @@ const columns = [
 		title: 'Time',
 		dataIndex: 'time',
 		key: 'time',
-		align: 'right' as AlignType
+		align: 'right' as AlignType,
 	}
 ]
 
@@ -134,15 +134,17 @@ const History: React.FC = () => {
 			</div>
 			<Dialog
 				title={
-					<div>
+					<div className="up-history-title">
 						Payment Details
 						{currentRecord?.status !== TransactionStatus.Success && (
 							<span className="status-tag">{currentRecord?.status}</span>
 						)}
+						{
+							<div className="up-history-dialog-extra" style={{ marginRight: '20px' }} onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={Skip} width={24} height={24}/></div>
+						}
 					</div>
 				}
 				className="up-history-dialog"
-				extraController={<div className="up-history-dialog-extra" style={{ marginRight: '20px' }} onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={ExploreButton} width={24} height={24}/></div>}
 				showConfirmButton={false}
 				showCancelButton={false}
 				isOpen={showDetail}

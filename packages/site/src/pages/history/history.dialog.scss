@@ -1,5 +1,9 @@
 .up-history-dialog {
   width: 440px !important;
+  .up-history-title {
+    font-size: 20px;
+    display: flex;
+  }
   
   .up_dialog_children {
     &::-webkit-scrollbar {
@@ -20,6 +24,7 @@
 
   .up-history-dialog-extra {
     cursor: pointer;
+    margin-left: 10px;
   }
 
   .record {

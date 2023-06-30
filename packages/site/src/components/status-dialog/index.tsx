@@ -121,7 +121,7 @@ const StatusDialog = () => {
 							<Icon src={MetaMask} width={40} height={40} />
 						</div>
 					</div>
-					<div className={styles.feature}>Available features</div>
+					<div className={styles.feature}>Available feature</div>
 					<div className={styles.feature_item}>
 						<Icon src={Gift} width={20} height={20} />
 						Gas-free payment

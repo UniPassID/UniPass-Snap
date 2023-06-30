@@ -114,14 +114,14 @@ const Transfer = forwardRef<
 				<div className={styles['sub-title']}>
 					{txs.length > 1 ? <div className={styles['sub-title-txt']}>Payment {index + 1}</div> : <div></div>}
 					<div style={{ display: 'flex' }}>
-						{txs.length > 1 && (
-							<div className={styles.icon} onClick={() => handleRemove(index)}>
-								<Icon src={DeleteSvg} />
-							</div>
-						)}
 						{!editable && (
 							<div className={styles.icon} onClick={() => handleEdit()}>
 								<Icon src={EditSvg} />
+							</div>
+						)}
+						{txs.length > 1 && (
+							<div className={styles.icon} onClick={() => handleRemove(index)}>
+								<Icon src={DeleteSvg} />
 							</div>
 						)}
 					</div>
@@ -169,7 +169,12 @@ const Transfer = forwardRef<
 								type="number"
 								placeholder="Enter amount"
 								formField={formField}
-								extraLabel={<span className="up-input-title">AVAILABLE: <span style={{color: '#1F202A', fontWeight: 500}}>{formatUSDAmount(availableBalance)}</span></span>}
+								extraLabel={
+									<span className="up-input-title">
+										AVAILABLE:{' '}
+										<span style={{ color: '#1F202A', fontWeight: 500 }}>{formatUSDAmount(availableBalance)}</span>
+									</span>
+								}
 								label="AMOUNT"
 								name={`txs.${index}.amount`}
 							/>

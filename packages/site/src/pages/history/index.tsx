@@ -142,7 +142,7 @@ const History: React.FC = () => {
 					</div>
 				}
 				className="up-history-dialog"
-				extraController={<div onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={ExploreButton} style={{ marginRight: '20px' }} width={24} height={24}/></div>}
+				extraController={<div className="up-history-dialog-extra" style={{ marginRight: '20px' }} onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={ExploreButton} width={24} height={24}/></div>}
 				showConfirmButton={false}
 				showCancelButton={false}
 				isOpen={showDetail}

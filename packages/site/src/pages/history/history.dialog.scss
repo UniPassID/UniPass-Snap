@@ -10,12 +10,16 @@
   }
 
   .status-tag {
-    color: #E85050;
-    background-color: #FDEEEE;
+    color: #F57A45;
+    background-color: #FEF2EC;
     font-size: 12px;
     padding: 2px 8px;
     border-radius: 20px;
     margin-left: 8px;
+  }
+
+  .up-history-dialog-extra {
+    cursor: pointer;
   }
 
   .record {

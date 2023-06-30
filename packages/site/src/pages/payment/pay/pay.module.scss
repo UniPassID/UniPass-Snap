@@ -94,6 +94,7 @@
 				justify-content: space-between;
 				margin-bottom: 12px;
 				padding-top: 24px;
+				color: #5E5F6E;
 				.controller {
 					display: flex;
 				}
@@ -109,6 +110,7 @@
 				}
 				.icon:hover {
 					border-color: #e1e6f0;
+					background-color: #fff;
 					cursor: pointer;
 				}
 			}
@@ -133,6 +135,7 @@
 				border-radius: 12px;
 				padding: 16px;
 				margin-bottom: 20px;
+				background-color: #fff;
 				.frozen-detail {
 					display: flex;
 					align-items: center;

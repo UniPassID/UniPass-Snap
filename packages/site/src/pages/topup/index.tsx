@@ -23,6 +23,8 @@ const TopUp = () => {
 	const {
 		metamaskAccount,
 		connect,
+		erc20Loading,
+		queryERC20Balances,
 		recharge,
 		rechargeLoading,
 		isRechargeDialogOpen,
@@ -75,8 +77,10 @@ const TopUp = () => {
 					checkedAssets={checkedAssets}
 					metamaskAccount={metamaskAccount}
 					setCheckAssets={setCheckAssets}
+					erc20Loading={erc20Loading}
 					connect={connect}
 					openQrCodeDialog={openQrCodeDialog}
+					queryERC20Balances={queryERC20Balances}
 				/>
 			</div>
 			<div className={styles.recharge}>

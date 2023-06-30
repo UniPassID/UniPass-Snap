@@ -13,8 +13,8 @@
     box-sizing: border-box;
 
     .logo {
-        margin-bottom: 28px;
-        padding: 0 40px;
+        margin-bottom: 24px;
+        margin-left: 40px;
     }
 
     .menus {
@@ -24,10 +24,10 @@
             display: flex;
             align-items: center;
             flex-flow: row nowrap;
-            justify-content: center;
-            height: 28px;
+            justify-content: space-between;
             width: 100%;
-            margin-bottom: 18px;
+            padding-left: 20px;
+            margin-bottom: 12px;
             position: relative;
             font-weight: 500;
             font-size: 14px;
@@ -35,15 +35,15 @@
             text-align: center;
             color: #5E5F6E;
             cursor: pointer;
-            border-right: 2px solid transparent;
             transition: all .15s ease-in-out;
 
             .menu_inner {
-                width: 120px;
-                height: 45px;
+                width: 160px;
+                height: 44px;
                 border-radius: 12px;
-                padding: 12px 10px;
+                padding: 12px 0;
                 display: flex;
+                padding-left: 20px;
                 align-items: center;
                 flex-flow: row nowrap;
                 justify-content: flex-start;
@@ -54,7 +54,7 @@
 
                 img {
                     display: inline-block;
-                    margin-right: 15px;
+                    margin-right: 12px;
                 }
             }
 
@@ -73,9 +73,17 @@
             }
         }
 
+        .side_divider {
+            width: 2px;
+            height: 28px;
+            background-color: transparent;
+        }
+
         .selected {
-            border-right: 2px solid #8864FF;
-            color: #1F202A;
+
+            .side_divider {
+                background-color: #8864FF;
+            }
         }
     }
 
@@ -90,11 +98,17 @@
             display: flex;
             align-items: center;
             flex-flow: row nowrap;
-            justify-content: space-between;
-            height: 28px;
-            width: 80px;
-            margin-bottom: 18px;
+            justify-content: flex-start;
+            height: 44px;
+            width: 160px;
+            padding-left: 20px;
             cursor: pointer;
+            color: #5E5F6E;
+
+            img {
+                display: inline-block;
+                margin-right: 12px;
+            }
         }
     }
 }

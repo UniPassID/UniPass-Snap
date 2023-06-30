@@ -26,6 +26,7 @@ export const useMetaMask = () => {
 	const setMetaMaskAccountTokenList = useSetRecoilState(metamaskAccountTokenListState)
 	const [rechargeLoading, { setTrue: startReChargeLoading, setFalse: endReChargeLoading }] = useBoolean(false)
 	const [isRechargeDialogOpen, { setTrue: openRechargeDialog, setFalse: closeRechargeDialog }] = useBoolean(false)
+	const [erc20Loading, { setTrue: enableErc20Loading, setFalse: disableErc20Loading }] = useBoolean(false)
 	const [selectedToken, setToken] = useState<TokenInfo | undefined>(undefined)
 	const [transactionAmount, setTransactionAmount] = useState<string>('')
 	const [transactionHash, setTransactionHash] = useState<string>('')
@@ -40,6 +41,7 @@ export const useMetaMask = () => {
 		if (!metamaskAccount) return
 		console.log(`begin queryERC20Balances`)
 
+		enableErc20Loading()
 		const tasks = CHAIN_CONFIGS.map((chain) => {
 			return getBalancesByMulticall(metamaskAccount, chain.tokens, chain.rpcUrl)
 		})
@@ -48,6 +50,7 @@ export const useMetaMask = () => {
 
 		setMetaMaskAccountTokenList(results)
 
+		disableErc20Loading()
 		if (!connectByHandle) return
 
 		let balance = BigNumber.from(0)
@@ -163,6 +166,8 @@ export const useMetaMask = () => {
 		metamaskAccount,
 		connectEagerly,
 		connect,
+		erc20Loading,
+		queryERC20Balances,
 		recharge,
 		rechargeLoading,
 		isRechargeDialogOpen,

@@ -19,6 +19,7 @@
 		font-size: 14px;
 		line-height: 20px;
 		color: #5E5F6E;
+		font-weight: 400;
 		margin-bottom: 8px;
 	}
 
@@ -40,7 +41,8 @@
 		}
 
 		&:focus-within {
-			background-color: #F7F7FA;
+			background-color: #FFF;
+			border-color: var(--up-primary);
 		}
 
 		.up-input-inner {

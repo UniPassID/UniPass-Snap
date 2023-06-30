@@ -20,26 +20,29 @@ export const useSnap = () => {
 
 	useAsyncEffect(async () => {
 		startLoadSnap()
-		let Status = ''
-		const _isFlask = await isFlaskVersion()
-		console.log(`_isFlask: ${_isFlask}`)
+		try {
+			let Status = ''
+			const _isFlask = await isFlaskVersion()
+			console.log(`_isFlask: ${_isFlask}`)
 
-		setHasFlaskDetected(_isFlask)
-		if (_isFlask) {
-			Status = 'MM_installed_no_Snap'
-			const localSmartAccountAddress = window.localStorage.getItem('up__smartAccountAddress')
-			if (localSmartAccountAddress && utils.isAddress(localSmartAccountAddress)) {
-				setSmartAccountState(localSmartAccountAddress)
-				const snap = await getSnap()
-				if (snap) Status = 'MM_installed_Snap_installed'
-				setInstalledSnap(snap)
-				await getSmartAccount()
+			setHasFlaskDetected(_isFlask)
+			if (_isFlask) {
+				Status = 'MM_installed_no_Snap'
+				const localSmartAccountAddress = window.localStorage.getItem('up__smartAccountAddress')
+				if (localSmartAccountAddress && utils.isAddress(localSmartAccountAddress)) {
+					setSmartAccountState(localSmartAccountAddress)
+					const snap = await getSnap()
+					if (snap) Status = 'MM_installed_Snap_installed'
+					setInstalledSnap(snap)
+					await getSmartAccount()
+				}
+			} else {
+				Status = 'no_MM_no_Snap'
 			}
-		} else {
-			Status = 'no_MM_no_Snap'
+			upGA('open-snap', 'homepage', { MetamaskStatus: Status })
+		} finally {
+			endLoadSnap()
 		}
-		endLoadSnap()
-		upGA('open-snap', 'homepage', { MetamaskStatus: Status })
 	}, [])
 
 	const handleConnectSnap = async () => {

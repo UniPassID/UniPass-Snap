@@ -66,7 +66,7 @@ export const ReCharge: React.FC<{
 				</form>
 
 				{selectedToken ? (
-					<div className={styles.selected_token}>
+					<div className={styles.selected_token} style={{ borderBottom: '1px solid #F0F0F5' }}>
 						<div className={styles.title}>TOKEN</div>
 						<div className={styles.token_info}>
 							<div className={styles.info} style={{ width: '90px' }}>
@@ -91,7 +91,7 @@ export const ReCharge: React.FC<{
 							{metamaskAccount || 'Waiting to get address'}
 						</div>
 					</div>
-					<div className={styles.item}>
+					<div className={styles.item} style={{ borderTop: '1px solid #F0F0F5' }}>
 						<div className={styles.title}>TO SNAP ADDRESS</div>
 						<div className={styles.address}>
 							<Icon src={UniPass} width={20} height={20} />
@@ -101,7 +101,14 @@ export const ReCharge: React.FC<{
 				</div>
 			</div>
 			<div className={styles.topup_btn}>
-				<Button size="md" btnType="filled" type="submit" loading={rechargeLoading} onClick={handleSubmit(onSubmit)}>
+				<Button
+					size="md"
+					btnType="filled"
+					type="submit"
+					loading={rechargeLoading}
+					onClick={handleSubmit(onSubmit)}
+					disabled={!metamaskAccount}
+				>
 					Top Up
 				</Button>
 			</div>

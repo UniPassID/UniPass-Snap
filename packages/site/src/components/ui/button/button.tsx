@@ -52,12 +52,12 @@ const Button: FunctionComponent<ButtonProps> = ({
 
 	return (
 		<button className={classes} disabled={disabled || loading} {...rest} type={type}>
+			{btnType === 'filled' && <div className="up_button_mask" />}
 			<div className="up_button_content">
 				{renderIcon()}
 				{(icon || loading) && <div className="up_button_divider"></div>}
 				<span>{children}</span>
 			</div>
-			{btnType !== 'gray' && <div className="up_button_mask" />}
 		</button>
 	)
 }

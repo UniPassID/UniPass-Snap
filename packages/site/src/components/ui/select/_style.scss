@@ -25,7 +25,7 @@ $select-prefix: 'rc-select';
     transition: border 0.3s ease-in-out;
 
     &:hover {
-        border-color: #8864FF;
+        background-color: #F7F7FA;
     }
 
     &-show-arrow &-loading {
@@ -97,6 +97,10 @@ $select-prefix: 'rc-select';
     }
 
     &-open {
+
+        background-color: #FFF;
+        border-color: var(--up-primary);
+
         .rc-select-arrow {
             &-icon::after {
                 transform: translateX(-2.5px) rotate(-90deg)

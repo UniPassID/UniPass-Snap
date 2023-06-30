@@ -99,6 +99,11 @@
                     background-color: #F0F0F5;
                 }
             }
+
+            .button {
+                border: 1px solid #E1E6F0;
+                background-color: #fff;
+            }
         }
 
         .smart_account {
@@ -111,7 +116,8 @@
                 display: flex;
                 align-items: center;
                 flex-flow: row nowrap;
-                justify-content: center;
+                justify-content: flex-start;
+                width: 157px;
                 padding: 0 12px;
                 height: 36px;
                 border: 1px solid #E1E6F0;

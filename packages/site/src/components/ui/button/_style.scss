@@ -15,10 +15,6 @@
 		opacity: $btn-opacity-focus;
 	}
 
-	&:hover {
-		background-color: #F7F7FA !important;
-	}
-
 	.up_button_content {
 		display: flex;
 		flex-flow: row nowrap;
@@ -81,13 +77,23 @@
 
 	&.up_button_gray {
 		color: var(--up-text-secondary);
-		background-color: transparent;
+		background-color: #F7F7FA;
 		border: 1px solid var(--up-border-line);
+
+		&:hover {
+			background-color: #E9E9F3;
+		}
 	}
 
 	&.up_button_tinted {
 		color: var(--up-primary);
+		border: 1px solid transparent;
 		background-color: var(--up-button-tinted-content);
+
+		&:hover {
+			border: 1px solid #8864FF;
+			background-color: #E7E0FF;
+		}
 	}
 
 	&.disabled,

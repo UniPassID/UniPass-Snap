@@ -59,7 +59,13 @@ const Assets = () => {
 					<span>$ </span>
 					<span>{formatUSDAmount(totalBalanceOnChain)}</span>
 				</div>
-				<Button size="md" btnType="gray" icon={<Icon src={TopUpButton} size="lg" />} onClick={toTopUp}>
+				<Button
+					size="md"
+					btnType="gray"
+					icon={<Icon src={TopUpButton} width={20} height={20} />}
+					onClick={toTopUp}
+					className={styles.button}
+				>
 					Top Up
 				</Button>
 				<div className={styles.title}>ASSETS</div>

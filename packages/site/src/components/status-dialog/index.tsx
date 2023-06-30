@@ -38,6 +38,10 @@ const StatusDialog = () => {
 		if (loadSnapLoading) return false
 		return !smartAccount || !installedSnap
 	}, [showMetaMaskInstallDialog, smartAccount, installedSnap, loadSnapLoading])
+	console.log(showMetaMaskInstallDialog)
+	console.log(loadSnapLoading)
+	console.log(installedSnap)
+	console.log(showSnapConnectDialog)
 
 	return (
 		<>

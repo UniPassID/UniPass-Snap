@@ -5,6 +5,7 @@ import USDC from '@/assets/svg/USDC.svg'
 import QRCode from '@/assets/svg/QRCode.svg'
 import EmptyAssets from '@/assets/svg/EmptyAssets.svg'
 import MetaMaskLinear from '@/assets/svg/MetaMask_Linear.svg'
+import Refresh from '@/assets/svg/Refresh.svg'
 import styles from './topup.module.scss'
 import { Button, Icon, Radio } from '@/components'
 import {
@@ -23,9 +24,19 @@ export const Balance: React.FC<{
 	checkedAssets?: string
 	metamaskAccount?: string
 	setCheckAssets: Dispatch<SetStateAction<string | undefined>>
+	erc20Loading: boolean
 	connect: () => Promise<void>
 	openQrCodeDialog: () => void
-}> = ({ checkedAssets, metamaskAccount, setCheckAssets, connect, openQrCodeDialog }) => {
+	queryERC20Balances: () => Promise<void>
+}> = ({
+	checkedAssets,
+	metamaskAccount,
+	setCheckAssets,
+	erc20Loading,
+	connect,
+	openQrCodeDialog,
+	queryERC20Balances
+}) => {
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const tokens = useRecoilValue(metamaskAccountTokenListState)
 
@@ -63,106 +74,125 @@ export const Balance: React.FC<{
 			)
 		}
 
-		return isTestnetEnv ? (
+		return (
 			<div className={styles.assets}>
-				<div className={styles.title}>ASSETS</div>
-				<div className={styles.items}>
-					<div className={styles.Polygon}>
-						<span>On Mumbai</span>
-						<div className={styles.divider} />
-					</div>
-					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDT_ADDRESS)}>
-						<div className={styles.coin}>
-							<Icon src={USDT} width={28} height={28} />
-							<span className={styles.symbol}>USDT</span>
+				<div className={styles.title}>
+					ASSETS
+					{metamaskAccount && (
+						<div className={styles.refresh} onClick={queryERC20Balances}>
+							<Icon
+								src={Refresh}
+								width={16}
+								height={16}
+								style={{ animation: erc20Loading ? 'spin 1s infinite linear' : '' }}
+							/>
 						</div>
-						<div className={styles.value}>
-							<div className={styles.num}>{getBalance(POLYGON_MUMBAI_USDT_ADDRESS)}</div>
-							<Radio value={POLYGON_MUMBAI_USDT_ADDRESS} checked={checkedAssets === POLYGON_MUMBAI_USDT_ADDRESS}>
-								{''}
-							</Radio>
-						</div>
-					</div>
-					<div className={styles.divider}></div>
-					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDC_ADDRESS)}>
-						<div className={styles.coin}>
-							<Icon src={USDC} width={28} height={28} />
-							<span className={styles.symbol}>USDC</span>
-						</div>
-						<div className={styles.value}>
-							<div className={styles.num}>{getBalance(POLYGON_MUMBAI_USDC_ADDRESS)}</div>
-							<Radio value={POLYGON_MUMBAI_USDC_ADDRESS} checked={checkedAssets === POLYGON_MUMBAI_USDC_ADDRESS}>
-								{''}
-							</Radio>
-						</div>
-					</div>
+					)}
 				</div>
-			</div>
-		) : (
-			<div className={styles.assets}>
-				<div className={styles.title}>ASSETS</div>
-				<div className={styles.items}>
-					<div className={styles.Arbitrum}>
-						<span>On Arbitrum</span>
-						<div className={styles.divider} />
-					</div>
-					<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDT_ADDRESS)}>
-						<div className={styles.coin}>
-							<Icon src={USDT} width={28} height={28} />
-							<span className={styles.symbol}>USDT</span>
+				{isTestnetEnv ? (
+					<div className={styles.items}>
+						<div className={styles.Polygon}>
+							<span>On Mumbai</span>
+							<div className={styles.divider} />
 						</div>
-						<div className={styles.value}>
-							<div className={styles.num}>{getBalance(ARBITRUM_MAINNET_USDT_ADDRESS)}</div>
-							<Radio value={ARBITRUM_MAINNET_USDT_ADDRESS} checked={checkedAssets === ARBITRUM_MAINNET_USDT_ADDRESS}>
-								{''}
-							</Radio>
+						<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDT_ADDRESS)}>
+							<div className={styles.coin}>
+								<Icon src={USDT} width={28} height={28} />
+								<span className={styles.symbol}>USDT</span>
+							</div>
+							<div className={styles.value}>
+								<div className={styles.num}>{getBalance(POLYGON_MUMBAI_USDT_ADDRESS)}</div>
+								<Radio value={POLYGON_MUMBAI_USDT_ADDRESS} checked={checkedAssets === POLYGON_MUMBAI_USDT_ADDRESS}>
+									{''}
+								</Radio>
+							</div>
 						</div>
-					</div>
-					<div className={styles.divider}></div>
-					<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDC_ADDRESS)}>
-						<div className={styles.coin}>
-							<Icon src={USDC} width={28} height={28} />
-							<span className={styles.symbol}>USDC</span>
-						</div>
-						<div className={styles.value}>
-							<div className={styles.num}>{getBalance(ARBITRUM_MAINNET_USDC_ADDRESS)}</div>
-							<Radio value={ARBITRUM_MAINNET_USDC_ADDRESS} checked={checkedAssets === ARBITRUM_MAINNET_USDC_ADDRESS}>
-								{''}
-							</Radio>
+						<div className={styles.divider}></div>
+						<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MUMBAI_USDC_ADDRESS)}>
+							<div className={styles.coin}>
+								<Icon src={USDC} width={28} height={28} />
+								<span className={styles.symbol}>USDC</span>
+							</div>
+							<div className={styles.value}>
+								<div className={styles.num}>{getBalance(POLYGON_MUMBAI_USDC_ADDRESS)}</div>
+								<Radio value={POLYGON_MUMBAI_USDC_ADDRESS} checked={checkedAssets === POLYGON_MUMBAI_USDC_ADDRESS}>
+									{''}
+								</Radio>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className={styles.items}>
-					<div className={styles.Polygon}>
-						<span>On Polygon</span>
-						<div className={styles.divider} />
-					</div>
-					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDT_ADDRESS)}>
-						<div className={styles.coin}>
-							<Icon src={USDT} width={28} height={28} />
-							<span className={styles.symbol}>USDT</span>
+				) : (
+					<>
+						<div className={styles.items}>
+							<div className={styles.Arbitrum}>
+								<span>On Arbitrum</span>
+								<div className={styles.divider} />
+							</div>
+							<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDT_ADDRESS)}>
+								<div className={styles.coin}>
+									<Icon src={USDT} width={28} height={28} />
+									<span className={styles.symbol}>USDT</span>
+								</div>
+								<div className={styles.value}>
+									<div className={styles.num}>{getBalance(ARBITRUM_MAINNET_USDT_ADDRESS)}</div>
+									<Radio
+										value={ARBITRUM_MAINNET_USDT_ADDRESS}
+										checked={checkedAssets === ARBITRUM_MAINNET_USDT_ADDRESS}
+									>
+										{''}
+									</Radio>
+								</div>
+							</div>
+							<div className={styles.divider}></div>
+							<div className={styles.usd} onClick={() => setCheckAssets(ARBITRUM_MAINNET_USDC_ADDRESS)}>
+								<div className={styles.coin}>
+									<Icon src={USDC} width={28} height={28} />
+									<span className={styles.symbol}>USDC</span>
+								</div>
+								<div className={styles.value}>
+									<div className={styles.num}>{getBalance(ARBITRUM_MAINNET_USDC_ADDRESS)}</div>
+									<Radio
+										value={ARBITRUM_MAINNET_USDC_ADDRESS}
+										checked={checkedAssets === ARBITRUM_MAINNET_USDC_ADDRESS}
+									>
+										{''}
+									</Radio>
+								</div>
+							</div>
 						</div>
-						<div className={styles.value}>
-							<div className={styles.num}>{getBalance(POLYGON_MAINNET_USDT_ADDRESS)}</div>
-							<Radio value={POLYGON_MAINNET_USDT_ADDRESS} checked={checkedAssets === POLYGON_MAINNET_USDT_ADDRESS}>
-								{''}
-							</Radio>
+						<div className={styles.items}>
+							<div className={styles.Polygon}>
+								<span>On Polygon</span>
+								<div className={styles.divider} />
+							</div>
+							<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDT_ADDRESS)}>
+								<div className={styles.coin}>
+									<Icon src={USDT} width={28} height={28} />
+									<span className={styles.symbol}>USDT</span>
+								</div>
+								<div className={styles.value}>
+									<div className={styles.num}>{getBalance(POLYGON_MAINNET_USDT_ADDRESS)}</div>
+									<Radio value={POLYGON_MAINNET_USDT_ADDRESS} checked={checkedAssets === POLYGON_MAINNET_USDT_ADDRESS}>
+										{''}
+									</Radio>
+								</div>
+							</div>
+							<div className={styles.divider}></div>
+							<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDC_ADDRESS)}>
+								<div className={styles.coin}>
+									<Icon src={USDC} width={28} height={28} />
+									<span className={styles.symbol}>USDC</span>
+								</div>
+								<div className={styles.value}>
+									<div className={styles.num}>{getBalance(POLYGON_MAINNET_USDC_ADDRESS)}</div>
+									<Radio value={POLYGON_MAINNET_USDC_ADDRESS} checked={checkedAssets === POLYGON_MAINNET_USDC_ADDRESS}>
+										{''}
+									</Radio>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div className={styles.divider}></div>
-					<div className={styles.usd} onClick={() => setCheckAssets(POLYGON_MAINNET_USDC_ADDRESS)}>
-						<div className={styles.coin}>
-							<Icon src={USDC} width={28} height={28} />
-							<span className={styles.symbol}>USDC</span>
-						</div>
-						<div className={styles.value}>
-							<div className={styles.num}>{getBalance(POLYGON_MAINNET_USDC_ADDRESS)}</div>
-							<Radio value={POLYGON_MAINNET_USDC_ADDRESS} checked={checkedAssets === POLYGON_MAINNET_USDC_ADDRESS}>
-								{''}
-							</Radio>
-						</div>
-					</div>
-				</div>
+					</>
+				)}
 			</div>
 		)
 	}
@@ -187,7 +217,13 @@ export const Balance: React.FC<{
 				{renderAssets()}
 			</div>
 			<div className={styles.qrcode_btn}>
-				<Button size="md" btnType="gray" icon={<Icon src={QRCode} width={20} height={20} />} onClick={topupViaQRCode}>
+				<Button
+					size="md"
+					btnType="gray"
+					icon={<Icon src={QRCode} width={20} height={20} />}
+					onClick={topupViaQRCode}
+					className={styles.button}
+				>
 					Top up via QRcode
 				</Button>
 			</div>

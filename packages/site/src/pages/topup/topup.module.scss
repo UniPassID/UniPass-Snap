@@ -55,10 +55,43 @@
             margin-top: 40px;
 
             .title {
+                display: flex;
+                align-items: center;
+                flex-flow: row nowrap;
+                justify-content: space-between;
                 font-weight: 500;
                 font-size: 16px;
                 line-height: 24px;
                 color: #5E5F6E;
+
+                .refresh {
+                    display: flex;
+                    align-items: center;
+                    flex-flow: row nowrap;
+                    justify-content: center;
+                    border-radius: 12px;
+                    border: 1px solid #E1E6F0;
+                    padding: 10px;
+                    width: 36px;
+                    height: 36px;
+                    cursor: pointer;
+
+                    img {
+                        display: inline-block;
+
+                        @keyframes spin {
+                            to {
+                                transform: rotate(360deg);
+                            }
+                        }
+                    }
+
+                    &:hover {
+                        background-color: #F7F7FA;
+                    }
+
+
+                }
             }
 
             .items {
@@ -176,6 +209,13 @@
                     display: inline-block;
                     margin-bottom: 64px;
                 }
+            }
+        }
+
+        .qrcode_btn {
+            .button {
+                border: 1px solid #E1E6F0;
+                background-color: #fff;
             }
         }
     }
@@ -324,7 +364,6 @@
             .transfer_info {
                 .item {
                     padding: 20px 0;
-                    border-top: 1px solid #F0F0F5;
 
                     .title {
                         font-weight: 400;

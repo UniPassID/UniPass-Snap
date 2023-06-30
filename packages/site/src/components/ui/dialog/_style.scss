@@ -13,7 +13,7 @@
 }
 
 .up_dialog_content {
-	width: 324px;
+	width: 400px;
 	height: auto;
 	padding: 28px;
 	border-radius: 20px;
@@ -32,8 +32,8 @@
 		.up_dialog_title {
 			flex: 1;
 			font-weight: 600;
-			font-size: 20px;
-			line-height: 28px;
+			font-size: 16px;
+			line-height: 24px;
 			color: var(--up-text-primary);
 		}
 
@@ -55,7 +55,6 @@
 		justify-content: flex-end;
 		align-items: center;
 		margin-top: 20px;
-		margin-bottom: 8px;
 
 		.up_dialog_footer_divider {
 			width: 12px;

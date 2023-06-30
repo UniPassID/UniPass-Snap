@@ -75,7 +75,8 @@ const SideBar = () => {
 		}
 	}
 
-	const handleSwitchEnv = (checked: boolean) => {
+	const handleSwitchEnv = () => {
+		const checked = !isTestnetEnv
 		const chainId = checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET
 		window.localStorage.setItem('up__currentChainId', chainId.toString())
 		setCurrentChainIdState(chainId)
@@ -111,6 +112,7 @@ const SideBar = () => {
 										<div className={styles.pop}>{pendingTransaction}</div>
 									)}
 								</div>
+								<div className={styles.side_divider}></div>
 							</div>
 						)
 					})}
@@ -124,12 +126,12 @@ const SideBar = () => {
 					onVisibleChange={toggle}
 					overlay={
 						<div className={styles.more_overlay}>
-							<div className={styles.item}>
+							<div className={styles.item} onClick={handleSwitchEnv}>
 								<div className={styles.left}>
 									<Icon src={Testnet} height={20} width={20} />
 									<span>Testnet</span>
 								</div>
-								<Switch checked={isTestnetEnv} onChange={handleSwitchEnv} />
+								<Switch checked={isTestnetEnv} />
 							</div>
 							<div className={styles.item} onClick={disconnect}>
 								<div className={styles.left}>

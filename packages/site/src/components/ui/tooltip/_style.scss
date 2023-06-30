@@ -19,7 +19,7 @@ $tooltip-arrow-width: 6px;
 		text-align: left;
 		text-decoration: none;
 		background-color: var(--up-tooltip-background);
-		box-shadow: var(--up-tooltip-box-shadow);
+		box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.16), 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 9px 9px 0px rgba(0, 0, 0, 0.03), 0px 20px 12px 0px rgba(0, 0, 0, 0.03);
 		border-radius: 8px;
 	}
 

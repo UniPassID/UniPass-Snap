@@ -47,18 +47,22 @@ const Dialog: React.FC<DialogProps> = (props) => {
 			appElement={rest.appElement || document.querySelector('body')!}
 			{...rest}
 		>
-			<div className="up_dialog_top">
-				<div className="up_dialog_title" style={{ textAlign: center ? 'center' : 'left' }}>
-					{title}
-				</div>
-				{extraController}
-				{showClose ? (
-					<div className="up_dialog_close" onClick={rest?.onRequestClose}>
-						{close_svg}
+			{title || extraController || showClose ? (
+				<div className="up_dialog_top">
+					<div className="up_dialog_title" style={{ textAlign: center ? 'center' : 'left' }}>
+						{title}
 					</div>
-				) : null}
+					{extraController}
+					{showClose ? (
+						<div className="up_dialog_close" onClick={rest?.onRequestClose}>
+							{close_svg}
+						</div>
+					) : null}
+				</div>
+			) : null}
+			<div className="up_dialog_children" style={{ textAlign: center ? 'center' : 'left' }}>
+				{children}
 			</div>
-			<div className="up_dialog_children">{children}</div>
 			{showCancelButton || showConfirmButton ? (
 				<div className="up_dialog_footer">
 					{showCancelButton ? (

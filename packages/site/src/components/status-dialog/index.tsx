@@ -38,10 +38,6 @@ const StatusDialog = () => {
 		if (loadSnapLoading) return false
 		return !smartAccount || !installedSnap
 	}, [showMetaMaskInstallDialog, smartAccount, installedSnap, loadSnapLoading])
-	console.log(showMetaMaskInstallDialog)
-	console.log(loadSnapLoading)
-	console.log(installedSnap)
-	console.log(showSnapConnectDialog)
 
 	return (
 		<>
@@ -56,18 +52,20 @@ const StatusDialog = () => {
 				center={true}
 				className={styles.flask_dialog}
 			>
-				<div className={styles.bg}>
-					<div className={styles.metamask}>
-						<Icon src={MetaMaskFlask} width={60} height={60} />
+				<div className={styles.content}>
+					<div className={styles.bg}>
+						<div className={styles.metamask}>
+							<Icon src={MetaMaskFlask} width={60} height={60} />
+						</div>
 					</div>
+					<div className={styles.title}>Install Flask</div>
+					<div className={styles.tips}>Before using UniPass Snap, you need to install Flask first.</div>
+					<div className={styles.button} onClick={installFlask}>
+						<Icon src={MetaMask_Linear} width={20} height={20} />
+						Install Flask
+					</div>
+					<div className={styles.alert}>Please refresh this page after the installation.</div>
 				</div>
-				<div className={styles.title}>Install Flask</div>
-				<div className={styles.tips}>Before using UniPass Snap, you need to install Flask first.</div>
-				<div className={styles.button} onClick={installFlask}>
-					<Icon src={MetaMask_Linear} width={20} height={20} />
-					Install Flask
-				</div>
-				<div className={styles.alert}>Please refresh this page after the installation.</div>
 			</Dialog>
 			{/* <Dialog
 				title=""
@@ -105,7 +103,7 @@ const StatusDialog = () => {
 				center={true}
 				className={styles.snap_dialog}
 			>
-				<div>
+				<div className={styles.content}>
 					<div className={styles.title}>Connect to UniPass Snap</div>
 					<div className={styles.tips}>
 						UniPass Snap is a product that empowers MetaMask with smart contract wallet.

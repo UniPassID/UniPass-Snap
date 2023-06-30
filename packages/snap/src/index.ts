@@ -1,7 +1,6 @@
 import { OnRpcRequestHandler } from '@metamask/snaps-types'
-import { panel, text } from '@metamask/snaps-ui'
-import { getMasterKeyAddress, getSignSig, signTransactionMessage } from './rpc'
-import { SignInput, SignTxMessageInput } from '../types'
+import { getMasterKeyAddress, getAuthentication, signTransactionMessage } from './rpc'
+import { AuthenticationInput, SignTxMessageInput } from '../types'
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -19,8 +18,8 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
 			return getMasterKeyAddress()
 		case 'signMessage':
 			return signTransactionMessage(request.params as SignTxMessageInput)
-		case 'getSignSig':
-			return getSignSig((request.params as SignInput).address)
+		case 'getAuthorization':
+			return getAuthentication((request.params as AuthenticationInput).address)
 		default:
 			throw new Error('Method not found.')
 	}

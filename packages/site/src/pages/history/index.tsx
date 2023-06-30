@@ -2,7 +2,7 @@ import { getHistory } from '@/utils/history'
 import styles from './history.module.scss'
 import Table from 'rc-table'
 import { useRecoilValue } from 'recoil'
-import { smartAccountState } from '@/store'
+import { isTestnetEnvState, smartAccountState } from '@/store'
 import { TransactionRecord, TransactionStatus } from '@/types/transaction'
 import dayjs from 'dayjs'
 import { AlignType } from 'rc-table/lib/interface'
@@ -12,7 +12,7 @@ import Arbitrum from '@/assets/svg/Arbitrum.svg'
 import Polygon from '@/assets/svg/Polygon.svg'
 import PaySvg from '@/assets/svg/PaymentSelected.svg'
 import { Dialog, Icon } from '@/components'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import ExploreButton from '@/assets/svg/ExploreButton.svg'
 import RecordDetail from './record'
 import EmptyAssets from '@/assets/svg/EmptyAssets.svg'
@@ -74,9 +74,13 @@ const columns = [
 
 const History: React.FC = () => {
 	const address = useRecoilValue(smartAccountState)
-	const historyData = getHistory(address)
+	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const [currentRecord, setCurrentRecord] = useState<TransactionRecord>()
 	const [showDetail, setShowDetail] = useState<boolean>(false)
+
+	const historyData = useMemo(() => {
+		return getHistory(address, isTestnetEnv)
+	}, [isTestnetEnv, address])
 
 	const formatHistoryData = (records: TransactionRecord[]) => {
 		return records.map((record) => {

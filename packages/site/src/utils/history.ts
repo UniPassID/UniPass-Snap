@@ -1,3 +1,4 @@
+import { TESTNET_CHAIN_IDS } from '@/constants'
 import { TransactionRecord, TransactionStatus } from '@/types/transaction'
 
 export function addHistory(address: string, txRecord: TransactionRecord) {
@@ -61,12 +62,16 @@ export function updateHistory(record: {
 	}
 }
 
-export function getHistory(address: string): TransactionRecord[] {
+export function getHistory(address: string, isTestnet: boolean = false): TransactionRecord[] {
 	try {
 		const historyKey = `${address}_his`
 		const allTxs = localStorage.getItem(historyKey) || '[]'
 		const parsedTxs = JSON.parse(allTxs) as TransactionRecord[]
-		return parsedTxs.sort((pre, next) => next.timestamp - pre.timestamp)
+		const result = parsedTxs.sort((pre, next) => next.timestamp - pre.timestamp)
+		const res = result.filter(tx => {
+			return isTestnet ? TESTNET_CHAIN_IDS.includes(tx.chainId) : !TESTNET_CHAIN_IDS.includes(tx.chainId)
+		})
+		return res
 	} catch (e) {
 		console.error('[history getHistory]', e)
 	}

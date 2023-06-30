@@ -1,4 +1,4 @@
-export type SignInput = {
+export type AuthenticationInput = {
 	address: string
 }
 

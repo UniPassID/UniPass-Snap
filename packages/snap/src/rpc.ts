@@ -29,7 +29,7 @@ export async function signTransaction(transaction: TransactionRequest): Promise<
 	return new Wallet(entropy).signTransaction(transaction)
 }
 
-export async function getSignSig(address: string): Promise<{ loginMessage: string; loginSignature: string }> {
+export async function getAuthentication(address: string): Promise<{ loginMessage: string; loginSignature: string }> {
 	const entropy = await getEntropy()
 	const loginMessage = `UniPass Snap is requesting to sign in at ${new Date().toISOString()} with your UniPass Snap account: ${address}`
 	const loginSignature = await new Wallet(entropy).signMessage(loginMessage)

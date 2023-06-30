@@ -13,8 +13,6 @@ import axios, { AxiosRequestConfig } from 'axios'
 
 const BASE_URL = process.env.REACT_APP_SNAP_SERVER_PREFIX
 
-console.log(BASE_URL)
-
 const request = async <T>(requestConfig: AxiosRequestConfig): Promise<T> => {
 	const { data } = await axios<ApiResponse<T>>(requestConfig)
 	return data.data

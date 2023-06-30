@@ -96,7 +96,6 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		const token = availableTokens.find(
 			(token) => getAddress(token.contractAddress) === getAddress(gas.selectedGas?.contractAddress || '')
 		)
-		console.log('token', token, token?.balance)
 		if (!token) return false
 		const tokenBalance = parseFloat(weiToEther(token.balance || 0, gas.selectedGas?.decimals))
 		return gas.selectedGas?.symbol === 'USDC'

@@ -17,7 +17,6 @@ const ChainSwitcher = () => {
 	const [selectChainId, setSelectChainId] = useState<number>()
 
 	const beforeSwitchChain = (chainId: number) => {
-		console.log(editingPayment)
 		setSelectChainId(chainId)
 		if (editingPayment) {
 			setTrue()

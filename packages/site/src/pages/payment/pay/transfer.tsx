@@ -169,7 +169,7 @@ const Transfer = forwardRef<
 								type="number"
 								placeholder="Enter amount"
 								formField={formField}
-								extraMessage={`AVAILABLE: ${formatUSDAmount(availableBalance)}`}
+								extraLabel={<span className="up-input-title">AVAILABLE: <span style={{color: '#1F202A', fontWeight: 500}}>{formatUSDAmount(availableBalance)}</span></span>}
 								label="AMOUNT"
 								name={`txs.${index}.amount`}
 							/>

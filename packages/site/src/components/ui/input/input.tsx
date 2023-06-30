@@ -5,10 +5,11 @@ import { handleErrors } from './utils'
 import { getCloseIcon, error_message_icon } from './icons'
 
 export interface InputProps extends InputHTMLAttributes<HTMLElement> {
-	formField: UseFormReturn<any>,
+	formField: UseFormReturn<any>
 	name: string
 	label?: string
 	extraMessage?: string
+	extraLabel?: React.ReactNode
 	inputRef?: React.MutableRefObject<HTMLInputElement | null>
 	disabled?: boolean
 	allowClose?: boolean
@@ -17,7 +18,19 @@ export interface InputProps extends InputHTMLAttributes<HTMLElement> {
 }
 
 const Input: React.FC<InputProps> = (props) => {
-	const { disabled, allowClose = true, suffix, style, formField, validateShame, extraMessage, inputRef, className, ...restProps } = props
+	const {
+		disabled,
+		allowClose = true,
+		suffix,
+		style,
+		formField,
+		validateShame,
+		extraLabel,
+		extraMessage,
+		inputRef,
+		className,
+		...restProps
+	} = props
 	const {
 		resetField,
 		register,
@@ -55,7 +68,7 @@ const Input: React.FC<InputProps> = (props) => {
 		<div className={wrapperClassNames} style={style}>
 			<div className="up-input-title-wrapper">
 				<span className="up-input-title">{props.label || props.name || ''}</span>
-				{ extraMessage && <span className="up-input-title">{extraMessage}</span>}
+				{extraLabel}
 			</div>
 			<div className={contentClassNames}>
 				<input

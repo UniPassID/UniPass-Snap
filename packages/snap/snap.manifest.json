@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "A Snap for stable coin payment.",
   "proposedName": "UniPass Snap",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/UniPassID/UniPass-Snap.git"
   },
   "source": {
-    "shasum": "DGyfPgGx5L5m+MdbkLbLCFuePfeZ4CSPNqKwZrpl9dc=",
+    "shasum": "81rbzrdej0sPHDTSy2M7zl70yeufFuZKg4qJXwSfCaI=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

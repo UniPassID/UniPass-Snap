@@ -307,8 +307,9 @@ const Pay: React.FC = () => {
 				<div className={styles['title-wrapper']}>
 					<div className={styles.title}>PAY</div>
 					<div className={styles['sub-title']}>
-						<span style={{ color: 'var(--up-primary)', fontWeight: 500 }}><span style={{fontWeight: 600, fontSize: '16px'}}>{availableFreeQuota}</span> gas-free</span> payment
-						{availableFreeQuota > 1 && 's'} left today
+						<span style={{ fontSize: '16px' , fontWeight: 600 }}>{availableFreeQuota}</span>
+						<span style={{ fontWeight: 500, margin: '0 4px' }}>gas-free</span>
+						<span style={{ color: '#5E5F6E' }}>payment {availableFreeQuota > 1 && 's'} left today</span>
 					</div>
 				</div>
 				<div className={styles.form}>
@@ -353,7 +354,7 @@ const Pay: React.FC = () => {
 									placement="topRight"
 								>
 									<div className={styles['free-tips-wrap']}>
-										<div className={styles['free-tips-warn']} style={{ color: '#E85050' }}>
+										<div className={styles['free-tips-warn']}>
 											{numbro(gas.originGas)
 												.subtract(gas.totalGas)
 												.divide(gas.originGas)

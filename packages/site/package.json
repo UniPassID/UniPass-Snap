@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"build:dev": "sh bin/dev_build.sh",
 		"build:prod": "sh bin/prod.sh",
 		"build:staging": "sh bin/staging.sh",
 		"build:test": "sh bin/test.sh",

@@ -109,6 +109,10 @@
 			}
 			.address-input {
 				font-size: 14px !important;
+
+				&::placeholder {
+					top: 1px;
+				}
 			}
 			.token-selector-wrapper {
 				width: 140px;

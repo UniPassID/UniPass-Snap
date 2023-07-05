@@ -20,7 +20,6 @@ const App: React.FC = () => {
 					</div>
 				</div>
 			</div>
-			<button onClick={() => setConfettiState(!showConfetti)}>ase</button>
 			<Confetti
 				width={size?.width}
 				height={size?.height}

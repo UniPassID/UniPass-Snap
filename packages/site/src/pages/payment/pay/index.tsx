@@ -1,11 +1,12 @@
 import { usePay } from '@/hooks/usePay'
 import { useFieldArray, useForm } from 'react-hook-form'
 import Transfer from './transfer'
-import { Button, Confirm, Icon, upNotify } from '@/components'
+import { Button, Confirm, Dialog, Icon, upNotify } from '@/components'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
 	availableFreeQuotaState,
+	confettiState,
 	currentChainIdState,
 	pendingTransactionState,
 	smartAccountInsState,
@@ -26,6 +27,8 @@ import ToolTip from '@/components/ui/tooltip'
 import { SnapSigner } from '@/snap-signer'
 import { getChainNameByChainId } from '@/constants'
 import { etherToWei, upGA } from '@/utils'
+import { useBoolean } from 'ahooks'
+import RecoverySvg from '@/assets/svg/recovery.svg'
 
 const MAX_TRANSACTION_LENGTH = 10
 
@@ -40,7 +43,11 @@ const Pay: React.FC = () => {
 	const [isPaying, setIsPaying] = useState<boolean>(false)
 	const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
 	const [deletingIndex, setDeletingIndex] = useState<number>()
+	const [payAmount, setPayAmount] = useState<number>()
+	const [currentAvailableQuota, setCurrentAvailableQuota] = useState<number>()
 	const [pendingTransaction, setPendingTransaction] = useRecoilState(pendingTransactionState)
+	const [isSubmitDialogOpen, { setTrue: openSubmitDialog, setFalse: closeSubmitDialog }] = useBoolean(false)
+	const setConfettiState = useSetRecoilState(confettiState)
 
 	const DEFAULT_FORM_ITEM = useMemo(() => {
 		return {
@@ -168,13 +175,15 @@ const Pay: React.FC = () => {
 
 	const onSubmit = async () => {
 		const isValid = validator()
+		setPayAmount(transferAmount.totalAmount)
+		setCurrentAvailableQuota(availableFreeQuota - gas.usedFreeQuota)
 		upGA('payment-click-pay', 'payment', {
 			ClickResult: isValid && !hasPendingTransaction && !isInsufficientBalance,
 			BatchAmount: txs.length,
 			PaymentAmount: transferAmount.totalAmount,
 			GasToken: currentSymbol,
 			DiscountStatus: gas.discountStatus,
-			SnapAddress: address
+			SnapAddress: `_${address}`
 		})
 		if (hasPendingTransaction) {
 			upNotify.error('The current chain has ongoing transactions. Please wait.')
@@ -253,7 +262,7 @@ const Pay: React.FC = () => {
 					chainId,
 					status: TransactionStatus.Pending,
 					timestamp: Date.now(),
-					discount: gas.discount,
+					originFee: gas.originGas,
 					txs,
 					fee: originFee
 				})
@@ -264,9 +273,14 @@ const Pay: React.FC = () => {
 					GasToken: currentSymbol,
 					BatchAmount: txs.length,
 					DiscountStatus: gas.discountStatus,
-					SnapAddress: address
+					SnapAddress: `_${address}`
 				})
-				upNotify.success('Submitted Success')
+				if (gas.usedFreeQuota) {
+					openSubmitDialog()
+					setConfettiState(true)
+				} else {
+					upNotify.success('Submitted Success')
+				}
 				setIsPaying(false)
 				reset()
 			} catch (e: any) {
@@ -413,6 +427,35 @@ const Pay: React.FC = () => {
 			>
 				Are you sure you want to delete this transaction?
 			</Confirm>
+			<Dialog
+				title=""
+				isOpen={isSubmitDialogOpen}
+				shouldCloseOnEsc={false}
+				shouldCloseOnOverlayClick={false}
+				showClose={false}
+				center={true}
+				className={styles.submit_dialog}
+			>
+				<div className={styles.content}>
+					<div className={styles.bg}>
+						<div className={styles.metamask}>
+							<Icon src={RecoverySvg} width={60} height={60} />
+						</div>
+					</div>
+					<div className={styles.title}>Congratulations !</div>
+					<div className={styles.tips}>
+						You have successfully sent a gas-free payment of {payAmount} USD.{' '}
+						{currentAvailableQuota && (
+							<>
+								There are still <span style={{color: '#8864FF'}}>{currentAvailableQuota} available gas-free</span> payment{currentAvailableQuota > 1 ? 's' : ''}.
+							</>
+						)}
+					</div>
+					<div className={styles.button} onClick={closeSubmitDialog}>
+						Close
+					</div>
+				</div>
+			</Dialog>
 		</div>
 	)
 }

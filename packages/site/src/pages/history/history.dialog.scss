@@ -1,8 +1,18 @@
 .up-history-dialog {
   width: 440px !important;
-  .up-history-title {
-    font-size: 20px;
+  .up-history-title-wrapper {
     display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-between;
+    .up-history-title {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+    }
+  }
+  .up_dialog_top {
+    margin-bottom: 24px;
   }
   
   .up_dialog_children {
@@ -14,17 +24,29 @@
   }
 
   .status-tag {
-    color: #F57A45;
-    background-color: #FEF2EC;
+    color: #E85050;
+    background-color: #FDEEEE;
     font-size: 12px;
-    padding: 2px 8px;
-    border-radius: 20px;
+    line-height: 20px;
+    font-weight: 500;
+    padding: 0 8px;
+    border-radius: 20px !important;
     margin-left: 8px;
+    &.pending-tag {
+      color: #F57A45;
+      background-color: #FEF2EC;
+    }
   }
 
   .up-history-dialog-extra {
     cursor: pointer;
     margin-left: 10px;
+    height: 24px;
+  }
+
+  .batch-records {
+    border-bottom: 1px dashed #C1C1C1;
+    margin-bottom: 28px;
   }
 
   .record {
@@ -38,7 +60,7 @@
       display: flex;
       justify-content: space-between;
       font-size: 14px;
-      padding: 20px 0;
+      margin-bottom: 28px;
       .label {
         font-weight: 500;
         color: var(--up-text-primary)
@@ -51,18 +73,44 @@
         text-align: right;
         word-break: break-all;
         word-wrap: break-word;
-        color: var(--up-text-secondary)
+        color: var(--up-text-secondary);
+        &.clickable {
+          cursor: pointer;
+        }
+        .clickable-content {
+          display: flex;
+          align-items: center;
+        }
+        &.primary-text {
+          color: var(--up-text-primary)
+        }
       }
     }
     .divider-line {
-      padding: 0;
       align-items: center;
+      margin-bottom: 16px;
+      font-size: 16px;
       .divider {
         border-top: 1px solid #F0F0F5;
         flex: 1;
         margin-left: 12px;
       }
     }
+  }
+}
+
+.history-record-status-tag {
+  color: #E85050;
+  background-color: #FDEEEE;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 500;
+  padding: 0 8px;
+  border-radius: 20px !important;
+  margin-left: 8px;
+  &.pending-tag {
+    color: #F57A45;
+    background-color: #FEF2EC;
   }
 }
 

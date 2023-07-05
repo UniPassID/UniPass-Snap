@@ -60,7 +60,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		const needGas = txs.length > availableFreeQuota
 		let totalGas = 0
 		let originGas = 0
-		let discount = txs.length > 1 ? 0.5 : 1.2
+		let discount = txs.length > 1 ? 0.5 : 1
 		if (needGas) {
 			totalGas =
 				numbro(SINGLE_GAS?.singleFee)
@@ -71,7 +71,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		originGas = numbro(SINGLE_GAS?.singleFee).multiply(txs.length).value() || 0
 		let selectedGas = getTokenBySymbol(currentSymbol, chainId)
 		const usedFreeQuota = availableFreeQuota > txs.length ? txs.length : availableFreeQuota
-		const discountStatus: string = totalGas ? ((totalGas - originGas) / totalGas).toString() : 'free'
+		const discountStatus: string = totalGas ? ((originGas - totalGas) / originGas).toString() : 'free'
 		return { needGas, originGas, totalGas, selectedGas, usedFreeQuota, discount, discountStatus }
 	}, [txs.length, availableFreeQuota, SINGLE_GAS, chainId, currentSymbol])
 
@@ -93,6 +93,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	const transferAmount = getTransferAmount()
 
 	const isInsufficientBalance = useMemo(() => {
+		if (gas.totalGas === 0) return false
 		const token = availableTokens.find(
 			(token) => getAddress(token.contractAddress) === getAddress(gas.selectedGas?.contractAddress || '')
 		)

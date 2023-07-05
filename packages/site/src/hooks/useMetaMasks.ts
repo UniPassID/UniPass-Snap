@@ -63,7 +63,7 @@ export const useMetaMask = () => {
 
 		upGA('topup-mm-get_balance-success', 'topup', {
 			Environment: isTestnetEnv ? 'Testnet' : 'Mainnet',
-			MetamaskStatus: balance.isZero() ? 'no_usdtc_balance' : 'with_usdtc_balance'
+			MetamaskBalance: balance.isZero() ? 'no_usdtc_balance' : 'with_usdtc_balance'
 		})
 	}
 

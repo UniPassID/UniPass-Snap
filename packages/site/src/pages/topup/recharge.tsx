@@ -24,7 +24,7 @@ export const ReCharge: React.FC<{
 		mode: 'onChange'
 	})
 
-	const { handleSubmit } = methods
+	const { handleSubmit, watch } = methods
 
 	const selectedToken = useMemo(() => {
 		const token = tokens.find((token) => checkedAssets === token.contractAddress)
@@ -43,6 +43,8 @@ export const ReCharge: React.FC<{
 	const onInputFocus = () => {
 		upGA('topup-mm-input-amount', 'topup', { ChainID: selectedToken?.chainId, TopupToken: selectedToken?.symbol })
 	}
+
+	const Amount = watch('Amount')
 
 	return (
 		<>
@@ -107,7 +109,7 @@ export const ReCharge: React.FC<{
 					type="submit"
 					loading={rechargeLoading}
 					onClick={handleSubmit(onSubmit)}
-					disabled={!metamaskAccount}
+					disabled={!metamaskAccount || !Amount}
 				>
 					Top Up
 				</Button>

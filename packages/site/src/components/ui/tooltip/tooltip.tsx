@@ -7,7 +7,7 @@ interface TooltipProps extends Partial<Exclude<RcTooltipProps, 'visible'>> {
 }
 
 const ToolTip: React.FC<TooltipProps> = (props) => {
-	const { title, showArrow = true, onPopupAlign, ...rest } = props
+	const { title, showArrow = true, ...rest } = props
 
 	return (
 		<RcTooltip

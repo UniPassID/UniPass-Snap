@@ -46,8 +46,6 @@ const StatusDialog = () => {
 				isOpen={showMetaMaskInstallDialog}
 				shouldCloseOnEsc={false}
 				shouldCloseOnOverlayClick={false}
-				showConfirmButton={false}
-				showCancelButton={false}
 				showClose={false}
 				center={true}
 				className={styles.flask_dialog}
@@ -97,8 +95,6 @@ const StatusDialog = () => {
 				title=""
 				shouldCloseOnEsc={false}
 				shouldCloseOnOverlayClick={false}
-				showConfirmButton={false}
-				showCancelButton={false}
 				showClose={false}
 				center={true}
 				className={styles.snap_dialog}
@@ -121,10 +117,14 @@ const StatusDialog = () => {
 							<Icon src={MetaMask} width={40} height={40} />
 						</div>
 					</div>
-					<div className={styles.feature}>Available feature</div>
+					<div className={styles.feature}>Available features</div>
 					<div className={styles.feature_item}>
 						<Icon src={Gift} width={20} height={20} />
 						Gas-free payment
+					</div>
+					<div className={styles.feature_item}>
+						<Icon src={Gift} width={20} height={20} />
+						batch transaction
 					</div>
 					<div className={styles.feature}>Upcoming features</div>
 					<div className={styles.feature_item}>

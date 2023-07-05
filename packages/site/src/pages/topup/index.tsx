@@ -9,7 +9,7 @@ import { useMetaMask } from '@/hooks'
 import { Balance } from './balance'
 import { ReCharge } from './recharge'
 import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS, getChainNameByChainId } from '@/constants'
-import { Dialog, Icon, TokenIcon, upNotify } from '@/components'
+import { Dialog, Confirm, Icon, TokenIcon, upNotify } from '@/components'
 import Success from '@/assets/svg/Success.svg'
 import NoQRCode from '@/assets/svg/NoQRCode.svg'
 import Copy from '@/assets/svg/Copy.svg'
@@ -91,7 +91,7 @@ const TopUp = () => {
 					rechargeLoading={rechargeLoading}
 				/>
 			</div>
-			<Dialog
+			<Confirm
 				title=""
 				isOpen={isRechargeDialogOpen}
 				onRequestClose={closeRechargeDialog}
@@ -113,7 +113,7 @@ const TopUp = () => {
 					You have successfully topped up {transactionAmount} {selectedToken?.symbol}. Go experience gas-free
 					transactions now !
 				</div>
-			</Dialog>
+			</Confirm>
 			<Dialog
 				title="Top up"
 				isOpen={qrCodeVisible}
@@ -122,11 +122,38 @@ const TopUp = () => {
 					setNetwork(undefined)
 					setToken(undefined)
 				}}
-				showConfirmButton={false}
-				showCancelButton={false}
 				className={styles.qrcode_dialog}
 				center={true}
 			>
+				<div className={styles.select}>
+					<div className={styles.items}>
+						<Select placeholder="Choose Network" style={{ width: '192px' }} value={netWork} onChange={_setNetwork}>
+							{qrCodeChains.map((token) => (
+								<Select.Option key={token.chainId} value={token.chainId}>
+									<TokenIcon
+										type={getChainNameByChainId(token.chainId)}
+										style={{ marginRight: '12px' }}
+										width={20}
+										height={20}
+									/>
+									{getChainNameByChainId(token.chainId)}
+								</Select.Option>
+							))}
+						</Select>
+					</div>
+					<div className={styles.items}>
+						<Select placeholder="Choose Token" style={{ width: '192px' }} value={token} onChange={_setToken}>
+							<Select.Option key="USDT" value="USDT">
+								<TokenIcon type="USDT" style={{ marginRight: '12px' }} width={20} height={20} />
+								USDT
+							</Select.Option>
+							<Select.Option key="USDC" value="USDC">
+								<TokenIcon type="USDC" style={{ marginRight: '12px' }} width={20} height={20} />
+								USDC
+							</Select.Option>
+						</Select>
+					</div>
+				</div>
 				<div className={styles.qrcode_wrap}>
 					<span className={styles.top_left}></span>
 					<span className={styles.top_right}></span>
@@ -155,37 +182,6 @@ const TopUp = () => {
 					<div className={styles.notice}>Please select the token and chain first</div>
 				)}
 
-				<div className={styles.select}>
-					<div className={styles.items}>
-						<div className={styles.title}>NETWORK</div>
-						<Select placeholder="Choose Network" style={{ width: '192px' }} value={netWork} onChange={_setNetwork}>
-							{qrCodeChains.map((token) => (
-								<Select.Option key={token.chainId} value={token.chainId}>
-									<TokenIcon
-										type={getChainNameByChainId(token.chainId)}
-										style={{ marginRight: '12px' }}
-										width={20}
-										height={20}
-									/>
-									{getChainNameByChainId(token.chainId)}
-								</Select.Option>
-							))}
-						</Select>
-					</div>
-					<div className={styles.items}>
-						<div className={styles.title}>TOKEN</div>
-						<Select placeholder="Choose Token" style={{ width: '192px' }} value={token} onChange={_setToken}>
-							<Select.Option key="USDT" value="USDT">
-								<TokenIcon type="USDT" style={{ marginRight: '12px' }} width={20} height={20} />
-								USDT
-							</Select.Option>
-							<Select.Option key="USDC" value="USDC">
-								<TokenIcon type="USDC" style={{ marginRight: '12px' }} width={20} height={20} />
-								USDC
-							</Select.Option>
-						</Select>
-					</div>
-				</div>
 				{showQRCode ? (
 					<div className={styles.warning}>
 						Only supports top up with USDT or USDC. Topping up with other tokens may result in a loss of funds

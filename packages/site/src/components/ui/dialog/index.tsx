@@ -1,3 +1,4 @@
 import Dialog from './dialog'
+import Confirm from './confirm'
 
-export default Dialog
+export { Dialog, Confirm }

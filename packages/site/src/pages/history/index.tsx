@@ -68,7 +68,7 @@ const columns = [
 		title: 'Time',
 		dataIndex: 'time',
 		key: 'time',
-		align: 'right' as AlignType,
+		align: 'right' as AlignType
 	}
 ]
 
@@ -140,13 +140,19 @@ const History: React.FC = () => {
 							<span className="status-tag">{currentRecord?.status}</span>
 						)}
 						{
-							<div className="up-history-dialog-extra" style={{ marginRight: '20px' }} onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={Skip} width={24} height={24}/></div>
+							<div
+								className="up-history-dialog-extra"
+								style={{ marginRight: '20px' }}
+								onClick={() => {
+									currentRecord && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')
+								}}
+							>
+								<Icon src={Skip} width={24} height={24} />
+							</div>
 						}
 					</div>
 				}
 				className="up-history-dialog"
-				showConfirmButton={false}
-				showCancelButton={false}
 				isOpen={showDetail}
 				onRequestClose={() => {
 					setShowDetail(false)

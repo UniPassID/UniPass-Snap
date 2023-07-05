@@ -1,7 +1,7 @@
 import { usePay } from '@/hooks/usePay'
 import { useFieldArray, useForm } from 'react-hook-form'
 import Transfer from './transfer'
-import { Button, Dialog, Icon, upNotify } from '@/components'
+import { Button, Confirm, Icon, upNotify } from '@/components'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
@@ -341,12 +341,14 @@ const Pay: React.FC = () => {
 					<div className={styles['network-fee-title-wrapper']}>
 						<div className={styles['network-fee-title']}>NETWORK FEE</div>
 						{gas.totalGas === 0 ? (
-							<ToolTip title="UniPass Snap provides three gas-free crypto payments every day" placement="topRight">
-								<div className={styles['free-tips-wrap']}>
-									<div className={styles['free-tips']}>Gas Free!</div>
-									<Icon src={QSvg} style={{ marginLeft: '12px' }} />
-								</div>
-							</ToolTip>
+							<div className={styles['free-tips-wrap']}>
+								<div className={styles['free-tips']}>Gas Free!</div>
+								<ToolTip title="UniPass Snap provides three gas-free crypto payments every day" placement="topRight">
+									<span>
+										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+									</span>
+								</ToolTip>
+							</div>
 						) : (
 							gas.originGas > gas.totalGas && (
 								<ToolTip
@@ -397,7 +399,7 @@ const Pay: React.FC = () => {
 					</Button>
 				</div>
 			</div>
-			<Dialog
+			<Confirm
 				title="Delete Payment"
 				isOpen={deleteConfirm}
 				onCancel={() => {
@@ -409,8 +411,8 @@ const Pay: React.FC = () => {
 					setDeleteConfirm(false)
 				}}
 			>
-				{'Are you sure you want to delete this transaction?'}
-			</Dialog>
+				Are you sure you want to delete this transaction?
+			</Confirm>
 		</div>
 	)
 }

@@ -9,6 +9,7 @@ import UniPass_Icon from '@/assets/svg/UniPass_Icon.svg'
 import MetaMask_Linear from '@/assets/svg/MetaMask_Linear_White.svg'
 import Connect from '@/assets/svg/Connect.svg'
 import Gift from '@/assets/svg/Gift.svg'
+import BatchTransactions from '@/assets/svg/BatchTransactions.svg'
 import BankCard from '@/assets/svg/BankCard.svg'
 import DimensionalCode from '@/assets/svg/DimensionalCode.svg'
 import SocialRecovery from '@/assets/svg/SocialRecovery.svg'
@@ -123,7 +124,7 @@ const StatusDialog = () => {
 						Gas-free payment
 					</div>
 					<div className={styles.feature_item}>
-						<Icon src={Gift} width={20} height={20} />
+						<Icon src={BatchTransactions} width={20} height={20} />
 						batch transaction
 					</div>
 					<div className={styles.feature}>Upcoming features</div>

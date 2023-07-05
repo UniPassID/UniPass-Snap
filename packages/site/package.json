@@ -48,6 +48,7 @@
 		"rc-table": "^7.32.1",
 		"rc-tooltip": "6.0.1",
 		"react": "^18.2.0",
+		"react-confetti": "^6.1.0",
 		"react-copy-to-clipboard": "^5.1.0",
 		"react-dom": "^18.2.0",
 		"react-ga4": "^2.1.0",

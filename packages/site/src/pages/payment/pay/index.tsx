@@ -16,8 +16,6 @@ import { isAddress } from 'ethers/lib/utils'
 import styles from './pay.module.scss'
 import { TransferRef } from './transfer'
 import FeeSwitcher from '@/components/fee-switcher'
-import Send from '@/assets/svg/Send.svg'
-import QSvg from '@/assets/svg/Question.svg'
 import { Transactions, TransactionStatus } from '@/types/transaction'
 import { addHistory } from '@/utils/history'
 import { formatTx, formatTxs, getTokenByContractAddress, getTokenBySymbol } from '@/utils/transaction'
@@ -28,6 +26,8 @@ import { SnapSigner } from '@/snap-signer'
 import { getChainNameByChainId } from '@/constants'
 import { etherToWei, upGA } from '@/utils'
 import { useBoolean } from 'ahooks'
+import Send from '@/assets/svg/Send.svg'
+import QSvg from '@/assets/svg/Question.svg'
 import RecoverySvg from '@/assets/svg/recovery.svg'
 
 const MAX_TRANSACTION_LENGTH = 10
@@ -445,7 +445,7 @@ const Pay: React.FC = () => {
 					<div className={styles.title}>Congratulations !</div>
 					<div className={styles.tips}>
 						You have successfully sent a gas-free payment of {payAmount} USD.{' '}
-						{currentAvailableQuota && (
+						{!!currentAvailableQuota && (
 							<>
 								There are still <span style={{ color: '#8864FF' }}>{currentAvailableQuota} available gas-free</span>{' '}
 								payment{currentAvailableQuota > 1 ? 's' : ''}.

@@ -447,13 +447,14 @@ const Pay: React.FC = () => {
 						You have successfully sent a gas-free payment of {payAmount} USD.{' '}
 						{currentAvailableQuota && (
 							<>
-								There are still <span style={{color: '#8864FF'}}>{currentAvailableQuota} available gas-free</span> payment{currentAvailableQuota > 1 ? 's' : ''}.
+								There are still <span style={{ color: '#8864FF' }}>{currentAvailableQuota} available gas-free</span>{' '}
+								payment{currentAvailableQuota > 1 ? 's' : ''}.
 							</>
 						)}
 					</div>
-					<div className={styles.button} onClick={closeSubmitDialog}>
+					<Button onClick={closeSubmitDialog} style={{ width: '100%' }}>
 						Close
-					</div>
+					</Button>
 				</div>
 			</Dialog>
 		</div>

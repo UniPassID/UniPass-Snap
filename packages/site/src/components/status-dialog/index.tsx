@@ -59,10 +59,13 @@ const StatusDialog = () => {
 					</div>
 					<div className={styles.title}>Install Flask</div>
 					<div className={styles.tips}>Before using UniPass Snap, you need to install Flask first.</div>
-					<div className={styles.button} onClick={installFlask}>
-						<Icon src={MetaMask_Linear} width={20} height={20} />
+					<Button
+						onClick={installFlask}
+						icon={<Icon src={MetaMask_Linear} width={20} height={20} />}
+						style={{ width: '100%' }}
+					>
 						Install Flask
-					</div>
+					</Button>
 					<div className={styles.alert}>Please refresh this page after the installation.</div>
 				</div>
 			</Dialog>

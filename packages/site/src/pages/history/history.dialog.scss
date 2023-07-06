@@ -41,7 +41,16 @@
   .up-history-dialog-extra {
     cursor: pointer;
     margin-left: 10px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    margin-right: 4px;
+    &:hover {
+      background-color: var(--up-content-background);
+    }
   }
 
   .batch-records {
@@ -112,5 +121,9 @@
     color: #F57A45;
     background-color: #FEF2EC;
   }
+}
+
+.rc-table-cell-scrollbar {
+  padding: 0 !important;
 }
 

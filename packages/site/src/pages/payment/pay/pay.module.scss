@@ -94,7 +94,7 @@
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 12px;
-				padding-top: 24px;
+				padding-top: 20px;
 				color: #5e5f6e;
 				.controller {
 					display: flex;
@@ -117,6 +117,7 @@
 			}
 			.address-input {
 				font-size: 14px !important;
+				font-weight: 400 !important;
 
 				&::placeholder {
 					top: 1px;
@@ -295,7 +296,7 @@
 					text-align: center;
 					font-size: 14px;
 					line-height: 20px;
-					margin-bottom: 60px;
+					margin-bottom: 40px;
 			}
 
 			.button {

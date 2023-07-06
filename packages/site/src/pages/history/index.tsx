@@ -19,7 +19,7 @@ import EmptyAssets from '@/assets/svg/EmptyAssets.svg'
 import clsx from 'clsx'
 import './history.dialog.scss'
 
-const statusText = (status: TransactionStatus) => {
+const statusText = (status?: TransactionStatus) => {
 	return status === TransactionStatus.Pending ? 'Pending' : 'Failed'
 }
 
@@ -58,7 +58,7 @@ const columns = [
 		title: 'Address',
 		dataIndex: 'address',
 		key: 'address',
-		width: 242,
+		width: 208,
 		align: 'right' as AlignType,
 		render: (txs: any) => {
 			return (
@@ -74,12 +74,13 @@ const columns = [
 	{
 		title: 'Trading Amount',
 		dataIndex: 'amount',
-		width: 242,
+		width: 208,
 		key: 'amount',
 		align: 'right'  as AlignType
 	},
 	{
 		title: 'Time',
+		width: 208,
 		dataIndex: 'time',
 		key: 'time',
 		align: 'right' as AlignType
@@ -158,14 +159,13 @@ const History: React.FC = () => {
 										currentRecord?.status === TransactionStatus.Pending && 'pending-tag'
 									)}
 								>
-									{currentRecord?.status}
+									{statusText(currentRecord?.status)}
 								</span>
 							)}
 						</div>
 						{
 							currentRecord?.hash && <div
 								className="up-history-dialog-extra"
-								style={{ marginRight: '12px' }}
 								onClick={() => {
 									openExplore(currentRecord.chainId, currentRecord.hash!, 'tx')
 								}}

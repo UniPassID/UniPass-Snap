@@ -45,6 +45,7 @@
   ::-webkit-scrollbar {
     display: none;
   }
+  
   table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -71,11 +72,9 @@
   td, th {
     padding: 0 20px;
   }
-  .rc-table-cell-scrollbar {
-    padding: 0 !important;
-  }
   tbody tr:hover {
     background-color: var(--up-content-background);
     cursor: pointer;
   }
 }
+

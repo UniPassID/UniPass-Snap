@@ -54,7 +54,7 @@ const RecordDetail: React.FC<{
 							</div>
 							<div className="row">
 								<div className="label">Pay</div>
-								<div className="content primary-text" style={{ fontWeight: '600' }}>
+								<div className="content primary-text" style={{ fontWeight: '500' }}>
 									<Icon
 										width={24}
 										height={24}
@@ -81,7 +81,7 @@ const RecordDetail: React.FC<{
 			)}
 			<div className="row">
 				<div className="label">Network</div>
-				<div className="content primary-text" style={{ fontWeight: '600' }}>
+				<div className="content primary-text" style={{ fontWeight: '500' }}>
 					<Icon
 						width={24}
 						height={24}
@@ -94,7 +94,7 @@ const RecordDetail: React.FC<{
 			{record.txs.length === 1 && (
 				<div className="row">
 					<div className="label">Amount</div>
-					<div className="content primary-text" style={{ fontWeight: '600' }}>
+					<div className="content primary-text" style={{ fontWeight: '500' }}>
 						<Icon
 							width={24}
 							height={24}
@@ -145,7 +145,7 @@ const RecordDetail: React.FC<{
 			</div>
 			<div className="row">
 				<div className="label">Fee</div>
-				<div className="content primary-text">{renderDiscount(record)}</div>
+				<div className="content">{renderDiscount(record)}</div>
 			</div>
 			<div className="row">
 				<div className="label">Time</div>

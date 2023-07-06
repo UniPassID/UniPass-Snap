@@ -96,16 +96,13 @@ const Transfer = forwardRef<
 			},
 			isValidAmount: () => {
 				try {
-					const currentToken = getTokenContractAddress(tx?.token)
-					return etherToWei(availableBalance, currentToken?.decimals).gte(
-						etherToWei(tx?.amount || '0', currentToken?.decimals)
-					)
+					return availableBalance > tx?.amount
 				} catch (e) {
 					return false
 				}
 			}
 		}),
-		[availableBalance, tx?.token, tx?.amount, getTokenContractAddress]
+		[availableBalance, tx?.amount]
 	)
 
 	return (

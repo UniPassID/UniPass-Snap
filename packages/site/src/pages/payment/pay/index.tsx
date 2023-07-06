@@ -86,23 +86,23 @@ const Pay: React.FC = () => {
 
 	const validator = useCallback(() => {
 		let isValid = true
-		return txs.every((tx, index) => {
+		txs.forEach((tx, index) => {
 			if (!tx.amount) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Amount is required`
 				})
 				isValid = false
+			}  else if (!(parseFloat(tx.amount) > 0)) {
+				setError(`txs.${index}.amount`, {
+					type: 'custom',
+					message: `Invalid amount`
+				})
+				isValid = false
 			} else if (!transferRefs.current[index].isValidAmount()) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Insufficient balance`
-				})
-				isValid = false
-			} else if (!(parseFloat(tx.amount) > 0)) {
-				setError(`txs.${index}.amount`, {
-					type: 'custom',
-					message: `Invalid amount`
 				})
 				isValid = false
 			}
@@ -119,8 +119,8 @@ const Pay: React.FC = () => {
 				})
 				isValid = false
 			}
-			return isValid
 		})
+		return isValid
 	}, [txs, setError])
 
 	const addMore = () => {
@@ -175,8 +175,6 @@ const Pay: React.FC = () => {
 
 	const onSubmit = async () => {
 		const isValid = validator()
-		setPayAmount(transferAmount.totalAmount)
-		setCurrentAvailableQuota(availableFreeQuota - gas.usedFreeQuota)
 		upGA('payment-click-pay', 'payment', {
 			ClickResult: isValid && !hasPendingTransaction && !isInsufficientBalance,
 			BatchAmount: txs.length,
@@ -195,6 +193,8 @@ const Pay: React.FC = () => {
 		}
 		if (!isValid) return
 		if (SINGLE_GAS) {
+			setPayAmount(transferAmount.totalAmount)
+			setCurrentAvailableQuota(availableFreeQuota - gas.usedFreeQuota)
 			try {
 				setIsPaying(true)
 				const formattedTxs = formatTxs(txs)
@@ -272,6 +272,7 @@ const Pay: React.FC = () => {
 					PaymentAmount: transferAmount.totalAmount,
 					GasToken: currentSymbol,
 					BatchAmount: txs.length,
+					GasAmount: gas.totalGas,
 					DiscountStatus: gas.discountStatus,
 					SnapAddress: `_${address}`
 				})
@@ -365,24 +366,26 @@ const Pay: React.FC = () => {
 							</div>
 						) : (
 							gas.originGas > gas.totalGas && (
-								<ToolTip
-									title="UniPass Snap utilizes the batch transaction feature to save you gas fee"
-									placement="topRight"
-								>
-									<div className={styles['free-tips-wrap']}>
-										<div className={styles['free-tips-warn']}>
-											<span>
-												{numbro(gas.originGas)
-													.subtract(gas.totalGas)
-													.divide(gas.originGas)
-													.multiply(100)
-													.format({ mantissa: 0 })}
-												%<span style={{ color: 'var(--up-text-primary)' }}> OFF</span>
-											</span>
-										</div>
-										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+								<div className={styles['free-tips-wrap']}>
+									<div className={styles['free-tips-warn']}>
+										<span>
+											{numbro(gas.originGas)
+												.subtract(gas.totalGas)
+												.divide(gas.originGas)
+												.multiply(100)
+												.format({ mantissa: 0 })}
+											%<span style={{ color: 'var(--up-text-primary)' }}> OFF</span>
+										</span>
 									</div>
-								</ToolTip>
+									<ToolTip
+										title="UniPass Snap utilizes the batch transaction feature to save you gas fee"
+										placement="topRight"
+									>
+										<span>
+											<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+										</span>
+									</ToolTip>
+								</div>
 							)
 						)}
 					</div>
@@ -444,10 +447,10 @@ const Pay: React.FC = () => {
 					</div>
 					<div className={styles.title}>Congratulations !</div>
 					<div className={styles.tips}>
-						You have successfully sent a gas-free payment of {payAmount} USD.{' '}
+						You have successfully sent a gas-free payment of {payAmount} USD.
 						{!!currentAvailableQuota && (
 							<>
-								There are still <span style={{ color: '#8864FF' }}>{currentAvailableQuota} available gas-free</span>{' '}
+								There are still <span style={{ color: '#8864FF', fontWeight: '500' }}>{currentAvailableQuota} available gas-free</span>{' '}
 								payment{currentAvailableQuota > 1 ? 's' : ''}.
 							</>
 						)}

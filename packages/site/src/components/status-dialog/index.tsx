@@ -125,7 +125,7 @@ const StatusDialog = () => {
 					</div>
 					<div className={styles.feature_item}>
 						<Icon src={BatchTransactions} width={20} height={20} />
-						batch transaction
+						Batch transaction
 					</div>
 					<div className={styles.feature}>Upcoming features</div>
 					<div className={styles.feature_item}>

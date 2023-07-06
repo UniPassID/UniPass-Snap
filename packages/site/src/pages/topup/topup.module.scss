@@ -12,9 +12,8 @@
         width: 400px;
         height: 720px;
         padding: 40px;
-        border-right: 1px solid;
         box-sizing: border-box;
-        border-image: linear-gradient(to bottom, rgb(240, 243, 250), rgba(240, 243, 250, 0.1)) 1;
+        background-color: #fff;
 
         .notice {
             font-weight: 500;
@@ -418,6 +417,7 @@
         display: block;
         margin: 0 auto;
         padding: 0;
+        margin-top: -12px;
     }
 
     .title {
@@ -509,7 +509,7 @@
         text-align: center;
         font-size: 16px;
         line-height: 24px;
-        margin-bottom: 28px;
+        margin-bottom: 20px;
     }
 
     .address {

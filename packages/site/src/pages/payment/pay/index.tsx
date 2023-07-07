@@ -1,11 +1,12 @@
 import { usePay } from '@/hooks/usePay'
 import { useFieldArray, useForm } from 'react-hook-form'
 import Transfer from './transfer'
-import { Button, Dialog, Icon, upNotify } from '@/components'
+import { Button, Confirm, Dialog, Icon, upNotify } from '@/components'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
 	availableFreeQuotaState,
+	confettiState,
 	currentChainIdState,
 	pendingTransactionState,
 	smartAccountInsState,
@@ -15,8 +16,6 @@ import { isAddress } from 'ethers/lib/utils'
 import styles from './pay.module.scss'
 import { TransferRef } from './transfer'
 import FeeSwitcher from '@/components/fee-switcher'
-import Send from '@/assets/svg/Send.svg'
-import QSvg from '@/assets/svg/Question.svg'
 import { Transactions, TransactionStatus } from '@/types/transaction'
 import { addHistory } from '@/utils/history'
 import { formatTx, formatTxs, getTokenByContractAddress, getTokenBySymbol } from '@/utils/transaction'
@@ -26,6 +25,10 @@ import ToolTip from '@/components/ui/tooltip'
 import { SnapSigner } from '@/snap-signer'
 import { getChainNameByChainId } from '@/constants'
 import { etherToWei, upGA } from '@/utils'
+import { useBoolean } from 'ahooks'
+import Send from '@/assets/svg/Send.svg'
+import QSvg from '@/assets/svg/Question.svg'
+import RecoverySvg from '@/assets/svg/recovery.svg'
 
 const MAX_TRANSACTION_LENGTH = 10
 
@@ -40,7 +43,11 @@ const Pay: React.FC = () => {
 	const [isPaying, setIsPaying] = useState<boolean>(false)
 	const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false)
 	const [deletingIndex, setDeletingIndex] = useState<number>()
+	const [payAmount, setPayAmount] = useState<number>()
+	const [currentAvailableQuota, setCurrentAvailableQuota] = useState<number>()
 	const [pendingTransaction, setPendingTransaction] = useRecoilState(pendingTransactionState)
+	const [isSubmitDialogOpen, { setTrue: openSubmitDialog, setFalse: closeSubmitDialog }] = useBoolean(false)
+	const setConfettiState = useSetRecoilState(confettiState)
 
 	const DEFAULT_FORM_ITEM = useMemo(() => {
 		return {
@@ -79,23 +86,23 @@ const Pay: React.FC = () => {
 
 	const validator = useCallback(() => {
 		let isValid = true
-		return txs.every((tx, index) => {
+		txs.forEach((tx, index) => {
 			if (!tx.amount) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Amount is required`
 				})
 				isValid = false
+			}  else if (!(parseFloat(tx.amount) > 0)) {
+				setError(`txs.${index}.amount`, {
+					type: 'custom',
+					message: `Invalid amount`
+				})
+				isValid = false
 			} else if (!transferRefs.current[index].isValidAmount()) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Insufficient balance`
-				})
-				isValid = false
-			} else if (!(parseFloat(tx.amount) > 0)) {
-				setError(`txs.${index}.amount`, {
-					type: 'custom',
-					message: `Invalid amount`
 				})
 				isValid = false
 			}
@@ -112,8 +119,8 @@ const Pay: React.FC = () => {
 				})
 				isValid = false
 			}
-			return isValid
 		})
+		return isValid
 	}, [txs, setError])
 
 	const addMore = () => {
@@ -174,7 +181,7 @@ const Pay: React.FC = () => {
 			PaymentAmount: transferAmount.totalAmount,
 			GasToken: currentSymbol,
 			DiscountStatus: gas.discountStatus,
-			SnapAddress: address
+			SnapAddress: `_${address}`
 		})
 		if (hasPendingTransaction) {
 			upNotify.error('The current chain has ongoing transactions. Please wait.')
@@ -186,6 +193,8 @@ const Pay: React.FC = () => {
 		}
 		if (!isValid) return
 		if (SINGLE_GAS) {
+			setPayAmount(transferAmount.totalAmount)
+			setCurrentAvailableQuota(availableFreeQuota - gas.usedFreeQuota)
 			try {
 				setIsPaying(true)
 				const formattedTxs = formatTxs(txs)
@@ -253,7 +262,7 @@ const Pay: React.FC = () => {
 					chainId,
 					status: TransactionStatus.Pending,
 					timestamp: Date.now(),
-					discount: gas.discount,
+					originFee: gas.originGas,
 					txs,
 					fee: originFee
 				})
@@ -263,10 +272,16 @@ const Pay: React.FC = () => {
 					PaymentAmount: transferAmount.totalAmount,
 					GasToken: currentSymbol,
 					BatchAmount: txs.length,
+					GasAmount: gas.totalGas,
 					DiscountStatus: gas.discountStatus,
-					SnapAddress: address
+					SnapAddress: `_${address}`
 				})
-				upNotify.success('Submitted Success')
+				if (gas.usedFreeQuota) {
+					openSubmitDialog()
+					setConfettiState(true)
+				} else {
+					upNotify.success('Submitted Success')
+				}
 				setIsPaying(false)
 				reset()
 			} catch (e: any) {
@@ -341,32 +356,36 @@ const Pay: React.FC = () => {
 					<div className={styles['network-fee-title-wrapper']}>
 						<div className={styles['network-fee-title']}>NETWORK FEE</div>
 						{gas.totalGas === 0 ? (
-							<ToolTip title="UniPass Snap provides three gas-free crypto payments every day" placement="topRight">
-								<div className={styles['free-tips-wrap']}>
-									<div className={styles['free-tips']}>Gas Free!</div>
-									<Icon src={QSvg} style={{ marginLeft: '12px' }} />
-								</div>
-							</ToolTip>
+							<div className={styles['free-tips-wrap']}>
+								<div className={styles['free-tips']}>Gas Free!</div>
+								<ToolTip title="UniPass Snap provides three gas-free crypto payments every day" placement="topRight">
+									<span>
+										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+									</span>
+								</ToolTip>
+							</div>
 						) : (
 							gas.originGas > gas.totalGas && (
-								<ToolTip
-									title="UniPass Snap utilizes the batch transaction feature to save you gas fee"
-									placement="topRight"
-								>
-									<div className={styles['free-tips-wrap']}>
-										<div className={styles['free-tips-warn']}>
-											<span>
-												{numbro(gas.originGas)
-													.subtract(gas.totalGas)
-													.divide(gas.originGas)
-													.multiply(100)
-													.format({ mantissa: 0 })}
-												%<span style={{ color: 'var(--up-text-primary)' }}> OFF</span>
-											</span>
-										</div>
-										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+								<div className={styles['free-tips-wrap']}>
+									<div className={styles['free-tips-warn']}>
+										<span>
+											{numbro(gas.originGas)
+												.subtract(gas.totalGas)
+												.divide(gas.originGas)
+												.multiply(100)
+												.format({ mantissa: 0 })}
+											%<span style={{ color: 'var(--up-text-primary)' }}> OFF</span>
+										</span>
 									</div>
-								</ToolTip>
+									<ToolTip
+										title="UniPass Snap utilizes the batch transaction feature to save you gas fee"
+										placement="topRight"
+									>
+										<span>
+											<Icon src={QSvg} style={{ marginLeft: '12px' }} />
+										</span>
+									</ToolTip>
+								</div>
 							)
 						)}
 					</div>
@@ -397,7 +416,7 @@ const Pay: React.FC = () => {
 					</Button>
 				</div>
 			</div>
-			<Dialog
+			<Confirm
 				title="Delete Payment"
 				isOpen={deleteConfirm}
 				onCancel={() => {
@@ -409,7 +428,37 @@ const Pay: React.FC = () => {
 					setDeleteConfirm(false)
 				}}
 			>
-				{'Are you sure you want to delete this transaction?'}
+				Are you sure you want to delete this transaction?
+			</Confirm>
+			<Dialog
+				title=""
+				isOpen={isSubmitDialogOpen}
+				shouldCloseOnEsc={false}
+				shouldCloseOnOverlayClick={false}
+				showClose={false}
+				center={true}
+				className={styles.submit_dialog}
+			>
+				<div className={styles.content}>
+					<div className={styles.bg}>
+						<div className={styles.metamask}>
+							<Icon src={RecoverySvg} width={60} height={60} />
+						</div>
+					</div>
+					<div className={styles.title}>Congratulations !</div>
+					<div className={styles.tips}>
+						You have successfully sent a gas-free payment of {payAmount} USD.
+						{!!currentAvailableQuota && (
+							<>
+								There are still <span style={{ color: '#8864FF', fontWeight: '500' }}>{currentAvailableQuota} available gas-free</span>{' '}
+								payment{currentAvailableQuota > 1 ? 's' : ''}.
+							</>
+						)}
+					</div>
+					<Button onClick={closeSubmitDialog} style={{ width: '100%' }}>
+						Close
+					</Button>
+				</div>
 			</Dialog>
 		</div>
 	)

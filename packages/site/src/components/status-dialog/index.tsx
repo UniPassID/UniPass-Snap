@@ -9,6 +9,7 @@ import UniPass_Icon from '@/assets/svg/UniPass_Icon.svg'
 import MetaMask_Linear from '@/assets/svg/MetaMask_Linear_White.svg'
 import Connect from '@/assets/svg/Connect.svg'
 import Gift from '@/assets/svg/Gift.svg'
+import BatchTransactions from '@/assets/svg/BatchTransactions.svg'
 import BankCard from '@/assets/svg/BankCard.svg'
 import DimensionalCode from '@/assets/svg/DimensionalCode.svg'
 import SocialRecovery from '@/assets/svg/SocialRecovery.svg'
@@ -46,8 +47,6 @@ const StatusDialog = () => {
 				isOpen={showMetaMaskInstallDialog}
 				shouldCloseOnEsc={false}
 				shouldCloseOnOverlayClick={false}
-				showConfirmButton={false}
-				showCancelButton={false}
 				showClose={false}
 				center={true}
 				className={styles.flask_dialog}
@@ -60,10 +59,13 @@ const StatusDialog = () => {
 					</div>
 					<div className={styles.title}>Install Flask</div>
 					<div className={styles.tips}>Before using UniPass Snap, you need to install Flask first.</div>
-					<div className={styles.button} onClick={installFlask}>
-						<Icon src={MetaMask_Linear} width={20} height={20} />
+					<Button
+						onClick={installFlask}
+						icon={<Icon src={MetaMask_Linear} width={20} height={20} />}
+						style={{ width: '100%' }}
+					>
 						Install Flask
-					</div>
+					</Button>
 					<div className={styles.alert}>Please refresh this page after the installation.</div>
 				</div>
 			</Dialog>
@@ -97,8 +99,6 @@ const StatusDialog = () => {
 				title=""
 				shouldCloseOnEsc={false}
 				shouldCloseOnOverlayClick={false}
-				showConfirmButton={false}
-				showCancelButton={false}
 				showClose={false}
 				center={true}
 				className={styles.snap_dialog}
@@ -121,10 +121,14 @@ const StatusDialog = () => {
 							<Icon src={MetaMask} width={40} height={40} />
 						</div>
 					</div>
-					<div className={styles.feature}>Available feature</div>
+					<div className={styles.feature}>Available features</div>
 					<div className={styles.feature_item}>
 						<Icon src={Gift} width={20} height={20} />
 						Gas-free payment
+					</div>
+					<div className={styles.feature_item}>
+						<Icon src={BatchTransactions} width={20} height={20} />
+						Batch transactions
 					</div>
 					<div className={styles.feature}>Upcoming features</div>
 					<div className={styles.feature_item}>

@@ -27,8 +27,8 @@ export interface TransactionRecord {
 	txs: Transaction[]
 	status: TransactionStatus
 	timestamp: number
-	discount?: number
 	fee?: Fee
+	originFee?: number
   error?: string
 }
 

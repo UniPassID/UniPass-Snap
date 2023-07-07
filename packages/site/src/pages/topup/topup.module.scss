@@ -12,9 +12,8 @@
         width: 400px;
         height: 720px;
         padding: 40px;
-        border-right: 1px solid;
         box-sizing: border-box;
-        border-image: linear-gradient(to bottom, rgb(240, 243, 250), rgba(240, 243, 250, 0.1)) 1;
+        background-color: #fff;
 
         .notice {
             font-weight: 500;
@@ -414,6 +413,13 @@
     text-align: center;
     width: 400px !important;
 
+    img {
+        display: block;
+        margin: 0 auto;
+        padding: 0;
+        margin-top: -12px;
+    }
+
     .title {
         font-size: 16px;
         font-weight: 600;
@@ -449,7 +455,7 @@
         justify-content: center;
         width: 240px;
         height: 240px;
-        margin: 30px auto 28px auto;
+        margin: 28px auto 28px auto;
         background: #F7F7FA;
 
 
@@ -503,7 +509,7 @@
         text-align: center;
         font-size: 16px;
         line-height: 24px;
-        margin-bottom: 28px;
+        margin-bottom: 20px;
     }
 
     .address {
@@ -531,6 +537,8 @@
         align-items: center;
         flex-flow: row nowrap;
         justify-content: space-between;
+        text-align: left;
+        margin-top: 24px;
 
         .items {
 

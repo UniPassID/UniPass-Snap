@@ -16,12 +16,17 @@ import { useMemo, useState } from 'react'
 import Skip from '@/assets/svg/Skip.svg'
 import RecordDetail from './record'
 import EmptyAssets from '@/assets/svg/EmptyAssets.svg'
+import clsx from 'clsx'
 import './history.dialog.scss'
+
+const statusText = (status?: TransactionStatus) => {
+	return status === TransactionStatus.Pending ? 'Pending' : 'Failed'
+}
 
 const columns = [
 	{
 		title: 'Transaction Type',
-		width: 300,
+		width: 284,
 		dataIndex: 'type',
 		align: 'left' as AlignType,
 		key: 'type',
@@ -35,7 +40,16 @@ const columns = [
 						</div>
 					</div>
 					<span style={{ marginLeft: '24px' }}>{record.txs.length > 1 ? 'Batch payment' : 'Sent'}</span>
-					{record?.status !== TransactionStatus.Success && <div className={styles['status-tag']}>{record?.status}</div>}
+					{record?.status !== TransactionStatus.Success && (
+						<div
+							className={clsx(
+								'history-record-status-tag',
+								record.status === TransactionStatus.Pending && 'pending-tag'
+							)}
+						>
+							{statusText(record?.status)}
+						</div>
+					)}
 				</div>
 			)
 		}
@@ -44,7 +58,7 @@ const columns = [
 		title: 'Address',
 		dataIndex: 'address',
 		key: 'address',
-		width: 200,
+		width: 208,
 		align: 'right' as AlignType,
 		render: (txs: any) => {
 			return (
@@ -60,15 +74,16 @@ const columns = [
 	{
 		title: 'Trading Amount',
 		dataIndex: 'amount',
-		width: 250,
+		width: 208,
 		key: 'amount',
-		align: 'center' as AlignType
+		align: 'right'  as AlignType
 	},
 	{
 		title: 'Time',
+		width: 208,
 		dataIndex: 'time',
 		key: 'time',
-		align: 'right' as AlignType,
+		align: 'right' as AlignType
 	}
 ]
 
@@ -134,19 +149,33 @@ const History: React.FC = () => {
 			</div>
 			<Dialog
 				title={
-					<div className="up-history-title">
-						Payment Details
-						{currentRecord?.status !== TransactionStatus.Success && (
-							<span className="status-tag">{currentRecord?.status}</span>
-						)}
+					<div className="up-history-title-wrapper">
+						<div className="up-history-title">
+							Payment Details
+							{currentRecord?.status !== TransactionStatus.Success && (
+								<span
+									className={clsx(
+										'history-record-status-tag',
+										currentRecord?.status === TransactionStatus.Pending && 'pending-tag'
+									)}
+								>
+									{statusText(currentRecord?.status)}
+								</span>
+							)}
+						</div>
 						{
-							<div className="up-history-dialog-extra" style={{ marginRight: '20px' }} onClick={() => { currentRecord  && currentRecord.hash && openExplore(currentRecord.chainId, currentRecord.hash, 'tx')}}><Icon src={Skip} width={24} height={24}/></div>
+							currentRecord?.hash && <div
+								className="up-history-dialog-extra"
+								onClick={() => {
+									openExplore(currentRecord.chainId, currentRecord.hash!, 'tx')
+								}}
+							>
+								<Icon src={Skip} width={24} height={24} />
+							</div>
 						}
 					</div>
 				}
 				className="up-history-dialog"
-				showConfirmButton={false}
-				showCancelButton={false}
 				isOpen={showDetail}
 				onRequestClose={() => {
 					setShowDetail(false)

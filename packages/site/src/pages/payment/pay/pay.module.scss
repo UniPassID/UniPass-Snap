@@ -66,9 +66,10 @@
 				align-items: center;
 				flex: 1;
 				.discount-tip {
-					box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.16), 0px 2px 5px 0px rgba(0, 0, 0, 0.16), 0px 9px 9px 0px rgba(0, 0, 0, 0.03), 0px 20px 12px 0px rgba(0, 0, 0, 0.03);
+					box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.16), 0px 2px 5px 0px rgba(0, 0, 0, 0.16),
+						0px 9px 9px 0px rgba(0, 0, 0, 0.03), 0px 20px 12px 0px rgba(0, 0, 0, 0.03);
 					margin-left: 10px;
-					background-color: #E85050;
+					background-color: #e85050;
 					border-radius: 8px;
 					color: #fff;
 					font-size: 12px;
@@ -82,7 +83,7 @@
 						height: 0;
 						left: -10px;
 						border: 6px solid transparent;
-						border-right-color: #E85050;
+						border-right-color: #e85050;
 					}
 				}
 			}
@@ -93,8 +94,8 @@
 				align-items: center;
 				justify-content: space-between;
 				margin-bottom: 12px;
-				padding-top: 24px;
-				color: #5E5F6E;
+				padding-top: 20px;
+				color: #5e5f6e;
 				.controller {
 					display: flex;
 				}
@@ -116,6 +117,7 @@
 			}
 			.address-input {
 				font-size: 14px !important;
+				font-weight: 400 !important;
 
 				&::placeholder {
 					top: 1px;
@@ -171,10 +173,10 @@
 						display: flex;
 						align-items: center;
 						font-weight: 500;
-						color: #4AAC4C;
+						color: #4aac4c;
 						&::before {
 							content: '';
-							background-color: #4AAC4C;
+							background-color: #4aac4c;
 							width: 4px;
 							height: 4px;
 							border-radius: 100%;
@@ -182,7 +184,7 @@
 						}
 						&::after {
 							content: '';
-							background-color: #4AAC4C;
+							background-color: #4aac4c;
 							border-radius: 100%;
 							width: 4px;
 							height: 4px;
@@ -193,10 +195,10 @@
 						display: flex;
 						align-items: center;
 						font-weight: 500;
-						color: #E85050;
+						color: #e85050;
 						&::before {
 							content: '';
-							background-color: #E85050;
+							background-color: #e85050;
 							width: 4px;
 							height: 4px;
 							border-radius: 100%;
@@ -204,7 +206,7 @@
 						}
 						&::after {
 							content: '';
-							background-color: #E85050;
+							background-color: #e85050;
 							border-radius: 100%;
 							width: 4px;
 							height: 4px;
@@ -212,9 +214,8 @@
 						}
 					}
 				}
-				
 			}
-			
+
 			.switcher-wrapper {
 				display: flex;
 				align-items: center;
@@ -227,10 +228,10 @@
 				.network-fee-origin {
 					font-size: 14px;
 					text-decoration: line-through;
-					color: var(--up-text-third)
+					color: var(--up-text-third);
 				}
 				.insufficient-tips {
-					color: #E85050;
+					color: #e85050;
 					font-size: 14px;
 					font-weight: 500;
 				}
@@ -248,5 +249,81 @@
 				margin-top: 28px;
 			}
 		}
+	}
+}
+
+.submit_dialog {
+	width: 400px !important;
+	display: flex;
+	align-items: center;
+	flex-flow: column nowrap;
+	justify-content: center;
+	padding: 0 !important;
+
+	.content {
+			padding: 60px 40px 40px 40px !important;
+			border-radius: 20px;
+			background: linear-gradient(270deg, #F2F4FF 0%, rgba(255, 255, 255, 0.00) 100%), linear-gradient(140deg, #FCF4FF 0%, rgba(255, 242, 253, 0.00) 100%);
+
+			.bg {
+					position: relative;
+					margin: -52px auto 0 auto;
+					background-image: url('../../..//assets/svg/Bobble_bg.svg');
+					width: 320px;
+					height: 140px;
+
+					.metamask {
+							position: absolute;
+							width: 60px;
+							height: 60px;
+							left: 50%;
+							top: 60px;
+							margin-left: -30px;
+					}
+			}
+
+			.title {
+					color: #1F202A;
+					text-align: center;
+					font-size: 20px;
+					font-weight: 500;
+					line-height: 28px;
+					margin-bottom: 15px;
+			}
+
+			.tips {
+					color: #5E5F6E;
+					text-align: center;
+					font-size: 14px;
+					line-height: 20px;
+					margin-bottom: 40px;
+			}
+
+			.button {
+					display: flex;
+					align-items: center;
+					flex-flow: row nowrap;
+					justify-content: center;
+					padding: 14px 32px;
+					border-radius: 100px;
+					background: #8864FF;
+					color: #fff;
+					text-align: center;
+					cursor: pointer;
+
+					img {
+							display: inline-block;
+							margin-right: 8px;
+					}
+			}
+
+			.alert {
+					color: #8864FF;
+					text-align: center;
+					font-size: 14px;
+					line-height: 20px;
+					margin-top: 12px;
+			}
+
 	}
 }

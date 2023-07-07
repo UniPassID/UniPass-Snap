@@ -18,5 +18,6 @@
     "qrcode",
     "topup",
     "TTFB"
-  ]
+  ],
+  "svg.preview.background": "custom"
 }

@@ -1,41 +1,18 @@
 import React from 'react'
 import Modal, { Props } from 'react-modal'
-import { close_svg } from '../notify/icons'
-import Button from '../button'
+import Close from '@/assets/svg/Close.svg'
+import Icon from '../icon'
 
 interface DialogProps extends Props {
 	title?: string | React.ReactNode
-	isOpen: boolean
-	confirmText?: string
-	showConfirmButton?: boolean
-	cancelText?: string
-	showCancelButton?: boolean
 	showClose?: boolean
 	center?: boolean
-	onConfirm?: React.MouseEventHandler
-	onCancel?: React.MouseEventHandler
-	extra?: React.ReactNode
 	extraController?: React.ReactNode
 	children: React.ReactNode
 }
 
 const Dialog: React.FC<DialogProps> = (props) => {
-	const {
-		title,
-		children,
-		showConfirmButton = true,
-		showCancelButton = true,
-		confirmText = 'Confirm',
-		cancelText = 'Cancel',
-		center = false,
-		showClose = true,
-		onConfirm,
-		onCancel,
-		extra,
-		extraController,
-		className,
-		...rest
-	} = props
+	const { title, children, center = false, showClose = true, extraController, className, ...rest } = props
 
 	return (
 		<Modal
@@ -55,7 +32,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
 					{extraController}
 					{showClose ? (
 						<div className="up_dialog_close" onClick={rest?.onRequestClose}>
-							{close_svg}
+							<Icon src={Close} width={24} height={24} />
 						</div>
 					) : null}
 				</div>
@@ -63,22 +40,6 @@ const Dialog: React.FC<DialogProps> = (props) => {
 			<div className="up_dialog_children" style={{ textAlign: center ? 'center' : 'left' }}>
 				{children}
 			</div>
-			{showCancelButton || showConfirmButton ? (
-				<div className="up_dialog_footer">
-					{showCancelButton ? (
-						<Button btnType="gray" size="sm" style={{ flex: center ? '1 1 0%' : '0 1 auto' }} onClick={onCancel}>
-							{cancelText}
-						</Button>
-					) : null}
-					{showCancelButton && showConfirmButton ? <div className="up_dialog_footer_divider"></div> : null}
-					{showConfirmButton ? (
-						<Button size="sm" style={{ flex: center ? '1 1 0%' : '0 1 auto' }} onClick={onConfirm}>
-							{confirmText}
-						</Button>
-					) : null}
-				</div>
-			) : null}
-			{extra && <div className="up_dialog_text_button">{extra}</div>}
 		</Modal>
 	)
 }

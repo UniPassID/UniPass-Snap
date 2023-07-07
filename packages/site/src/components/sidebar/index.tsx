@@ -20,6 +20,7 @@ import History from '@/assets/svg/History.svg'
 import HistorySelected from '@/assets/svg/HistorySelected.svg'
 import More from '@/assets/svg/More.svg'
 import Testnet from '@/assets/svg/Testnet.svg'
+import Support from '@/assets/svg/Support.svg'
 import Disconnect from '@/assets/svg/Disconnect.svg'
 import Close from '@/assets/svg/Close.svg'
 import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
@@ -94,6 +95,11 @@ const SideBar = () => {
 		upGA('setting-click-disconnect', 'setting')
 	}
 
+	const handleSupport = () => {
+		var url = 'mailto:unipass-snap-support@accountlabs.com'
+		window.open(url)
+	}
+
 	return (
 		<div className={styles.sidebar}>
 			<div className={styles.menus}>
@@ -135,6 +141,12 @@ const SideBar = () => {
 									<span>Testnet</span>
 								</div>
 								<Switch checked={isTestnetEnv} />
+							</div>
+							<div className={styles.item} onClick={handleSupport}>
+								<div className={styles.left}>
+									<Icon src={Support} height={20} width={20} />
+									<span>Support</span>
+								</div>
 							</div>
 							<div className={styles.item} onClick={disconnect}>
 								<div className={styles.left}>

@@ -27,7 +27,7 @@ export async function waitPendingTransactions(
 				ChainID: tx.chainId,
 				GasAmount: tx.fee?.amount,
 				PaymentAmount: tx.txs.reduce((pre, tx) => pre + parseFloat(tx.amount) || 0, 0),
-				SnapAddress: address,
+				SnapAddress: `_${address}`,
 				txHash: txResult.transactionHash
 			})
 		} catch (e) {

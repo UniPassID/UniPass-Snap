@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import styles from './chain-switcher.module.scss'
 import { currentChainIdState, editingPaymentState, smartAccountInsState } from '@/store'
 import { ARBITRUM_MAINNET, POLYGON_MAINNET, TESTNET_CHAIN_IDS } from '@/constants'
-import { Dialog, Icon } from '@/components'
+import { Confirm, Icon } from '@/components'
 import Arbitrum from '@/assets/svg/Arbitrum.svg'
 import Polygon from '@/assets/svg/Polygon.svg'
 import { useBoolean } from 'ahooks'
@@ -17,6 +17,7 @@ const ChainSwitcher = () => {
 	const [selectChainId, setSelectChainId] = useState<number>()
 
 	const beforeSwitchChain = (chainId: number) => {
+		if (chainId === currentChainId) return
 		setSelectChainId(chainId)
 		if (editingPayment) {
 			setTrue()
@@ -67,7 +68,7 @@ const ChainSwitcher = () => {
 	return (
 		<>
 			{render()}
-			<Dialog
+			<Confirm
 				title="Confirmation"
 				isOpen={switchChainConfirm}
 				onCancel={() => {
@@ -82,7 +83,7 @@ const ChainSwitcher = () => {
 				}}
 			>
 				Switching networks will clear your current payment information. Are you sure you want to switch?
-			</Dialog>
+			</Confirm>
 		</>
 	)
 }

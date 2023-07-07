@@ -12,9 +12,8 @@
         width: 400px;
         height: 720px;
         padding: 40px;
-        border-right: 1px solid;
         box-sizing: border-box;
-        border-image: linear-gradient(to bottom, rgb(240, 243, 250), rgba(240, 243, 250, 0.1)) 1;
+        border-image: #fff;
 
         .assets {
             flex: 1;
@@ -140,7 +139,10 @@
             }
 
             .explore {
-                padding: 10px;
+                display: flex;
+                align-items: center;
+                flex-flow: row nowrap;
+                justify-content: center;
                 width: 36px;
                 height: 36px;
                 border: 1px solid #E1E6F0;

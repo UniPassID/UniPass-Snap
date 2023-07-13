@@ -1,7 +1,7 @@
 import { Bytes, Wallet } from 'ethers'
 import { SignTxMessageInput, OriginTransaction } from '../types'
 import { NodeType, panel, text } from '@metamask/snaps-ui'
-import { arrayify } from 'ethers/lib/utils'
+import { arrayify, entropyToMnemonic } from 'ethers/lib/utils'
 import { getTokenSymbolByAddress, validTxHash } from './utils'
 
 function getEntropy() {
@@ -13,20 +13,26 @@ function getEntropy() {
 	})
 }
 
-export async function getMasterKeyAddress(): Promise<string> {
+async function getWallet() {
 	const entropy = await getEntropy()
-	return new Wallet(entropy).address
+	const mnemonic = entropyToMnemonic(entropy)
+	return Wallet.fromMnemonic(mnemonic)
+}
+
+export async function getMasterKeyAddress(): Promise<string> {
+	const wallet = await getWallet()
+	return wallet.address
 }
 
 export async function signMessage(message: string | Bytes): Promise<string> {
-	const entropy = await getEntropy()
-	return new Wallet(entropy).signMessage(message)
+	const wallet = await getWallet()
+	return wallet.signMessage(message)
 }
 
 export async function getAuthentication(address: string): Promise<{ loginMessage: string; loginSignature: string }> {
-	const entropy = await getEntropy()
+	const wallet = await getWallet()
 	const loginMessage = `UniPass Snap is requesting to sign in at ${new Date().toISOString()} with your UniPass Snap account: ${address}`
-	const loginSignature = await new Wallet(entropy).signMessage(loginMessage)
+	const loginSignature = await wallet.signMessage(loginMessage)
 	return {
 		loginMessage,
 		loginSignature

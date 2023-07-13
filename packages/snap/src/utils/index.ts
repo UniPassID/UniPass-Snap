@@ -1,4 +1,11 @@
-import { getAddress } from 'ethers/lib/utils'
+import { Interface, getAddress, parseUnits } from 'ethers/lib/utils'
+import { Transaction, OriginTransaction, FeeTx } from '../../types'
+import { BigNumber, Contract, constants } from 'ethers'
+import { ERC20_ABI } from './ERC20_ABI'
+import { ModuleMainInterface } from '@unipasswallet/utils'
+import { RawMainExecuteCall } from '@unipasswallet/wallet/dist/rawMainExecuteCall'
+import { CallTxBuilder } from '@unipasswallet/transaction-builders'
+import { digestTxHash, toTransaction, Transactionish, Transaction as UPTransaction } from '@unipasswallet/transactions'
 
 export const POLYGON_MUMBAI_USDC_ADDRESS = '0x87F0E95E11a49f56b329A1c143Fb22430C07332a'
 export const POLYGON_MUMBAI_USDT_ADDRESS = '0x569F5fF11E259c8e0639b4082a0dB91581a6b83e'
@@ -20,4 +27,98 @@ export const TOKEN_SYMBOL_MAP: Record<string, string> = {
 
 export function getTokenSymbolByAddress(address: string) {
 	return TOKEN_SYMBOL_MAP[getAddress(address)]
+}
+
+export function formatTxs(txs: Transaction[]) {
+	return txs.map((tx) => {
+		return formatTx(tx)
+	})
+}
+
+export function formatTx(tx: Transaction) {
+	const contract = new Contract(getAddress(tx.token), ERC20_ABI)
+	const data = contract.interface.encodeFunctionData('transfer', [getAddress(tx.to), parseUnits(tx.amount, 6)])
+	return { value: '0x00', to: getAddress(tx.token), data }
+}
+
+async function generateExecuteCall(
+	txs: UPTransaction[],
+	nonce: BigNumber,
+	address: string,
+	feeTx?: UPTransaction
+): Promise<RawMainExecuteCall> {
+	const transactions = []
+	const OWNER_WEIGHT = 60
+	const GUARDIAN_WEIGHT = 0
+	const ASSETS_OP_WEIGHT = 100
+
+	if (txs.length === 1) {
+		transactions.push(txs[0])
+	} else {
+		const data = ModuleMainInterface.encodeFunctionData('selfExecute', [
+			OWNER_WEIGHT,
+			ASSETS_OP_WEIGHT,
+			GUARDIAN_WEIGHT,
+			txs
+		])
+
+		transactions.push(new CallTxBuilder(true, constants.Zero, address, constants.Zero, data).build())
+	}
+
+	if (feeTx) {
+		transactions.push(feeTx)
+	}
+
+	return new RawMainExecuteCall(transactions, nonce.add(1), [0])
+}
+
+function feeFormatter(feeTx?: Transaction): FeeTx | undefined {
+	return feeTx ? { ...feeTx, amount: parseUnits(feeTx.amount, 6) } : undefined
+}
+
+function generateFeeTx(fee?: FeeTx): UPTransaction | undefined {
+	if (fee) {
+		const { to, amount, token } = fee
+
+		if (amount.gt(0)) {
+			if (token === constants.AddressZero) {
+				return new CallTxBuilder(true, constants.Zero, to, amount, '0x').build()
+			}
+
+			return new CallTxBuilder(
+				true,
+				constants.Zero,
+				token,
+				constants.Zero,
+				new Interface(ERC20_ABI).encodeFunctionData('transfer', [to, amount])
+			).build()
+		}
+	}
+
+	return undefined
+}
+
+export async function validTxSig(originTransaction: OriginTransaction, signature: string): Promise<boolean> {
+	const txs = formatTxs(originTransaction.transactions)
+	const newTxs = txs.map((tx) => {
+		const newTx = Object.assign({}, tx as Transactionish)
+		newTx.gasLimit = constants.Zero
+		const callTx = toTransaction(newTx)
+		callTx.revertOnError = true
+		return toTransaction(callTx)
+	})
+
+	const execute = await generateExecuteCall(
+		newTxs,
+		BigNumber.from(originTransaction.nonce),
+		originTransaction.address,
+		generateFeeTx(feeFormatter(originTransaction.fee))
+	)
+	const txHash = digestTxHash(
+		originTransaction.chainId,
+		originTransaction.address,
+		originTransaction.nonce,
+		execute.txs
+	)
+	return txHash === signature
 }

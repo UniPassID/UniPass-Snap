@@ -32,11 +32,15 @@ export interface TransactionRecord {
   error?: string
 }
 
-export interface originTransaction {
+export interface OriginTransaction {
 	transactions: Transaction[]
 	chain: string
+	chainId: number
+	nonce: number
+	address: string
 	fee?: {
-		symbol: string
+		to: string
+		token: string
 		amount: string
 	}
 }

@@ -1,4 +1,4 @@
-import { originTransaction } from "@/types/transaction";
+import { OriginTransaction } from "@/types/transaction";
 import { signMessageWithSnap, signTransactionWithSnap } from "@/utils";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { Bytes, Signer } from "ethers"; 
@@ -6,7 +6,7 @@ import { hexlify } from "ethers/lib/utils";
 
 export class SnapSigner extends Signer {
   private address: string
-  private originTransaction?: originTransaction
+  private originTransaction?: OriginTransaction
 
   constructor(address: string) {
     super()
@@ -26,7 +26,7 @@ export class SnapSigner extends Signer {
     return signTransactionWithSnap(transaction)
   }
 
-  setOriginTransaction(originTransaction: originTransaction) {
+  setOriginTransaction(originTransaction: OriginTransaction) {
     this.originTransaction = originTransaction
   }
 

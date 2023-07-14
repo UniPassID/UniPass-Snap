@@ -48,7 +48,7 @@ async function generateExecuteCall(
 	feeTx?: UPTransaction
 ): Promise<RawMainExecuteCall> {
 	const transactions = []
-	const OWNER_WEIGHT = 60
+	const OWNER_WEIGHT = 100
 	const GUARDIAN_WEIGHT = 0
 	const ASSETS_OP_WEIGHT = 100
 
@@ -98,27 +98,31 @@ function generateFeeTx(fee?: FeeTx): UPTransaction | undefined {
 	return undefined
 }
 
-export async function validTxSig(originTransaction: OriginTransaction, signature: string): Promise<boolean> {
-	const txs = formatTxs(originTransaction.transactions)
-	const newTxs = txs.map((tx) => {
-		const newTx = Object.assign({}, tx as Transactionish)
-		newTx.gasLimit = constants.Zero
-		const callTx = toTransaction(newTx)
-		callTx.revertOnError = true
-		return toTransaction(callTx)
-	})
+export async function validTxHash(originTransaction: OriginTransaction, signature: string): Promise<boolean> {
+	try {
+		const txs = formatTxs(originTransaction.transactions)
+		const newTxs = txs.map((tx) => {
+			const newTx = Object.assign({}, tx as Transactionish)
+			newTx.gasLimit = constants.Zero
+			const callTx = toTransaction(newTx)
+			callTx.revertOnError = true
+			return toTransaction(callTx)
+		})
 
-	const execute = await generateExecuteCall(
-		newTxs,
-		BigNumber.from(originTransaction.nonce),
-		originTransaction.address,
-		generateFeeTx(feeFormatter(originTransaction.fee))
-	)
-	const txHash = digestTxHash(
-		originTransaction.chainId,
-		originTransaction.address,
-		originTransaction.nonce,
-		execute.txs
-	)
-	return txHash === signature
+		const execute = await generateExecuteCall(
+			newTxs,
+			BigNumber.from(originTransaction.nonce),
+			originTransaction.address,
+			generateFeeTx(feeFormatter(originTransaction.fee))
+		)
+		const txHash = digestTxHash(
+			originTransaction.chainId,
+			originTransaction.address,
+			originTransaction.nonce,
+			execute.txs
+		)
+		return txHash === signature
+	} catch (e) {
+		return false
+	}
 }

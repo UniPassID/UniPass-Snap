@@ -2,7 +2,7 @@ import { Bytes, Wallet } from 'ethers'
 import { SignTxMessageInput, OriginTransaction } from '../types'
 import { NodeType, panel, text } from '@metamask/snaps-ui'
 import { arrayify } from 'ethers/lib/utils'
-import { getTokenSymbolByAddress, validTxSig } from './utils'
+import { getTokenSymbolByAddress, validTxHash } from './utils'
 
 function getEntropy() {
 	return snap.request({
@@ -38,8 +38,10 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 
 	const originTransaction = JSON.parse(signTxMessage.originTransaction) as OriginTransaction
 
-	if (!validTxSig(originTransaction, signTxMessage.message)) {
-		throw new Error('inValid transaction sig')
+	const validHash = await validTxHash(originTransaction, signTxMessage.message)
+
+	if (!validHash) {
+		throw new Error('Invalid transaction hash')
 	}
 
 	if (originTransaction.transactions.length > 1) {

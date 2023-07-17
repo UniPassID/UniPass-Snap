@@ -17,7 +17,7 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
 		case 'getMasterKeyAddress':
 			return getMasterKeyAddress()
 		case 'signMessage':
-			return signTransactionMessage(request.params as SignTxMessageInput)
+			return signTransactionMessage(request.params as SignTxMessageInput, origin)
 		case 'getAuthentication':
 			return getAuthentication((request.params as AuthenticationInput).address)
 		default:

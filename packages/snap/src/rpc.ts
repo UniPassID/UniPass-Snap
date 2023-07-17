@@ -33,7 +33,7 @@ export async function getAuthentication(address: string): Promise<{ loginMessage
 	}
 }
 
-export async function signTransactionMessage(signTxMessage: SignTxMessageInput) {
+export async function signTransactionMessage(signTxMessage: SignTxMessageInput, origin: string) {
 	let panelContent: { value: string; type: NodeType.Text }[]
 
 	const originTransaction = JSON.parse(signTxMessage.originTransaction) as OriginTransaction
@@ -70,7 +70,7 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 					originTransaction.transactions[0].token
 				)} on ${originTransaction.chain}**`
 			),
-			text(`**To**: ${originTransaction.transactions[0].to}`),
+			text(`**To: ${originTransaction.transactions[0].to}**`),
 			text(
 				`**Gasfee: ${
 					originTransaction.fee
@@ -85,7 +85,7 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 		method: 'snap_dialog',
 		params: {
 			type: 'confirmation',
-			content: panel(panelContent)
+			content: panel([...panelContent, text(`**URI: ${origin}**`)])
 		}
 	})
 

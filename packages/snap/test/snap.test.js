@@ -43,7 +43,7 @@ describe('UniPass Snap', () => {
 		expect(ui).toRender(
 			panel([
 				text(`**Pay 1 USDT on Mumbai**`),
-				text(`**To**: 0x26441AC58f27536eF40fFD0D76c4fA9C96c9F398`),
+				text(`**To: 0x26441AC58f27536eF40fFD0D76c4fA9C96c9F398**`),
 				text(`**Gasfee: Free**`)
 			])
 		)
@@ -67,8 +67,9 @@ describe('UniPass Snap', () => {
 		expect(ui).toRender(
 			panel([
 				text(`**Pay 1 USDT on Mumbai**`),
-				text(`**To**: 0x26441AC58f27536eF40fFD0D76c4fA9C96c9F398`),
-				text(`**Gasfee: 0.012 USDT**`)
+				text(`**To: 0x26441AC58f27536eF40fFD0D76c4fA9C96c9F398**`),
+				text(`**Gasfee: 0.012 USDT**`),
+				text(`**URI: https://snap.unipass.xyz**`)
 			])
 		)
 		await ui.ok()
@@ -97,7 +98,8 @@ describe('UniPass Snap', () => {
 				text(`Pay 1 USDT`),
 				text(`To: 0x26441AC58f27536eF40fFD0D76c4fA9C96c9F398`),
 				text(`**Gasfee: 0.012 USDT**`),
-				text(`**Chain: Mumbai**`)
+				text(`**Chain: Mumbai**`),
+				text(`**URI: https://snap.unipass.xyz**`)
 			])
 		)
 		await ui.ok()

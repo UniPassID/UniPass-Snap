@@ -89,7 +89,7 @@ const SideBar = () => {
 
 	const disconnect = () => {
 		window.localStorage.removeItem('up__smartAccountAddress')
-		window.localStorage.removeItem('up__accessToken')
+		window.sessionStorage.removeItem('up__accessToken')
 		setSmartAccountState('')
 		toggle()
 		upGA('setting-click-disconnect', 'setting')

@@ -33,7 +33,7 @@ export async function sign(data: SignInput) {
 }
 
 export async function getFreeQuota() {
-	const accessToken = localStorage.getItem('up__accessToken')
+	const accessToken = sessionStorage.getItem('up__accessToken')
 	return request<GetFreeQuotaOutput>({
 		method: 'GET',
 		url: '/api/v1/account/get-free-quota',
@@ -45,7 +45,7 @@ export async function getFreeQuota() {
 }
 
 export async function getSingleTransactionFees() {
-	const accessToken = localStorage.getItem('up__accessToken')
+	const accessToken = sessionStorage.getItem('up__accessToken')
 	return request<SingleTransactionFeesOutput>({
 		method: 'GET',
 		url: '/api/v1/transaction/get-single-transaction-fee',
@@ -57,7 +57,7 @@ export async function getSingleTransactionFees() {
 }
 
 export async function authorizeTransactionFees(data: AuthorizeTxFeesInput) {
-	const accessToken = localStorage.getItem('up__accessToken')
+	const accessToken = sessionStorage.getItem('up__accessToken')
 	return request<AuthorizeTxFeesOutput>({
 		method: 'POST',
 		url: '/api/v1/transaction/authorize-transaction-fees',
@@ -70,7 +70,7 @@ export async function authorizeTransactionFees(data: AuthorizeTxFeesInput) {
 }
 
 export async function verifyTransactionFees(data: AuthorizeTxFeesInput) {
-	const accessToken = localStorage.getItem('up__accessToken')
+	const accessToken = sessionStorage.getItem('up__accessToken')
 	return request<VerifyTxFeesOutput>({
 		method: 'POST',
 		url: '/api/v1/transaction/verify-transaction-fees',

@@ -34,7 +34,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 			setSingleFeeResult(res.fees)
 		},
 		{
-			ready: !!localStorage.getItem('up__accessToken'),
+			ready: !!sessionStorage.getItem('up__accessToken'),
 			pollingInterval: 10000
 		}
 	)

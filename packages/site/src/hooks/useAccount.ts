@@ -50,7 +50,7 @@ export const useAccount = () => {
 			}
 		},
 		{
-			ready: !!localStorage.getItem('up__accessToken'),
+			ready: !!sessionStorage.getItem('up__accessToken'),
 			refreshDeps: [smartAccount],
 			pollingInterval: 3000
 		}

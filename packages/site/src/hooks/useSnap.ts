@@ -72,8 +72,8 @@ export const useSnap = () => {
 			appId: CUSTOM_AUTH_APPID,
 			unipassServerUrl: process.env.REACT_APP_SDK_URL_PREFIX
 		})
-		setSmartAccountInsState(smartAccount)
 		await smartAccount.init({ chainId: currentChainId })
+		setSmartAccountInsState(smartAccount)
 		const address = await smartAccount.getAddress()
 		const smartAccountAddress = utils.getAddress(address)
 		window.localStorage.setItem('up__smartAccountAddress', smartAccountAddress)

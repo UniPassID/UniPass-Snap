@@ -44,7 +44,8 @@ describe('UniPass Snap', () => {
 			panel([
 				text(`**Pay 1 USDT on Mumbai**`),
 				text(`**To: 0x26441AC58f27536eF40fFD0D76c4fA9C96c9F398**`),
-				text(`**Gasfee: Free**`)
+				text(`**Gasfee: Free**`),
+				text(`**URI: https://snap.unipass.xyz**`)
 			])
 		)
 		await ui.ok()

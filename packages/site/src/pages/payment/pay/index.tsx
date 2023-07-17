@@ -93,7 +93,7 @@ const Pay: React.FC = () => {
 					message: `Amount is required`
 				})
 				isValid = false
-			}  else if (!(parseFloat(tx.amount) > 0)) {
+			} else if (!(parseFloat(tx.amount) > 0)) {
 				setError(`txs.${index}.amount`, {
 					type: 'custom',
 					message: `Invalid amount`
@@ -228,22 +228,25 @@ const Pay: React.FC = () => {
 					if (!result.success) throw new Error(result.errorReason)
 				}
 				const signer = smartAccount.getSigner() as SnapSigner
+
+				const feeTx = originFee
+					? {
+							...originFee,
+							amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
+					  }
+					: undefined
+
 				signer.setOriginTransaction({
 					transactions: txs,
 					chain: getChainNameByChainId(chainId),
-					fee: {
-						symbol: currentSymbol,
-						amount: gas.totalGas.toString()
-					}
+					chainId: chainId,
+					nonce: nonce,
+					address: address,
+					fee: originFee,
 				})
 
 				const signedTxs = await smartAccount.signTransactions(formatTxs(txs), {
-					fee: originFee
-						? {
-								...originFee,
-								amount: etherToWei(originFee.amount, getTokenByContractAddress(originFee.token)?.decimals)
-						  }
-						: undefined
+					fee: feeTx
 				})
 
 				if (gas.usedFreeQuota) {
@@ -450,7 +453,8 @@ const Pay: React.FC = () => {
 						You have successfully sent a gas-free payment of {payAmount} USD.
 						{!!currentAvailableQuota && (
 							<>
-								There are still <span style={{ color: '#8864FF', fontWeight: '500' }}>{currentAvailableQuota} available gas-free</span>{' '}
+								There are still{' '}
+								<span style={{ color: '#8864FF', fontWeight: '500' }}>{currentAvailableQuota} available gas-free</span>{' '}
 								payment{currentAvailableQuota > 1 ? 's' : ''}.
 							</>
 						)}

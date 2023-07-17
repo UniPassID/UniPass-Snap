@@ -1,9 +1,8 @@
 import { Bytes, Wallet } from 'ethers'
-import { TransactionRequest } from '@ethersproject/abstract-provider'
-import { SignTxMessageInput, originTransaction } from '../types'
+import { SignTxMessageInput, OriginTransaction } from '../types'
 import { NodeType, panel, text } from '@metamask/snaps-ui'
 import { arrayify } from 'ethers/lib/utils'
-import { getTokenSymbolByAddress } from './utils'
+import { getTokenSymbolByAddress, validTxHash } from './utils'
 
 function getEntropy() {
 	return snap.request({
@@ -24,11 +23,6 @@ export async function signMessage(message: string | Bytes): Promise<string> {
 	return new Wallet(entropy).signMessage(message)
 }
 
-export async function signTransaction(transaction: TransactionRequest): Promise<string> {
-	const entropy = await getEntropy()
-	return new Wallet(entropy).signTransaction(transaction)
-}
-
 export async function getAuthentication(address: string): Promise<{ loginMessage: string; loginSignature: string }> {
 	const entropy = await getEntropy()
 	const loginMessage = `UniPass Snap is requesting to sign in at ${new Date().toISOString()} with your UniPass Snap account: ${address}`
@@ -41,7 +35,14 @@ export async function getAuthentication(address: string): Promise<{ loginMessage
 
 export async function signTransactionMessage(signTxMessage: SignTxMessageInput) {
 	let panelContent: { value: string; type: NodeType.Text }[]
-	const originTransaction = JSON.parse(signTxMessage.originTransaction) as originTransaction
+
+	const originTransaction = JSON.parse(signTxMessage.originTransaction) as OriginTransaction
+
+	const validHash = await validTxHash(originTransaction, signTxMessage.message)
+
+	if (!validHash) {
+		throw new Error('Invalid transaction hash')
+	}
 
 	if (originTransaction.transactions.length > 1) {
 		let payContent = originTransaction.transactions.map((tx, index) => {
@@ -55,7 +56,9 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 			...payContent.flat(),
 			text(
 				`**Gasfee: ${
-					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
+					originTransaction.fee
+						? `${originTransaction.fee.amount} ${getTokenSymbolByAddress(originTransaction.fee.token)}`
+						: 'Free'
 				}**`
 			),
 			text(`**Chain: ${originTransaction.chain}**`)
@@ -70,7 +73,9 @@ export async function signTransactionMessage(signTxMessage: SignTxMessageInput) 
 			text(`**To**: ${originTransaction.transactions[0].to}`),
 			text(
 				`**Gasfee: ${
-					originTransaction.fee ? `${originTransaction.fee.amount} ${originTransaction.fee.symbol}` : 'Free'
+					originTransaction.fee
+						? `${originTransaction.fee.amount} ${getTokenSymbolByAddress(originTransaction.fee.token)}`
+						: 'Free'
 				}**`
 			)
 		]

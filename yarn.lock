@@ -7339,6 +7339,10 @@ __metadata:
     "@metamask/snaps-ui": ^0.32.2
     "@typescript-eslint/eslint-plugin": ^5.33.0
     "@typescript-eslint/parser": ^5.33.0
+    "@unipasswallet/transaction-builders": ^0.3.2
+    "@unipasswallet/transactions": ^0.3.2
+    "@unipasswallet/utils": ^0.3.2
+    "@unipasswallet/wallet": ^0.3.2
     babel-jest: ^29.6.1
     buffer: ^6.0.3
     eslint: ^8.21.0

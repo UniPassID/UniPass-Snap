@@ -1,6 +1,6 @@
 {
 	"name": "@unipasswallet/unipass-snap",
-	"version": "0.1.0-alpha.3",
+	"version": "0.1.0-alpha.4",
 	"description": "A snap for stable coin payment",
 	"repository": {
 		"type": "git",
@@ -29,6 +29,10 @@
 		"@metamask/key-tree": "^7.0.0",
 		"@metamask/snaps-types": "^0.32.2",
 		"@metamask/snaps-ui": "^0.32.2",
+		"@unipasswallet/transaction-builders": "^0.3.2",
+		"@unipasswallet/transactions": "^0.3.2",
+		"@unipasswallet/utils": "^0.3.2",
+		"@unipasswallet/wallet": "^0.3.2",
 		"buffer": "^6.0.3",
 		"ethers": "5.7.1",
 		"makerdao-multicall": "^0.12.5"

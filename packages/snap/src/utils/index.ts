@@ -98,7 +98,7 @@ function generateFeeTx(fee?: FeeTx): UPTransaction | undefined {
 	return undefined
 }
 
-export async function validTxHash(originTransaction: OriginTransaction, signature: string): Promise<boolean> {
+export async function validTxHash(originTransaction: OriginTransaction, digestHash: string): Promise<boolean> {
 	try {
 		const txs = formatTxs(originTransaction.transactions)
 		const newTxs = txs.map((tx) => {
@@ -121,7 +121,7 @@ export async function validTxHash(originTransaction: OriginTransaction, signatur
 			originTransaction.nonce,
 			execute.txs
 		)
-		return txHash === signature
+		return txHash === digestHash
 	} catch (e) {
 		return false
 	}

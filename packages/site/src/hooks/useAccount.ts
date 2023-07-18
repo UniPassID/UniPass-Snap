@@ -1,9 +1,18 @@
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { useRequest } from 'ahooks'
-import { smartAccountState, smartAccountTokenListState, isTestnetEnvState, availableFreeQuotaState, smartAccountInsState, pendingTransactionState } from '@/store'
+import {
+	smartAccountState,
+	smartAccountTokenListState,
+	isTestnetEnvState,
+	availableFreeQuotaState,
+	smartAccountInsState,
+	pendingTransactionState,
+	currentChainIdState,
+	isDeployedState
+} from '@/store'
 import { CHAIN_CONFIGS, MAINNET_CHAIN_IDS, TESTNET_CHAIN_IDS } from '@/constants'
 import { getBalancesByMulticall, getHistoryByStatus, waitPendingTransactions } from '@/utils'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { getDefaultTokenList } from '@/constants/tokens'
 import { getFreeQuota } from '@/request'
 import { TransactionStatus } from '@/types/transaction'
@@ -12,6 +21,8 @@ export const useAccount = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
 	const smartAccountIns = useRecoilValue(smartAccountInsState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
+	const currentChainId = useRecoilValue(currentChainIdState)
+	const setIsDeployed = useSetRecoilState(isDeployedState)
 	const [tokens, setSmartAccountTokenList] = useRecoilState(smartAccountTokenListState)
 	const setAvailableFreeQuota = useSetRecoilState(availableFreeQuotaState)
 	const setPendingTransaction = useSetRecoilState(pendingTransactionState)
@@ -56,16 +67,29 @@ export const useAccount = () => {
 		}
 	)
 
+	const refreshDeployedStatus = useCallback(async () => {
+		if (smartAccountIns) {
+			const isDeployed = await smartAccountIns.isDeployed()
+			setIsDeployed(isDeployed)
+		}
+	}, [smartAccountIns, setIsDeployed])
+
+	// detect whether user deployed on currentChain
+	useEffect(() => {
+		refreshDeployedStatus()
+	}, [currentChainId, refreshDeployedStatus])
+
 	// polling pending transaction
 	useRequest(
 		async () => {
 			const pendingTransactions = getHistoryByStatus(smartAccount, TransactionStatus.Pending)
 			setPendingTransaction(pendingTransactions.length)
 			waitPendingTransactions(smartAccountIns, smartAccount, pendingTransactions)
-		}, {
+		},
+		{
 			ready: !!(smartAccount && smartAccountIns),
 			refreshDeps: [smartAccount, smartAccountIns],
-			pollingInterval: 3000,
+			pollingInterval: 3000
 		}
 	)
 
@@ -76,5 +100,5 @@ export const useAccount = () => {
 		setSmartAccountTokenList(defaultTokenList)
 	}, [isTestnetEnv, setSmartAccountTokenList])
 
-	return { smartAccount, queryERC20Balances, tokens, handleQueryERC20Balance }
+	return { smartAccount, queryERC20Balances, tokens, handleQueryERC20Balance, refreshDeployedStatus }
 }

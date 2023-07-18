@@ -8,6 +8,7 @@ import {
 	availableFreeQuotaState,
 	confettiState,
 	currentChainIdState,
+	isDeployedState,
 	pendingTransactionState,
 	smartAccountInsState,
 	smartAccountState
@@ -48,6 +49,7 @@ const Pay: React.FC = () => {
 	const [pendingTransaction, setPendingTransaction] = useRecoilState(pendingTransactionState)
 	const [isSubmitDialogOpen, { setTrue: openSubmitDialog, setFalse: closeSubmitDialog }] = useBoolean(false)
 	const setConfettiState = useSetRecoilState(confettiState)
+	const setIsDeployed = useSetRecoilState(isDeployedState)
 
 	const DEFAULT_FORM_ITEM = useMemo(() => {
 		return {
@@ -286,6 +288,8 @@ const Pay: React.FC = () => {
 					upNotify.success('Submitted Success')
 				}
 				setIsPaying(false)
+				// set deployed true after transaction submit success
+				setIsDeployed(true)
 				reset()
 			} catch (e: any) {
 				upNotify.error(e?.rawMessage || e?.message || 'Something wrong, please retry')

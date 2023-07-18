@@ -29,10 +29,16 @@ const availableFreeQuotaState = atom<number>({
 	default: 3
 })
 
+const isDeployedState = atom<boolean>({
+	key: 'isDeployed',
+	default: false,
+})
+
 export {
 	smartAccountState,
 	smartAccountTokenListState,
 	smartAccountTotalBalanceState,
 	smartAccountInsState,
-	availableFreeQuotaState
+	availableFreeQuotaState,
+	isDeployedState
 }

@@ -16,22 +16,22 @@ const ChainSwitcher = () => {
 	const [switchChainConfirm, { setFalse, setTrue }] = useBoolean(false)
 	const [selectChainId, setSelectChainId] = useState<number>()
 
-	const beforeSwitchChain = (chainId: number) => {
+	const beforeSwitchChain = async (chainId: number) => {
 		if (chainId === currentChainId) return
 		setSelectChainId(chainId)
 		if (editingPayment) {
 			setTrue()
 			return
 		} else {
+			await smartAccountIns?.switchChain?.(chainId)
 			setCurrentChainId(chainId)
-			smartAccountIns?.switchChain?.(chainId)
 		}
 	}
 
-	const switchChain = () => {
+	const switchChain = async () => {
 		if (!selectChainId) return
+		await smartAccountIns?.switchChain?.(selectChainId)
 		setCurrentChainId(selectChainId)
-		smartAccountIns?.switchChain?.(selectChainId)
 		setFalse()
 	}
 

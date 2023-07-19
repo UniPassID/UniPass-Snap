@@ -3,6 +3,7 @@ import {
 	availableFreeQuotaState,
 	currentChainIdState,
 	editingPaymentState,
+	isDeployedState,
 	smartAccountState,
 	smartAccountTokenListState
 } from '@/store'
@@ -23,6 +24,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	const [singleFeeResult, setSingleFeeResult] = useState<SingleTransactionFee[]>()
 	const setEditingPayment = useSetRecoilState(editingPaymentState)
 	const [hasPendingTransaction, setHasPendingTransaction] = useState<boolean>(false)
+	const isDeployed = useRecoilValue(isDeployedState)
 
 	const availableTokens = useMemo(() => {
 		return tokens.filter((token) => token.chainId === chainId)
@@ -57,6 +59,9 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	}, [chainId, singleFeeResult])
 
 	const gas = useMemo(() => {
+		console.log('GAS useMemo isDeployed: ', isDeployed)
+
+		console.log('GAS useMemo SINGLE_GAS: ', SINGLE_GAS)
 		const needGas = txs.length > availableFreeQuota
 		let totalGas = 0
 		let originGas = 0
@@ -71,9 +76,12 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		originGas = numbro(SINGLE_GAS?.singleFee).multiply(txs.length).value() || 0
 		let selectedGas = getTokenBySymbol(currentSymbol, chainId)
 		const usedFreeQuota = availableFreeQuota > txs.length ? txs.length : availableFreeQuota
+		if (usedFreeQuota === 0 && !isDeployed) {
+			totalGas = numbro(totalGas).add(SINGLE_GAS?.deployFee || 0).value() || 0
+		}
 		const discountStatus: string = totalGas ? ((originGas - totalGas) / originGas).toString() : 'free'
 		return { needGas, originGas, totalGas, selectedGas, usedFreeQuota, discount, discountStatus }
-	}, [txs.length, availableFreeQuota, SINGLE_GAS, chainId, currentSymbol])
+	}, [txs.length, availableFreeQuota, SINGLE_GAS, chainId, currentSymbol, isDeployed])
 
 	const getTransferAmount = () => {
 		let usdcAmount = 0

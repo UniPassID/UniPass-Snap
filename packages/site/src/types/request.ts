@@ -29,6 +29,7 @@ export interface SingleTransactionFee {
 	chainId: number
 	singleFee: number
 	feeReceiver: string
+	deployFee: number
 }
 
 export interface SingleTransactionFeesOutput {

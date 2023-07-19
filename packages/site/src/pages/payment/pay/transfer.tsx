@@ -80,7 +80,7 @@ const Transfer = forwardRef<
 			const totalBalance =
 				availableTokens.find((token) => currentToken?.contractAddress === token.contractAddress)?.balance ||
 				BigNumber.from(0)
-			return weiToEther(totalBalance.sub(totalUsed), currentToken.decimals)
+			return weiToEther(totalBalance.sub(totalUsed), currentToken?.decimals)
 		}
 		return '0'
 	}, [txs, availableTokens, index, tx?.token, getTokenContractAddress])
@@ -96,7 +96,7 @@ const Transfer = forwardRef<
 			},
 			isValidAmount: () => {
 				try {
-					return availableBalance > tx?.amount
+					return parseFloat(availableBalance) >= parseFloat(tx?.amount)
 				} catch (e) {
 					return false
 				}

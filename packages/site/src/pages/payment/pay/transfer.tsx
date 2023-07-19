@@ -12,7 +12,6 @@ import { BigNumber } from 'ethers'
 import { Transaction } from '@/types/transaction'
 import Select, { Option } from 'rc-select'
 import clsx from 'clsx'
-import numbro from 'numbro'
 
 export interface TransferRef {
 	freeze: () => void

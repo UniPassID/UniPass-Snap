@@ -96,7 +96,7 @@ const Transfer = forwardRef<
 			},
 			isValidAmount: () => {
 				try {
-					return availableBalance > tx?.amount
+					return availableBalance >= tx?.amount
 				} catch (e) {
 					return false
 				}

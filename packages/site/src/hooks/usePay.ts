@@ -37,7 +37,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		},
 		{
 			ready: !!sessionStorage.getItem('up__accessToken'),
-			pollingInterval: 10000
+			pollingInterval: 3000
 		}
 	)
 
@@ -59,6 +59,9 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 	}, [chainId, singleFeeResult])
 
 	const gas = useMemo(() => {
+		console.log('GAS useMemo isDeployed: ', isDeployed)
+
+		console.log('GAS useMemo SINGLE_GAS: ', SINGLE_GAS)
 		const needGas = txs.length > availableFreeQuota
 		let totalGas = 0
 		let originGas = 0

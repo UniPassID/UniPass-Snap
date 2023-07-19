@@ -70,6 +70,7 @@ export const useAccount = () => {
 	const refreshDeployedStatus = useCallback(async () => {
 		if (smartAccountIns) {
 			const isDeployed = await smartAccountIns.isDeployed()
+			console.log('set deployed:', isDeployed)
 			setIsDeployed(isDeployed)
 		}
 	}, [smartAccountIns, setIsDeployed])

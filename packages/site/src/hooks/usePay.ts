@@ -37,7 +37,7 @@ export const usePay = (txs: Transaction[], currentSymbol: string) => {
 		},
 		{
 			ready: !!sessionStorage.getItem('up__accessToken'),
-			pollingInterval: 3000
+			pollingInterval: 10000
 		}
 	)
 

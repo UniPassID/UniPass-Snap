@@ -244,7 +244,7 @@ const Pay: React.FC = () => {
 					chainId: chainId,
 					nonce: nonce,
 					address: address,
-					fee: originFee,
+					fee: originFee
 				})
 
 				const signedTxs = await smartAccount.signTransactions(formatTxs(txs), {
@@ -365,7 +365,7 @@ const Pay: React.FC = () => {
 						{gas.totalGas === 0 ? (
 							<div className={styles['free-tips-wrap']}>
 								<div className={styles['free-tips']}>Gas Free!</div>
-								<ToolTip title="UniPass Snap provides three gas-free crypto payments every day" placement="topRight">
+								<ToolTip title="UniPass provides three gas-free crypto payments every day" placement="topRight">
 									<span>
 										<Icon src={QSvg} style={{ marginLeft: '12px' }} />
 									</span>
@@ -385,7 +385,7 @@ const Pay: React.FC = () => {
 										</span>
 									</div>
 									<ToolTip
-										title="UniPass Snap utilizes the batch transaction feature to save you gas fee"
+										title="UniPass utilizes the batch transaction feature to save you gas fee"
 										placement="topRight"
 									>
 										<span>

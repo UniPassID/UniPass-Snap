@@ -58,7 +58,7 @@ const StatusDialog = () => {
 						</div>
 					</div>
 					<div className={styles.title}>Install Flask</div>
-					<div className={styles.tips}>Before using UniPass Snap, you need to install Flask first.</div>
+					<div className={styles.tips}>Before using UniPass, you need to install Flask first.</div>
 					<Button
 						onClick={installFlask}
 						icon={<Icon src={MetaMask_Linear} width={20} height={20} />}
@@ -87,7 +87,7 @@ const StatusDialog = () => {
 					</div>
 				</div>
 				<div className={styles.title}>Install MetaMask</div>
-				<div className={styles.tips}>Before using UniPass Snap, you need to install MetaMask first.</div>
+				<div className={styles.tips}>Before using UniPass, you need to install MetaMask first.</div>
 				<div className={styles.button} onClick={installFlask}>
 					<Icon src={MetaMask_Linear} width={20} height={20} />
 					Install MetaMask
@@ -104,10 +104,8 @@ const StatusDialog = () => {
 				className={styles.snap_dialog}
 			>
 				<div className={styles.content}>
-					<div className={styles.title}>Connect to UniPass Snap</div>
-					<div className={styles.tips}>
-						UniPass Snap is a product that empowers MetaMask with smart contract wallet.
-					</div>
+					<div className={styles.title}>Connect to UniPass</div>
+					<div className={styles.tips}>UniPass is a product that empowers MetaMask with smart contract wallet.</div>
 					<div className={styles.pair}>
 						<div className={styles.item}>
 							<Icon src={UniPass_Icon} width={40} height={40} />
@@ -149,7 +147,7 @@ const StatusDialog = () => {
 						loading={connectSnapLoading}
 						onClick={connect}
 					>
-						Connect Snap
+						Connect UniPass
 					</Button>
 				</div>
 			</Dialog>

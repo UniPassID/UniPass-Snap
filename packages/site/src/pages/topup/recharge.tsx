@@ -94,7 +94,7 @@ export const ReCharge: React.FC<{
 						</div>
 					</div>
 					<div className={styles.item} style={{ borderTop: '1px solid #F0F0F5' }}>
-						<div className={styles.title}>TO SNAP ADDRESS</div>
+						<div className={styles.title}>TO UNIPASS ADDRESS</div>
 						<div className={styles.address}>
 							<Icon src={UniPass} width={20} height={20} />
 							{smartAccount}

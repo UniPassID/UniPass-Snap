@@ -23,6 +23,8 @@ import Testnet from '@/assets/svg/Testnet.svg'
 import Support from '@/assets/svg/Support.svg'
 import Disconnect from '@/assets/svg/Disconnect.svg'
 import Close from '@/assets/svg/Close.svg'
+import Document from '@/assets/svg/Document.svg'
+import FAQ from '@/assets/svg/FAQ.svg'
 import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
 import styles from './sidebar.module.scss'
 import { upGA } from '@/utils'
@@ -95,6 +97,16 @@ const SideBar = () => {
 		upGA('setting-click-disconnect', 'setting')
 	}
 
+	const handleOpenDocument = () => {
+		var url = 'https://accountlabs.notion.site/UniPass-Document-90ee049fb60b4601a2e3b43e3c5a7e1d'
+		window.open(url, '_blank')
+	}
+
+	const handleOpenFAQ = () => {
+		var url = 'https://accountlabs.notion.site/UniPass-FAQ-f14aee595f694f71812588309e62c5be'
+		window.open(url, '_blank')
+	}
+
 	const handleSupport = () => {
 		var url = 'mailto:unipass-snap-support@accountlabs.com'
 		window.open(url)
@@ -142,6 +154,18 @@ const SideBar = () => {
 								</div>
 								<Switch checked={isTestnetEnv} />
 							</div>
+							{/* <div className={styles.item} onClick={handleOpenDocument}>
+								<div className={styles.left}>
+									<Icon src={Document} height={16} width={16} />
+									<span>Document</span>
+								</div>
+							</div>
+							<div className={styles.item} onClick={handleOpenFAQ}>
+								<div className={styles.left}>
+									<Icon src={FAQ} height={16} width={16} />
+									<span>FAQ</span>
+								</div>
+							</div> */}
 							<div className={styles.item} onClick={handleSupport}>
 								<div className={styles.left}>
 									<Icon src={Support} height={20} width={20} />

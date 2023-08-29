@@ -154,18 +154,18 @@ const SideBar = () => {
 								</div>
 								<Switch checked={isTestnetEnv} />
 							</div>
-							{/* <div className={styles.item} onClick={handleOpenDocument}>
+							<div className={styles.item} onClick={handleOpenDocument}>
 								<div className={styles.left}>
-									<Icon src={Document} height={16} width={16} />
+									<Icon src={Document} height={20} width={20} />
 									<span>Document</span>
 								</div>
 							</div>
 							<div className={styles.item} onClick={handleOpenFAQ}>
 								<div className={styles.left}>
-									<Icon src={FAQ} height={16} width={16} />
+									<Icon src={FAQ} height={20} width={20} />
 									<span>FAQ</span>
 								</div>
-							</div> */}
+							</div>
 							<div className={styles.item} onClick={handleSupport}>
 								<div className={styles.left}>
 									<Icon src={Support} height={20} width={20} />

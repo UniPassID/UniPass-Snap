@@ -1,13 +1,13 @@
 {
   "version": "0.1.0-alpha.4",
-  "description": "A Snap for stable coin payment.",
-  "proposedName": "UniPass Snap",
+  "description": "UniPass is a stablecoin payment product designed to enhance your MetaMask experience by harnessing the power of smart contract wallet capabilities.",
+  "proposedName": "UniPass",
   "repository": {
     "type": "git",
     "url": "https://github.com/UniPassID/UniPass-Snap.git"
   },
   "source": {
-    "shasum": "GPLsyAWTZ2Xq0R7zewwLaP3tGfRPu01ufYSeX3jT10A=",
+    "shasum": "kyzzGYSgrq88dWm1b8rX+nOj3qrJjnHWXHgsKY7LGzY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

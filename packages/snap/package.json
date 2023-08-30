@@ -1,6 +1,6 @@
 {
 	"name": "@unipasswallet/unipass-snap",
-	"version": "0.1.0-alpha.4",
+	"version": "0.1.1",
 	"description": "A snap for stable coin payment",
 	"repository": {
 		"type": "git",

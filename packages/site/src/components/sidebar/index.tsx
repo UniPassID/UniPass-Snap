@@ -100,6 +100,7 @@ const SideBar = () => {
 	const handleOpenDocument = () => {
 		var url = 'https://accountlabs.notion.site/UniPass-Document-90ee049fb60b4601a2e3b43e3c5a7e1d'
 		window.open(url, '_blank')
+		upGA('setting-click-document', 'setting')
 	}
 
 	const handleOpenFAQ = () => {
@@ -111,6 +112,7 @@ const SideBar = () => {
 	const handleSupport = () => {
 		var url = 'https://t.me/+Hr3N_I3xJmtlMDQ1'
 		window.open(url, '_blank')
+		upGA('setting-click-support', 'setting')
 	}
 
 	return (

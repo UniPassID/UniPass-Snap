@@ -37,6 +37,8 @@ type EventName =
 	| 'setting-click-disconnect'
 	| 'setting-switch-testnet'
 	| 'setting-click-FAQ'
+	| 'setting-click-document'
+	| 'setting-click-support'
 
 type Category = 'homepage' | 'login' | 'signup' | 'topup' | 'payment' | 'setting'
 

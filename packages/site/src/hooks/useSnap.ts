@@ -1,8 +1,14 @@
 import { utils } from 'ethers'
 import { useAsyncEffect, useBoolean } from 'ahooks'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
-import { flaskState, installedSnapState, smartAccountState, smartAccountInsState, currentChainIdState } from '@/store'
-import { connectSnap, getMasterKeyAddress, getSnap, isFlaskVersion, upGA } from '@/utils'
+import {
+	metaMaskState,
+	installedSnapState,
+	smartAccountState,
+	smartAccountInsState,
+	currentChainIdState
+} from '@/store'
+import { connectSnap, getMasterKeyAddress, getSnap, isMetaMaskVersion, upGA } from '@/utils'
 import { CHAIN_CONFIGS, CUSTOM_AUTH_APPID } from '@/constants'
 import { SmartAccount } from '@unipasswallet/smart-account'
 import { upNotify } from '@/components'
@@ -10,7 +16,7 @@ import { SnapSigner } from '@/snap-signer'
 import { fetchAccessToken } from '@/utils/account'
 
 export const useSnap = () => {
-	const [isFlask, setHasFlaskDetected] = useRecoilState(flaskState)
+	const [isMetaMask, setHasMetaMaskDetected] = useRecoilState(metaMaskState)
 	const [installedSnap, setInstalledSnap] = useRecoilState(installedSnapState)
 	const currentChainId = useRecoilValue(currentChainIdState)
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
@@ -22,11 +28,10 @@ export const useSnap = () => {
 		startLoadSnap()
 		try {
 			let Status = ''
-			const _isFlask = await isFlaskVersion()
-			console.log(`_isFlask: ${_isFlask}`)
+			const _isMetaMask = await isMetaMaskVersion()
 
-			setHasFlaskDetected(_isFlask)
-			if (_isFlask) {
+			setHasMetaMaskDetected(_isMetaMask)
+			if (_isMetaMask) {
 				Status = 'MM_installed_no_Snap'
 				const localSmartAccountAddress = window.localStorage.getItem('up__smartAccountAddress')
 				if (localSmartAccountAddress && utils.isAddress(localSmartAccountAddress)) {
@@ -86,5 +91,5 @@ export const useSnap = () => {
 		return { smartAccountAddress, isNewAccount: res.isNewAccount }
 	}
 
-	return { isFlask, installedSnap, handleConnectSnap, connectSnapLoading, loadSnapLoading }
+	return { isMetaMask, installedSnap, handleConnectSnap, connectSnapLoading, loadSnapLoading }
 }

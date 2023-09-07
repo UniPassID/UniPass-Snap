@@ -2,14 +2,14 @@ import { useBoolean } from 'ahooks'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import clsx from 'clsx'
 import { MenuType } from '@/types'
-import { Icon, Popover, Switch } from '@/components'
+import { Icon, Popover } from '@/components'
 import {
 	currentSideBarState,
-	isTestnetEnvState,
-	currentChainIdState,
+	// isTestnetEnvState,
+	// currentChainIdState,
 	smartAccountState,
-	pendingTransactionState,
-	smartAccountInsState
+	pendingTransactionState
+	// smartAccountInsState
 } from '@/store'
 import Logo from '@/assets/svg/unipass.svg'
 import Payment from '@/assets/svg/Payment.svg'
@@ -19,13 +19,13 @@ import TopUpSelected from '@/assets/svg/TopUpSelected.svg'
 import History from '@/assets/svg/History.svg'
 import HistorySelected from '@/assets/svg/HistorySelected.svg'
 import More from '@/assets/svg/More.svg'
-import Testnet from '@/assets/svg/Testnet.svg'
+// import Testnet from '@/assets/svg/Testnet.svg'
 import Support from '@/assets/svg/Support.svg'
 import Disconnect from '@/assets/svg/Disconnect.svg'
 import Close from '@/assets/svg/Close.svg'
 import Document from '@/assets/svg/Document.svg'
 import FAQ from '@/assets/svg/FAQ.svg'
-import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
+// import { ARBITRUM_MAINNET, POLYGON_MUMBAI } from '@/constants'
 import styles from './sidebar.module.scss'
 import { upGA } from '@/utils'
 
@@ -43,12 +43,12 @@ const menus: Array<{ name: MenuType }> = [
 
 const SideBar = () => {
 	const [showActions, { toggle }] = useBoolean(false)
-	const setCurrentChainIdState = useSetRecoilState(currentChainIdState)
+	// const setCurrentChainIdState = useSetRecoilState(currentChainIdState)
 	const [currentSideBar, setCurrentSideBar] = useRecoilState(currentSideBarState)
-	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
+	// const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const setSmartAccountState = useSetRecoilState(smartAccountState)
 	const pendingTransaction = useRecoilValue(pendingTransactionState)
-	const smartAccountIns = useRecoilValue(smartAccountInsState)
+	// const smartAccountIns = useRecoilValue(smartAccountInsState)
 
 	const getMenuClassName = (name: MenuType) => {
 		return clsx(styles.menu, {
@@ -80,14 +80,14 @@ const SideBar = () => {
 		}
 	}
 
-	const handleSwitchEnv = () => {
-		const checked = !isTestnetEnv
-		const chainId = checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET
-		window.localStorage.setItem('up__currentChainId', chainId.toString())
-		setCurrentChainIdState(chainId)
-		smartAccountIns.switchChain(chainId)
-		upGA('setting-switch-testnet', 'setting', { Environment: checked ? 'Testnet' : 'Mainnet' })
-	}
+	// const handleSwitchEnv = () => {
+	// 	const checked = !isTestnetEnv
+	// 	const chainId = checked ? POLYGON_MUMBAI : ARBITRUM_MAINNET
+	// 	window.localStorage.setItem('up__currentChainId', chainId.toString())
+	// 	setCurrentChainIdState(chainId)
+	// 	smartAccountIns.switchChain(chainId)
+	// 	upGA('setting-switch-testnet', 'setting', { Environment: checked ? 'Testnet' : 'Mainnet' })
+	// }
 
 	const disconnect = () => {
 		window.localStorage.removeItem('up__smartAccountAddress')
@@ -105,11 +105,12 @@ const SideBar = () => {
 	const handleOpenFAQ = () => {
 		var url = 'https://accountlabs.notion.site/UniPass-FAQ-f14aee595f694f71812588309e62c5be'
 		window.open(url, '_blank')
+		upGA('setting-click-FAQ', 'setting')
 	}
 
 	const handleSupport = () => {
-		var url = 'mailto:unipass-snap-support@accountlabs.com'
-		window.open(url)
+		var url = 'https://t.me/+Hr3N_I3xJmtlMDQ1'
+		window.open(url, '_blank')
 	}
 
 	return (
@@ -147,13 +148,13 @@ const SideBar = () => {
 					onVisibleChange={toggle}
 					overlay={
 						<div className={styles.more_overlay}>
-							<div className={styles.item} onClick={handleSwitchEnv}>
+							{/* <div className={styles.item} onClick={handleSwitchEnv}>
 								<div className={styles.left}>
 									<Icon src={Testnet} height={20} width={20} />
 									<span>Testnet</span>
 								</div>
 								<Switch checked={isTestnetEnv} />
-							</div>
+							</div> */}
 							<div className={styles.item} onClick={handleOpenDocument}>
 								<div className={styles.left}>
 									<Icon src={Document} height={20} width={20} />

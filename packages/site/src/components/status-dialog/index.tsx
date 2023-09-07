@@ -4,7 +4,6 @@ import { useSnap } from '@/hooks'
 import { smartAccountState } from '@/store'
 import { Button, Dialog, Icon } from '@/components'
 import MetaMask from '@/assets/svg/MetaMask.svg'
-import MetaMaskFlask from '@/assets/img/metamask_flask.png'
 import UniPass_Icon from '@/assets/svg/UniPass_Icon.svg'
 import MetaMask_Linear from '@/assets/svg/MetaMask_Linear_White.svg'
 import Connect from '@/assets/svg/Connect.svg'
@@ -17,11 +16,11 @@ import styles from './status-dialog.module.scss'
 import { upGA } from '@/utils'
 
 const StatusDialog = () => {
-	const { isFlask, installedSnap, handleConnectSnap, connectSnapLoading, loadSnapLoading } = useSnap()
+	const { isMetaMask, installedSnap, handleConnectSnap, connectSnapLoading, loadSnapLoading } = useSnap()
 	const smartAccount = useRecoilValue(smartAccountState)
 
-	const installFlask = () => {
-		window.open('https://metamask.io/flask/', '_blank')
+	const installMetaMask = () => {
+		window.open('https://metamask.io/download/', '_blank')
 		upGA('login-click-install_metamask', 'login')
 	}
 
@@ -31,8 +30,8 @@ const StatusDialog = () => {
 	}
 
 	const showMetaMaskInstallDialog = useMemo(() => {
-		return typeof isFlask === 'boolean' && !isFlask
-	}, [isFlask])
+		return typeof isMetaMask === 'boolean' && !isMetaMask
+	}, [isMetaMask])
 
 	const showSnapConnectDialog = useMemo(() => {
 		if (showMetaMaskInstallDialog) return false
@@ -49,51 +48,26 @@ const StatusDialog = () => {
 				shouldCloseOnOverlayClick={false}
 				showClose={false}
 				center={true}
-				className={styles.flask_dialog}
+				className={styles.metamask_dialog}
 			>
 				<div className={styles.content}>
 					<div className={styles.bg}>
 						<div className={styles.metamask}>
-							<Icon src={MetaMaskFlask} width={60} height={60} />
+							<Icon src={MetaMask} width={60} height={60} />
 						</div>
 					</div>
-					<div className={styles.title}>Install Flask</div>
-					<div className={styles.tips}>Before using UniPass, you need to install Flask first.</div>
+					<div className={styles.title}>Install MetaMask</div>
+					<div className={styles.tips}>Before using UniPass, you need to install MetaMask first.</div>
 					<Button
-						onClick={installFlask}
+						onClick={installMetaMask}
 						icon={<Icon src={MetaMask_Linear} width={20} height={20} />}
-						style={{ width: '100%' }}
+						className={styles.button}
 					>
-						Install Flask
+						Install MetaMask
 					</Button>
 					<div className={styles.alert}>Please refresh this page after the installation.</div>
 				</div>
 			</Dialog>
-			{/* <Dialog
-				title=""
-				isOpen={showMetaMaskInstallDialog}
-				shouldCloseOnEsc={false}
-				shouldCloseOnOverlayClick={false}
-				showConfirmButton={false}
-				showCancelButton={false}
-				showClose={false}
-				center={true}
-				className={styles.metamask_dialog}
-			>
-				<div className={styles.bg}>
-					<Icon src={BobbleBg} width={300} height={140} />
-					<div className={styles.metamask}>
-						<Icon src={MetaMask} width={60} height={60} />
-					</div>
-				</div>
-				<div className={styles.title}>Install MetaMask</div>
-				<div className={styles.tips}>Before using UniPass, you need to install MetaMask first.</div>
-				<div className={styles.button} onClick={installFlask}>
-					<Icon src={MetaMask_Linear} width={20} height={20} />
-					Install MetaMask
-				</div>
-				<div className={styles.alert}>Please refresh this page after the installation.</div>
-			</Dialog> */}
 			<Dialog
 				isOpen={showSnapConnectDialog}
 				title=""

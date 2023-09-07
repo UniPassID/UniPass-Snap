@@ -36,6 +36,7 @@ type EventName =
 	| 'homepage-click-scan_button'
 	| 'setting-click-disconnect'
 	| 'setting-switch-testnet'
+	| 'setting-click-FAQ'
 
 type Category = 'homepage' | 'login' | 'signup' | 'topup' | 'payment' | 'setting'
 

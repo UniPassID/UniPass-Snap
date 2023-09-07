@@ -1,8 +1,8 @@
 import { atom } from 'recoil'
 import type { Snap } from '../types'
 
-const flaskState = atom<boolean | undefined>({
-	key: 'flaskState',
+const metaMaskState = atom<boolean | undefined>({
+	key: 'metaMaskState',
 	default: undefined
 })
 
@@ -12,4 +12,4 @@ const installedSnapState = atom<Snap | undefined>({
 	dangerouslyAllowMutability: true
 })
 
-export { flaskState, installedSnapState }
+export { metaMaskState, installedSnapState }

@@ -9,7 +9,8 @@ const currentSideBarState = atom<MenuType>({
 
 const currentChainIdState = atom<number>({
 	key: 'currentChainState',
-	default: parseInt(window.localStorage.getItem('up__currentChainId') || '') || ARBITRUM_MAINNET
+	// default: parseInt(window.localStorage.getItem('up__currentChainId') || '') || ARBITRUM_MAINNET
+	default: ARBITRUM_MAINNET
 })
 
 const isTestnetEnvState = selector({

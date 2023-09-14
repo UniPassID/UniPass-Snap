@@ -22,14 +22,16 @@ export async function waitPendingTransactions(
 				status: txResult.status ? TransactionStatus.Success : TransactionStatus.Failed,
 				hash: txResult.transactionHash
 			})
-			upGA('payment-success', 'payment', {
-				BatchAmount: tx.txs.length,
-				ChainID: tx.chainId,
-				GasAmount: tx.fee?.amount,
-				PaymentAmount: tx.txs.reduce((pre, tx) => pre + parseFloat(tx.amount) || 0, 0),
-				SnapAddress: `_${address}`,
-				txHash: txResult.transactionHash
-			})
+			if (TransactionStatus.Success) {
+				upGA('payment-success', 'payment', {
+					BatchAmount: tx.txs.length,
+					ChainID: tx.chainId,
+					GasAmount: tx.fee?.amount,
+					PaymentAmount: tx.txs.reduce((pre, tx) => pre + parseFloat(tx.amount) || 0, 0),
+					SnapAddress: `_${address}`,
+					txHash: `_${txResult.transactionHash}`
+				})
+			}
 		} catch (e) {
 			updateHistory({
 				address,

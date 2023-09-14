@@ -22,7 +22,7 @@ export async function waitPendingTransactions(
 				status: txResult.status ? TransactionStatus.Success : TransactionStatus.Failed,
 				hash: txResult.transactionHash
 			})
-			if (TransactionStatus.Success) {
+			if (txResult.status) {
 				upGA('payment-success', 'payment', {
 					BatchAmount: tx.txs.length,
 					ChainID: tx.chainId,

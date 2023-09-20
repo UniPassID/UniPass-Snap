@@ -7,7 +7,8 @@ import {
 	metamaskAccountTokenListState,
 	currentSideBarState,
 	isTestnetEnvState,
-	currentChainIdState
+	currentChainIdState,
+	smartAccountInsState
 } from '@/store'
 import { upNotify } from '@/components'
 import { CHAIN_CONFIGS, getAddChainParameters } from '@/constants'
@@ -20,6 +21,7 @@ const { useAccount, useProvider } = hooks
 
 export const useMetaMask = () => {
 	const smartAccount = useRecoilValue(smartAccountState)
+	const smartAccountIns = useRecoilValue(smartAccountInsState)
 	const isTestnetEnv = useRecoilValue(isTestnetEnvState)
 	const setCurrentSideBar = useSetRecoilState(currentSideBarState)
 	const setCurrentChainId = useSetRecoilState(currentChainIdState)
@@ -150,6 +152,7 @@ export const useMetaMask = () => {
 	const goToPayment = () => {
 		setCurrentSideBar('Payment')
 		if (selectedToken) {
+			smartAccountIns?.switchChain(selectedToken.chainId)
 			setCurrentChainId(selectedToken.chainId)
 			upGA('topup-mm-success-click-go_to_payment', 'topup', {
 				ChainID: selectedToken.chainId,

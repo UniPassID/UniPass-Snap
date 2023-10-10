@@ -119,7 +119,7 @@ const SideBar = () => {
 		<div className={styles.sidebar}>
 			<div className={styles.menus}>
 				<div className={styles.logo}>
-					<Icon src={Logo} height={24} width={115} />
+					<Icon src={Logo} height={32} width={128} />
 				</div>
 				<div className={styles.menus}>
 					{menus.map((menu) => {
